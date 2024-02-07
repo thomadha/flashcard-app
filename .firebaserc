@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "tdt4140-2024"
-  }
+    "default": "tdt4140-2024",
+    "dev": "tdt4140-2024-dev"
+  },
+  "targets": {},
+  "etags": {}
 }
