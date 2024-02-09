@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+body {
+    background-color: #DEFEDD;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav {
+    background-color: #EF8CAD;
+    width: 100%;
+    height: 15%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#flashCard {
+    position: relative;
+    margin: auto;
+    margin-top: 80px;
+    width: 800px;
+    height: 522px;
+    background-color: white;
+    border-radius: 30px;
+    filter: drop-shadow(8px 8px 8px rgb(87, 85, 85));
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#flashCardQuestion {
+    text-align: center;
+    font-family: 'Lucida Sans';
+    font-size: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+#Title {
+    padding-top: 10px;
+    font-family: 'papyrus';
+    font-size: 65px;
+    margin-left: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#ForrigeKnapp {
+    position: absolute;
+    left: 0;
+    top: 220px;
+    margin-left: 120px; 
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 25px;
+}
+
+#NesteKnapp {
+    position: absolute;
+    right: 0; 
+    top: 220px;
+    margin-right: 120px;
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 25px;
+}
+
+#TilbakeKnapp{
+    right: 20px;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 25px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+#BrukerKnapp {
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    font-size: 25px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
 }
