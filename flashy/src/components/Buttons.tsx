@@ -1,10 +1,15 @@
-function Buttons() {
+interface ButtonsProps {
+  handleBackClick: () => void;
+  handleNextClick: () => void;
+}
+
+function Buttons({ handleBackClick, handleNextClick }: ButtonsProps) {
   return (
     <>
-      <button type="button" className="btn" id="ForrigeKnapp">
+      <button id="BackButton" onClick={handleBackClick}>
         Forrige
       </button>
-      <button type="button" className="btn" id="NesteKnapp">
+      <button id="NextButton" onClick={handleNextClick}>
         Neste
       </button>
     </>

@@ -1,8 +1,13 @@
-function FlashCard() {
+interface FlashCardProps {
+  text: string;
+  handleClickOnFlashCard: () => void;
+}
+
+function FlashCard({text, handleClickOnFlashCard}: FlashCardProps) {
   return (
     <>
-      <div id="flashCard">
-        <p id="flashCardQuestion">Hvilken gruppe er best i PU?</p>
+      <div id="flashCard" onClick={handleClickOnFlashCard}>
+        <p id="flashCardText" >{text}</p>
       </div>
     </>
   );
