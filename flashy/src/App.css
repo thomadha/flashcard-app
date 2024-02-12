@@ -1,38 +1,103 @@
-.App {
-  text-align: center;
+body {
+    background-color: #DEFEDD;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav {
+    background-color: #EF8CAD;
+    width: 100%;
+    height: 15%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#flashCard {
+    position: relative;
+    margin: auto;
+    margin-top: 80px;
+    width: 800px;
+    height: 522px;
+    background-color: white;
+    border-radius: 30px;
+    filter: drop-shadow(4px 4px 4px rgb(87, 85, 85));
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#DifficultCard {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+#EditFlashCard {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;    
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#flashCardText {
+    text-align: center;
+    /* font-family: 'Lucida Sans'; */
+    font-size: 30px;
+}
+
+#Title {
+    padding-top: 10px;
+    /* font-family: 'papyrus'; */
+    font-size: 65px;
+    margin-left: 30px;
+}
+
+#BackButton {
+    position: absolute;
+    left: 0;
+    top: 220px;
+    margin-left: 120px; 
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
+#NextButton {
+    position: absolute;
+    right: 0; 
+    top: 220px;
+    margin-right: 120px;
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
+#HomeButton{
+    /* Spurte chat om hvordan sentrere knappene på høyre side */
+    padding: 5px;
+    position:absolute; 
+    right: 180px;
+    top: 3%;
+    transform: translateY(-5%);
+    background-color: white;
+    border-radius: 8px;
+    font-size: 35px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+#UserButton {
+    padding: 5px;
+    position:absolute; 
+    right: 30px;
+    top: 3%;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 35px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
 }
