@@ -57,7 +57,7 @@ nav {
     font-size: 35px;
 }
 
-#HjemKnapp{
+#HomeButton{
     /* Spurte chat om hvordan sentrere knappene på høyre side */
     padding: 5px;
     position:absolute; 
@@ -70,7 +70,7 @@ nav {
     filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
 }
 
-#BrukerKnapp {
+#UserButton {
     padding: 5px;
     position:absolute; 
     right: 30px;
