@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../lib/firebase/firebase";
 import exp from 'constants';
 
 export const useCardStrings = (flashCardSetId: string) => {
