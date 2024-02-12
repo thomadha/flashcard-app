@@ -22,6 +22,26 @@ nav {
     align-items: center;
 }
 
+#DifficultCard {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+
+#EditFlashCard {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;    
+}
+
 #flashCardText {
     text-align: center;
     /* font-family: 'Lucida Sans'; */
@@ -62,7 +82,7 @@ nav {
     padding: 5px;
     position:absolute; 
     right: 180px;
-    top: 5%;
+    top: 3%;
     transform: translateY(-5%);
     background-color: white;
     border-radius: 8px;
@@ -74,7 +94,7 @@ nav {
     padding: 5px;
     position:absolute; 
     right: 30px;
-    top: 5%;
+    top: 3%;
     transform: translateY(-5%);
     background-color: White;
     border-radius: 8px;
