@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
-import App from "./CardViewer";
+import CardViewer from "./CardViewer";
 import Login from "./Login";
 import reportWebVitals from "./reportWebVitals";
 
@@ -10,8 +10,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
     <Login />
+    <CardViewer/>
   </React.StrictMode>
 );
 
