@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Buttons from "./Buttons";
 import FlashCard from "./FlashCard";
+import UseCardStrings from "./FlashCardSet";
 
 interface FlashCardParentProps {}
 
 function FlashCardParent(props: FlashCardParentProps){
 
-    const studySet: [string,string][] = [
-        ["Hvilken gruppe er best i PU", "Gruppe 51 <3"], 
-        ["Statsministeren i Norge", "Jonas Gahr Støre"],
-        ["Hvor mange fylker i Norge", "15"]
-    ];
-    
+    const { cardsData, loading } = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn.."]]);
     const [card, setCard] = useState(0); 
     const [side, setSide] = useState(0); 
     const [text, setText] = useState(studySet[0][0]);
 
     useEffect(() => {
-        setText(studySet[card][0]);
-    }, [card]);
+      if (!loading) {
+        setStudySet(cardsData);
+      }
+    }, [loading, cardsData]);
+
+    useEffect(() => {
+        if (studySet[card]) {
+            setText(studySet[card][0]);
+        }
+    }, [card, studySet]);
 
     const handleBackClick = () => {
         if(card === 0){
