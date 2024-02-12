@@ -1,9 +1,13 @@
 import React from "react";
-
+import InlogPanel from "./components/InlogPanel";
 import "./Login.css";
 
 function Login() {
-  return <div></div>;
+  return (
+    <>
+      <InlogPanel />
+    </>
+  );
 }
 
 export default Login;
