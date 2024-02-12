@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Login />
-    <CardViewer/>
+    {/* For å vise CardViewer burde vi sjekke at Innlogginga har gått bra, for å deretter ha riktig CardViewer for riktig bruker */}
   </React.StrictMode>
 );
 
