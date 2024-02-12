@@ -1,9 +1,9 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import FlashCardParent from "./components/FlashCardParent";
-import "./App.css";
+import "./CardViewer.css";
 
-function App() {
+function CardViewer() {
   return (
     <div>
       <NavBar />
@@ -12,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default CardViewer;
