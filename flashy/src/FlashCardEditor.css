@@ -1,0 +1,69 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.flashcard {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 10px; /* Adjust margin between cards */
+}
+
+.header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black; /* Set the color to black or any other contrasting color */
+}
+
+.flashcard textarea {
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc; /* Add border for better visibility */
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black; /* Set the color to black or any other contrasting color */
+}
+
+.cardfront{
+    position: absolute;
+    top: 320px; /* Adjust as needed */
+    left: 32%; /* Position in the center horizontally */
+    font-size: 40px; /* Adjust font size as needed */
+    font-weight: bold;
+}
+
+.cardback {
+    position: absolute;
+    top: 320px;
+    left: 57%;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
