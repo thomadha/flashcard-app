@@ -1,4 +1,4 @@
-import "./CardViewer.css";
+import "./CardViewer";
 import HomePageParent from "./components/HomePageParent";
 
 function HomePage() {
