@@ -32,8 +32,6 @@ function FlashCardParent(props: FlashCardParentProps){
         else{
           setCard(card - 1); 
         }
-        //setCard((prevCard) => (prevCard === 0 ? studySet.length - 1 : prevCard - 1));
-        //chat foreslo dette, det er jo fancy med oneliners, men jeg hadde jo ikke kommet på det selv :)
     }
     
     const handleNextClick = () => {
@@ -43,7 +41,6 @@ function FlashCardParent(props: FlashCardParentProps){
         else{
           setCard(card + 1); 
         }
-        //setCard((prevCard) => (prevCard === studySet.length - 1 ? 0 : prevCard + 1));
     }
 
       
