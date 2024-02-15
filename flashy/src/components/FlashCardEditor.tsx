@@ -23,14 +23,27 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 const Page: React.FC = () => {
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
+    const [savedMessage, setSavedMessage] = useState<string | null>(null);
 
     // Define handleSaveChanges here, outside useEffect
     const handleSaveChanges = async () => {
-        const docRef = await addDoc(collection(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards"), {
-            flashcardFront: text1,
-            flashcardBack: text2
-        });
-        console.log("Document written with ID: ", docRef.id);
+        try{
+            const docRef = await addDoc(collection(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards"), {
+                flashcardFront: text1,
+                flashcardBack: text2
+            });
+            console.log("Dokument skrive med ID: ", docRef.id);
+            setSavedMessage("Endringene ble lagret."); // Set saved message
+            setTimeout(() => {
+                setSavedMessage(null); // Clear saved message after 3 seconds
+            }, 3000);
+            
+            setText1("");
+            setText2("");
+
+        } catch (error) {
+            console.error("Problemer ved lagring:", error);
+    }
     };
 
     useEffect(() => {
@@ -47,6 +60,7 @@ const Page: React.FC = () => {
                 <FlashCardEditor text={text2} handleTextChange={setText2} />
             </div>
             <button id="saveChanges" onClick={handleSaveChanges}>Lagre</button>
+            {savedMessage && <div className="saved-message">{savedMessage}</div>}
         </div>
     );
 };
