@@ -13,7 +13,7 @@
 }
 
 .flashcard {
-    background-color: #f0f0f0;
+    background-color: #EF8CAD;
     border-radius: 10px;
     padding: 20px;
     margin: 0 10px; /* Adjust margin between cards */
@@ -29,7 +29,7 @@
 .flashcard textarea {
     width: 300px;
     height: 200px;
-    border: 1px solid #ccc; /* Add border for better visibility */
+    border: 1px solid #EF8CAD; /* Add border for better visibility */
     font-size: 16px;
     padding: 10px;
     border-radius: 5px;
