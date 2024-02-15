@@ -30,58 +30,18 @@ function Grid() {
           setText(namesArray[0]);
       }
     }, [namesArray]);
-    // const currentArray: GridItemArray = {
-    //     //For loop som henter fra Firebase
-    // }
 
-    //lager alle divsa fra verdiene i arrayen 
-    const Itemdivs: JSX.Element[] = [];
-    for (const key in )
-
-    // return (
-    //     <>
-    //         <div className="GridBody"></div>
-    //         <div className="GridBody">
-    //             {Itemdivs}
-    //         </div>
-    //     </>
-    // )
   return (
     <>
       <div className="grid-container">
-        <div className="grid-item">
-          <button className="likeSet"> {text} </button>
-          <button className="commentSet"> K </button>
+            {namesArray.map((name, index) => (
+                <div key={index} className="grid-item">
+                    <div>{name}</div> 
+                    <button className="likeSet"> L </button>
+                    <button className="commentSet"> K </button>
+                </div>
+            ))}
         </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-        <div className="grid-item">
-          <button className="likeSet"> L </button>
-          <button className="commentSet"> K </button>
-        </div>
-      </div>
     </>
   );
 }
