@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../lib/firebase/firebase";
 import UseCardStrings, { useCardStrings } from "./FlashCardSet";
 
 interface FlashCardProps{
