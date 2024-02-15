@@ -1,21 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
-import CardViewer from "./CardViewer";
-import Login from "./Login";
+import CardViewer from "./pages/CardViewer";
+import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/cards" element={<CardViewer />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <Login />
-    {/* For å vise CardViewer burde vi sjekke at Innlogginga har gått bra, for å deretter ha riktig CardViewer for riktig bruker */}
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+root.render(<App />);

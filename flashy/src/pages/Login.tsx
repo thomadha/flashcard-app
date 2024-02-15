@@ -1,8 +1,7 @@
-import InlogPanel from "./components/InlogPanel";
-import "./Login.css";
+import InlogPanel from "../components/InlogPanel";
+import "../style/Style.css";
 
 function Login() {
-
   return (
     <>
       <InlogPanel />
