@@ -1,7 +1,7 @@
 import React from "react";
-import NavBar from "./components/NavBar";
-import FlashCardParent from "./components/FlashCardParent";
-import "./CardViewer.css";
+import NavBar from "../components/NavBar";
+import FlashCardParent from "../components/FlashCardParent";
+import '../style/Style.css';
 
 function CardViewer() {
   return (

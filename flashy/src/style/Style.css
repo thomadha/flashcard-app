@@ -8,6 +8,8 @@ nav {
     height: 15%;
 }
 
+/* CardViewerCSS */
+
 #flashCard {
     position: relative;
     margin: auto;
@@ -100,4 +102,50 @@ nav {
     border-radius: 8px;
     font-size: 35px;
     filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+/* InlogCSS */
+
+#BackPanel {
+    height: 100vh;
+    background-color: #A6526D;
+}
+
+#PinkPanel {
+    background-color: #EF8CAD;
+    width: 85vw;
+    height: 100%;
+    left: 0;
+}
+
+#LigthPinkPanel {
+    background-color: #F6C3D4;
+    width: 70vw;
+    height: 100%;
+    left: 0;
+}
+
+#GreenPanel {
+    background-color: #DEFEDD;
+    width: 55vw;
+    height: 100%;
+    left:0
+}
+
+#LogInLogo {
+    padding-top: 20vh;
+    text-align: center;
+    font-size: 60px;
+    font-family: 'Lucida Sans';
+}
+
+#InlogField{
+    text-align: center;
+}
+
+#submitButton {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
 }
