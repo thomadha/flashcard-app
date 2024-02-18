@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import CardViewer from "./pages/CardViewer";
 import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 
 export default function App() {
   return (
@@ -13,6 +13,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />}></Route>
         <Route path="/cards" element={<CardViewer />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
       </Routes>
     </BrowserRouter>
   );
