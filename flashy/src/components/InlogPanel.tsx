@@ -26,7 +26,7 @@ function InlogPanel() {
           password
         );
         console.log("Success. Signed in ", loginInfo.user.email);
-        navigateTo("/cards");
+        navigateTo("/home");
       } catch (e) {
         console.log("Prøver å registrere istedet");
         try {
@@ -36,7 +36,7 @@ function InlogPanel() {
             password
           );
           console.log("Success. Registered ", loginInfo.user.email);
-          navigateTo("/cards");
+          navigateTo("/home");
         } catch (e2) {
           console.error("Error: ", e2);
           if (e2 instanceof Error) {
