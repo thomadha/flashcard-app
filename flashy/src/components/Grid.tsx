@@ -1,49 +1,39 @@
-import * as React from "react";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSetNames from "./FetchSetNames";
 
 export interface Item {
-    //Kan starte med bare navn på settet også utvide etterhvert
-    SetName: String;
+    id: string; // Add id property
+    name: string; // Add name property
 }
 
 export interface GridItemArray {
-    items: {
-        item: Item;
-    };
+    items: Item[];
 }
 
 function Grid() {
 
-    const { flashcardSetNames, loading } = useSetNames();
-    const [namesArray, setNamesArray] = useState([ "Laster inn.."]);
-    const [text, setText] = useState(namesArray[0]);
+    const { flashcardSetData, loading } = useSetNames();
+    const [itemsArray, setItemsArray] = useState<Item[]>([]);
 
     useEffect(() => {
-      if (!loading) {
-        setNamesArray(flashcardSetNames);
-      }
-    }, [loading, flashcardSetNames]);
+        if (!loading) {
+            setItemsArray(flashcardSetData);
+        }
+    }, [loading, flashcardSetData]);
 
-    useEffect(() => {
-      if (namesArray[0]) {
-          setText(namesArray[0]);
-      }
-    }, [namesArray]);
-
-  return (
-    <>
-      <div className="grid-container">
-            {namesArray.map((name, index) => (
-                <div key={index} className="grid-item">
-                    <div>{name}</div> 
-                    <button className="likeSet"> L </button>
-                    <button className="commentSet"> K </button>
-                </div>
-            ))}
-        </div>
-    </>
-  );
+    return (
+        <>
+            <div className="grid-container">
+                {itemsArray.map((item, index) => (
+                    <div key={item.id} className="grid-item"> {/* Use 'item.id' as key */}
+                        <div>{item.name}</div>
+                        <button className="likeSet"> Like </button>
+                        <button className="commentSet"> Comment </button>
+                    </div>
+                ))}
+            </div>
+        </>
+    );
 }
 
 export default Grid;

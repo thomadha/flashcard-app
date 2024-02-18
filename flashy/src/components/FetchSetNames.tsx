@@ -1,24 +1,28 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
-import exp from 'constants';
 
 export const useSetNames = () => {
-    const [flashcardSetNames, setflashcardSetNamesData] = useState<any | null>(null);
+    const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string }[]>([]); // Array of objects with ID and name
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
       const fetchData = async () => {
-        const cardsCollectionRef = collection(db, 'flashcardSets');
-        const querySnapshot = await getDocs(cardsCollectionRef);
-        const data = querySnapshot.docs.map(doc => doc.data().name);
-        setflashcardSetNamesData(data);
-        setLoading(false);
+        try {
+          const cardsCollectionRef = collection(db, 'flashcardSets');
+          const querySnapshot = await getDocs(cardsCollectionRef);
+          const data = querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+          setFlashcardSetData(data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching flashcard set data:", error);
+          setLoading(false);
+        }
       };
       fetchData();
     }, []);
   
-    return { flashcardSetNames, loading };
+    return { flashcardSetData, loading };
 }
 
 export default useSetNames;
