@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../lib/firebase/firebase";
 
 export const useSetNames = () => {
     const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string }[]>([]); // Array of objects with ID and name
