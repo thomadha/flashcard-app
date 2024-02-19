@@ -42,10 +42,10 @@ function AdminPanel(){
     }
 
     return(
-        <>
+        <div id="divUser">
             {isAdmin && (
                 <form id="UsersWithAccess" >
-                <p>Skriv inn bruker du ønsker å gi adminrettigheter</p>
+                <p id="text">Skriv inn bruker du ønsker å gi/fjerne adminrettigheter</p>
                 <input
                     id="emailInput"
                     placeholder="E-post"
@@ -64,7 +64,7 @@ function AdminPanel(){
             {!isAdmin && (
                 <p id="text">Du har dessverre ikke adminrettigheter</p>
             )}
-        </>
+        </div>
     );
 
 }
