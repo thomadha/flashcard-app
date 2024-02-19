@@ -18,7 +18,7 @@ function Buttons({
         Neste
       </button>
       <button id="ShuffleCards" onClick={handleShuffleCards}>
-        Tilfeldig
+        Tilfeldig rekkefølge
       </button>
     </>
   );
