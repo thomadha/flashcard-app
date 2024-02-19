@@ -13,13 +13,12 @@ function InlogPanel() {
   const auth = getAuth(firebaseClient);
   const navigateTo = useNavigate();
 
-  async function signIn(email: string, password: string) {
-    console.log("Trykk ble registrert");
+  async function signInUser(event: React.SyntheticEvent) {
     if (password.length < 6) {
       alert("Passord må være minst 6 tegn");
     } else {
-      try {
-        console.log("Prøver å logge inn");
+      try{
+        event.preventDefault();
         const loginInfo = await signInWithEmailAndPassword(
           auth,
           email,
@@ -27,29 +26,30 @@ function InlogPanel() {
         );
         console.log("Success. Signed in ", loginInfo.user.email);
         navigateTo("/home");
-      } catch (e) {
-        console.log("Prøver å registrere istedet");
-        try {
-          const loginInfo = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          console.log("Success. Registered ", loginInfo.user.email);
-          navigateTo("/home");
-        } catch (e2) {
-          console.error("Error: ", e2);
-          if (e2 instanceof Error) {
-            alert("Feil passord, prøv på nytt");
-          }
-        }
+      } catch (e){
+        console.error("Error: ", e);
+        alert("Feil brukernavn eller passord");
       }
     }
   }
 
-  function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    signIn(email, password);
+  async function registerUser(event: React.SyntheticEvent) {
+    if (password.length < 6) {
+      alert("Passord må være minst 6 tegn");
+    }else{
+      try {
+        const loginInfo = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log("Success. Registered ", loginInfo.user.email);
+        navigateTo("/home");
+      } catch (e) {
+        console.error("Error: ", e);
+        alert("Det finnes allerede en bruker med denne mailen"); 
+      }
+    }
   }
 
   return (
@@ -59,7 +59,7 @@ function InlogPanel() {
           <div id="LigthPinkPanel">
             <div id="GreenPanel">
               <p id="LogInLogo">Flashy</p>
-              <form id="InlogField" onSubmit={onSubmit}>
+              <form id="InlogField">
                 <input
                   id="emailInput"
                   placeholder="E-post"
@@ -74,8 +74,11 @@ function InlogPanel() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                  <button id="submitButton" type="submit" value="Register">
-                    Logg Inn eller registrer
+                  <button id="LoggInnBtn" onClick={signInUser}>
+                    Logg Inn
+                  </button>
+                  <button id="RegisterBtn" onClick={registerUser}>
+                    Registrer
                   </button>
               </form>
             </div>
