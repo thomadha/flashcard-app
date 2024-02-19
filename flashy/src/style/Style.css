@@ -151,7 +151,93 @@ nav {
 }
 
 
-/*temp css styling*/
-.grid-item{
-    
+/* CSS for homepage */
+
+#HomePageNavButton {
+    padding: 1%;
+    transform: translateY(-5%);
+    background-color: #DEFEDD;
+    font-size: 30px;
+    border: transparent;
+}
+
+
+#HomePageNavButton:hover {
+    text-decoration: underline;
+}
+
+
+
+#CreateSetButton {
+    padding: 1px;
+    position: absolute;
+    right: 30px;
+    margin-top: 15px;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 30px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+#SearchSetButton{
+    position: absolute;
+    padding: 1px;
+    right: 250px;
+    margin-top: 15px;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 30px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+Nav>homenav {
+    background-color: #DEFEDD;
+}
+
+.Container {
+    display: flex;
+    max-width: 100%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px;
+    margin: 30px;
+}
+
+.grid-item {
+    position: relative;
+    background-color: #F6C3D4;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    height: 240px;
+}
+
+.likeSet {
+    padding: 5px;
+    position: absolute;
+    margin-top: 5px;
+    right: 10px;
+    bottom: 60px;
+    background-color: White;
+    border-radius: 8px;
+    font-size: 20px;
+    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+}
+
+.commentSet {
+    padding: 5px;
+    position: absolute;
+    margin-top: 5px;
+    right: 10px;
+    bottom: 10px;
+    background-color: White;
+    border-radius: 8px;
+    font-size: 20px;
+    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
 }
