@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import firebaseClient, { auth } from "../lib/firebase/firebase";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function InlogPanel() {
   const [email, setEmail] = useState("");
@@ -38,6 +38,7 @@ function InlogPanel() {
       alert("Passord må være minst 6 tegn");
     }else{
       try {
+        event.preventDefault();
         const loginInfo = await createUserWithEmailAndPassword(
           auth,
           email,
