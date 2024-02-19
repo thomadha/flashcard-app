@@ -19,48 +19,67 @@ function FlashCardParent(props: FlashCardParentProps){
       }
     }, [cardsData]);
 
-    useEffect(() => {
-        if (studySet[card]) {
-            setText(studySet[card][0]);
-        }
-    }, [card, studySet]);
-
-    const handleBackClick = () => {
-        if(card === 0){
-          setCard(studySet.length - 1); 
-        }
-        else{
-          setCard(card - 1); 
-        }
+  useEffect(() => {
+    if (studySet[card]) {
+      setText(studySet[card][0]);
     }
-    
-    const handleNextClick = () => {
-        if(card === (studySet.length - 1)){
-          setCard(0); 
-        }
-        else{
-          setCard(card + 1); 
-        }
+  }, [card, studySet]);
+
+  const handleBackClick = () => {
+    if (card === 0) {
+      setCard(studySet.length - 1);
+    } else {
+      setCard(card - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (card === studySet.length - 1) {
+      setCard(0);
+    } else {
+      setCard(card + 1);
+    }
+  };
+
+  const handleClickOnFlashCard = () => {
+    if (side === 0) {
+      setText(studySet[card][1]);
+      setSide(1);
+    } else {
+      setText(studySet[card][0]);
+      setSide(0);
+    }
+  };
+
+  const handleShuffleCards = () => {
+    const shuffledStudySet = [...studySet];
+    const currentCardText = studySet[card][0];
+
+    for (let i = shuffledStudySet.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledStudySet[i], shuffledStudySet[j]] = [
+        shuffledStudySet[j],
+        shuffledStudySet[i],
+      ];
     }
 
-      
-    const handleClickOnFlashCard = () => {
-        if(side === 0){
-          setText(studySet[card][1]);
-          setSide(1); 
-        }
-        else{
-          setText(studySet[card][0]);
-          setSide(0);
-        }
-    }
-
-    return(
-        <>
-            <Buttons handleBackClick={handleBackClick} handleNextClick={handleNextClick}/>
-            <FlashCard text={text} handleClickOnFlashCard={handleClickOnFlashCard}/> 
-        </>
+    const newCardIndex = shuffledStudySet.findIndex(
+      ([front]) => front === currentCardText
     );
-}
 
-export default FlashCardParent; 
+    setStudySet(shuffledStudySet);
+    setCard(newCardIndex !== -1 ? newCardIndex : 0);
+  };
+
+  return (
+    <>
+      <Buttons
+        handleBackClick={handleBackClick}
+        handleNextClick={handleNextClick}
+        handleShuffleCards={handleShuffleCards}
+      />
+      <FlashCard text={text} handleClickOnFlashCard={handleClickOnFlashCard} />
+    </>
+  );
+}
+export default FlashCardParent;
