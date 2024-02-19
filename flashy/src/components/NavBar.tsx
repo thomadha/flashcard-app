@@ -4,8 +4,12 @@ function Navbar() {
   return (
     <nav className="navbar-flashy">
       <p id="Title">Flashy!</p>
-      <button id="HomeButton">Hjem</button>
-      <button id="UserButton">Bruker</button>
+      <Link to="/home" >
+        <button id="HomeButton">Hjem</button>
+      </Link>
+      <Link to="/userpage">
+        <button id="UserButton">Bruker</button>
+      </Link>
     </nav>
   );
 }
