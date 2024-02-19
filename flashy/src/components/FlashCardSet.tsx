@@ -11,7 +11,7 @@ export const useCardStrings = (flashCardSetId: string) => {
       const fetchData = async () => {
         const cardsCollectionRef = collection(db, 'flashcardSets', flashCardSetId, 'cards');
         const querySnapshot = await getDocs(cardsCollectionRef);
-        const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack]);
+        const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack, doc.id]);
         setCardsData(data);
         setLoading(false);
       };
