@@ -79,6 +79,16 @@ nav {
     font-size: 35px;
 }
 
+#ShuffleCards {
+    position: absolute;
+    bottom: 5px;
+    left: 40vw;
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
 #HomeButton{
     /* Spurte chat om hvordan sentrere knappene på høyre side */
     padding: 5px;
