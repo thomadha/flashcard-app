@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
-import { doc, collection, addDoc, updateDoc, deleteDoc} from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import UseCardStrings from "./FlashCardSet";
+import UseCardStrings, { useCardStrings } from "./FlashCardSet";
 
 interface FlashCardProps{
     text: string;
@@ -26,9 +26,12 @@ const Page: React.FC = () => {
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
+    const [dummy, setDummy] = useState(0)
     
 
-    const { cardsData, loading } = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    //const [cardsData, setCardsData] = useState(UseCardStrings("uL5B3RmmHwv8fI57sdPy"));
+
+    const {cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
 
@@ -51,10 +54,16 @@ const Page: React.FC = () => {
     
     // Constant updating of setStudySet
     useEffect(() => { 
-        if (!loading) {
+        if (cardsData) {
           setStudySet(cardsData);
         }
-      }, [loading, cardsData]);
+      }, [cardsData]);
+
+    // Constant updating of setStudySet
+    useEffect(() => { 
+        fetchData();
+        
+      }, [dummy]);
 
     
     // Define handleSaveChanges here, outside useEffect
@@ -68,7 +77,7 @@ const Page: React.FC = () => {
                 await updateDoc(docRef, {
                     flashcardFront: text1,
                     flashcardBack: text2
-                });
+                }).then(() => setDummy(dummy + 1));
             
 
             } else {
@@ -76,6 +85,11 @@ const Page: React.FC = () => {
                     flashcardFront: text1,
                     flashcardBack: text2
                 });
+
+                if (docRef){
+                    setDummy(dummy + 1);
+                }
+                
                 console.log("Document written with ID: ", docRef.id);
             }
             setSavedMessage("Endringene ble lagret."); // Set saved message
@@ -108,7 +122,7 @@ const Page: React.FC = () => {
 
         const docRef = doc(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards", studySet[card][2]);
 
-        await deleteDoc(docRef);
+        await deleteDoc(docRef).then(() => setDummy(dummy + 1));
         setCard(-1);
         
     }
@@ -128,7 +142,7 @@ const Page: React.FC = () => {
                 <button style={{background: "yellow", color: "black"}} onClick={() => handleClickOnHeaderNewFlashcard()}> Nytt flashcard </button>
             </nav>
 
-            <div className="cardfront">Framside</div>
+            <div className="cardfront">Framside yay</div>
             <div className="cardback">Bakside</div>
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
