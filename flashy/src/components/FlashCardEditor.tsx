@@ -152,7 +152,7 @@ const Page: React.FC = () => {
                 <FlashCardEditor text={text2} handleTextChange={setText2} />
             </div>
             <button id="saveChanges" onClick={handleSaveChanges}>Lagre</button>
-            <button style={{background: "#B24C6D", color: "white"}} onClick={handleDeleteCard}>Slett</button>
+            <button style={{background: "#76B27C"}} onClick={handleDeleteCard}>Slett</button>
             
             {savedMessage && <div className="saved-message">{savedMessage}</div>}
 
