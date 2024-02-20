@@ -31,10 +31,10 @@ function Grid(){
       <>
           <div className="grid-container">
               {itemsArray.map((item, index) => (
-                  <div key={item.id} className="grid-item"> {/* Use 'item.id' as key */}
-                      <div onClick={gotoPage}>{item.name}</div>
-                      <button className="likeSet"> Like </button>
-                      <button className="commentSet"> Comment </button>
+                  <div key={item.id} className="grid-item" onClick={gotoPage}> {/* Use 'item.id' as key */}
+                      <div>{item.name}</div>
+                      {/* <button className="likeSet"> Like </button>
+                      <button className="commentSet"> Comment </button> */}
                   </div>
               ))}
           </div>
