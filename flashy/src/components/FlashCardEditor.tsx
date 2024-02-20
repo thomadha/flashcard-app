@@ -16,7 +16,7 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
             <textarea
                 value={text}
                 onChange={(e) => handleTextChange(e.target.value)}
-                placeholder={"Her kan du skrive noko: "}
+                placeholder={"Her kan du skrive noe: "}
             />
         </div>
     );
@@ -129,30 +129,33 @@ const Page: React.FC = () => {
     }
 
 
-
     return (
-        
-        <div className="page">
-            
-            <nav role="setNavbar">
-                {studySet.map((front, index) => (
-                    
-                    <button onClick={() => handleClickOnHeader(index)}> {front[0]} </button>
-                
-                ))}
-                <button style={{background: "yellow", color: "black"}} onClick={() => handleClickOnHeaderNewFlashcard()}> Nytt flashcard </button>
-            </nav>
 
-            <div className="cardfront">Framside yay</div>
+        <div className="page">
+    
+            <div>
+
+                <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
+
+                    {studySet.map((front, index) => (<button onClick={() => handleClickOnHeader(index)}> {front[0]} </button>))}
+
+                    <button style={{background: "#76B27C", color: "black"}} onClick={() => handleClickOnHeaderNewFlashcard()}> Nytt flashcard </button>
+                
+                </nav>
+
+            </div>
+
+            <div className="cardfront">Framside</div>
             <div className="cardback">Bakside</div>
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
                 <FlashCardEditor text={text2} handleTextChange={setText2} />
             </div>
             <button id="saveChanges" onClick={handleSaveChanges}>Lagre</button>
-            <button style={{background: "red"}} onClick={handleDeleteCard}>Slett</button>
+            <button style={{background: "#76B27C"}} onClick={handleDeleteCard}>Slett</button>
             
             {savedMessage && <div className="saved-message">{savedMessage}</div>}
+
         </div>
     );
 };
