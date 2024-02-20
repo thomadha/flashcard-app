@@ -7,7 +7,7 @@ interface FlashCardParentProps {}
 
 function FlashCardParent(props: FlashCardParentProps){
 
-    const { cardsData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    const { cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn.."]]);
     const [card, setCard] = useState(0); 
     const [side, setSide] = useState(0); 
