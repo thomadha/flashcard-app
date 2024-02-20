@@ -7,17 +7,17 @@ interface FlashCardParentProps {}
 
 function FlashCardParent(props: FlashCardParentProps){
 
-    const { cardsData, loading } = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    const { cardsData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn.."]]);
     const [card, setCard] = useState(0); 
     const [side, setSide] = useState(0); 
     const [text, setText] = useState(studySet[0][0]);
 
     useEffect(() => {
-      if (!loading) {
+      if (cardsData) {
         setStudySet(cardsData);
       }
-    }, [loading, cardsData]);
+    }, [cardsData]);
 
     useEffect(() => {
         if (studySet[card]) {

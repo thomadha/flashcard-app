@@ -4,21 +4,22 @@ import { db } from "./firebase";
 import exp from 'constants';
 
 export const useCardStrings = (flashCardSetId: string) => {
-    const [cardsData, setCardsData] = useState<any | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [cardsData, setCardsData] = useState<string[][] | null>(null);
   
+
+    const fetchData = async () => {
+      const cardsCollectionRef = collection(db, 'flashcardSets', flashCardSetId, 'cards');
+      const querySnapshot = await getDocs(cardsCollectionRef);
+      const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack, doc.id]);
+      setCardsData(data);
+    };
+
     useEffect(() => {
-      const fetchData = async () => {
-        const cardsCollectionRef = collection(db, 'flashcardSets', flashCardSetId, 'cards');
-        const querySnapshot = await getDocs(cardsCollectionRef);
-        const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack, doc.id]);
-        setCardsData(data);
-        setLoading(false);
-      };
+      
       fetchData();
     }, [flashCardSetId]);
   
-    return { cardsData, loading };
+    return {cardsData, fetchData};
 }
 
 export default useCardStrings;
