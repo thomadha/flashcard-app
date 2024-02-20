@@ -59,8 +59,7 @@ const Page: React.FC = () => {
         }
       }, [cardsData]);
 
-    // Updates cardsData with function from useCardStrings, when dummy value is changed
-    // Dummy value is changed when updating, adding or deleting card.
+    // Constant updating of setStudySet
     useEffect(() => { 
         fetchData();
         
