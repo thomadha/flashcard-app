@@ -33,8 +33,7 @@ const Page: React.FC = () => {
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
-
-    //const [cardsData, setCardsData] = useState(UseCardStrings("uL5B3RmmHwv8fI57sdPy"));
+    
 
     const {cardsData, fetchData} = UseCardStrings(id);
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
