@@ -4,9 +4,9 @@ function HomePageNav() {
 
     const navigateTo = useNavigate();
 
-    const goToEdit = () => {
-        navigateTo("/edit");
-      };
+    const gotoEdit = (id: string) => {
+        navigateTo("/edit", { state: { id } });
+    }
 
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
@@ -14,7 +14,7 @@ function HomePageNav() {
             <button id="HomePageNavButton">Utforsk</button>
             <button id="HomePageNavButton">Favoritter</button>
             <button id="SearchSetButton">Søk</button>
-            <button id="CreateSetButton" onClick={goToEdit}>Lag et nytt sett</button>
+            <button id="CreateSetButton" onClick={() => gotoEdit("new")}>Lag et nytt sett</button>
         </div>
     )
 }
