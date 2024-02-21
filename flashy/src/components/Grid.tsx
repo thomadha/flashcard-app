@@ -13,14 +13,14 @@ export interface GridItemArray {
 
 function Grid(){
     const navigateTo = useNavigate();
-    const { flashcardSetData, loading } = useSetNames();
+    const { flashcardSetData, fetchData} = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
 
     useEffect(() => {
-        if (!loading) {
+        if (flashcardSetData) {
             setItemsArray(flashcardSetData);
         }
-    }, [loading, flashcardSetData]);
+    }, [flashcardSetData]);
 
     const gotoPage = (id: string) => {
         navigateTo("/cards", { state: { id } });
