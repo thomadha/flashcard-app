@@ -6,7 +6,12 @@ import { useLocation } from "react-router-dom";
 
 interface FlashCardParentProps {}
 
-function FlashCardParent(props: FlashCardParentProps){
+function FlashCardParent(props: FlashCardParentProps) {
+  const { cardsData, loading } = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+  const [studySet, setStudySet] = useState([["Laster inn..", "Laster inn.."]]);
+  const [card, setCard] = useState(0);
+  const [side, setSide] = useState(0);
+  const [text, setText] = useState(studySet[0][0]);
 
     const location = useLocation();
     const id = location.state.id;
