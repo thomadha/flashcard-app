@@ -3,11 +3,9 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import firebaseClient from "../lib/firebase/firebase";
+import firebaseClient, { auth } from "../lib/firebase/firebase";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
-import { db } from "../lib/firebase/firebase";
 
 function InlogPanel() {
   const [email, setEmail] = useState("");

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
-import { doc, collection, addDoc, updateDoc, deleteDoc, and } from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
-import { AddNewFlashcardset } from "./FlashCardSet";
+import UseCardStrings, { useCardStrings } from "./FlashCardSet";
 
 interface FlashCardProps{
     text: string;
@@ -27,16 +27,12 @@ const Page: React.FC = () => {
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
+    
+
     //const [cardsData, setCardsData] = useState(UseCardStrings("uL5B3RmmHwv8fI57sdPy"));
 
-    const { cardsData, fetchData } = AddNewFlashcardset();
-    const [currentFlashcardId, setCurrentFlashcardId] = useState<string | undefined>("");
-    const [studySet, setStudySet] = useState<[string, string, string, string][]>(
-        cardsData[4] !== undefined 
-        ? [["Laster inn..", "Laster inn..", "Laster inn...", cardsData[0][4]]]
-        : [["Laster inn..", "Laster inn..", "Laster inn...", ""]]
-    );
-
+    const {cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
@@ -47,11 +43,9 @@ const Page: React.FC = () => {
         if (studySet[card]) {
             setText1(studySet[card][0]);
             setText2(studySet[card][1]);
-            setCurrentFlashcardId(studySet[card][3]);
         } else {
             setText1(""); // or set it to an empty string or any other default value
             setText2(""); // or set it to an empty string or any other default value
-            setCurrentFlashcardId("");
         }
     }, [card]);
 
@@ -60,41 +54,38 @@ const Page: React.FC = () => {
     
     // Constant updating of setStudySet
     useEffect(() => { 
-        if (cardsData && cardsData.length > 0 && studySet.length === 1) {
-            const transformedData: [string, string, string, string][] = cardsData.map(data => {
-                // Assuming each inner array in cardsData has four elements
-                return [data[0], data[1], data[2], data[3]];
-            });
-            setStudySet(transformedData);
+        if (cardsData) {
+          setStudySet(cardsData);
         }
-    }, []);
-
+      }, [cardsData]);
 
     // Updates cardsData with function from useCardStrings, when dummy value is changed
     // Dummy value is changed when updating, adding or deleting card.
     useEffect(() => { 
         fetchData();
+        
       }, [dummy]);
 
     
     // Define handleSaveChanges here, outside useEffect
     const handleSaveChanges = async () => {
-        try {
-            const data = {
-                flashcardFront: text1,
-                flashcardBack: text2
-            };
+        try{
             if (studySet[card]) {
                 console.log("Document updated with ID: ", studySet[card]);
                 console.log(text2)
-                const docRef = doc(db, "flashcardSets", "cards", studySet[card][2] );
+                const docRef = doc(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards", studySet[card][2]);
 
-
-                await updateDoc(docRef, data).then(() => setDummy(dummy + 1));
+                await updateDoc(docRef, {
+                    flashcardFront: text1,
+                    flashcardBack: text2
+                }).then(() => setDummy(dummy + 1));
             
 
             } else {
-                const docRef = await addDoc(collection(db, "flashcardSets"), data);
+                const docRef = await addDoc(collection(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards"), {
+                    flashcardFront: text1,
+                    flashcardBack: text2
+                });
 
                 if (docRef){
                     setDummy(dummy + 1);
@@ -127,19 +118,14 @@ const Page: React.FC = () => {
     }
 
     // Deleting card
-    // TODO: Needs a validation that the card is in the set
     const handleDeleteCard = async () => {
-        try {
-            if (currentFlashcardId !== undefined) {
-                console.log(studySet[card][2])
-                const docRef = doc(db, "flashcardSets", currentFlashcardId, "cards", studySet[card][2]);
-                await deleteDoc(docRef).then(() => setDummy(dummy + 1));
-                setCard(-1);
-            }
-        }
-        catch (e) {
-            return;
-        }   
+        console.log(studySet[card][2])
+
+        const docRef = doc(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards", studySet[card][2]);
+
+        await deleteDoc(docRef).then(() => setDummy(dummy + 1));
+        setCard(-1);
+        
     }
 
 
