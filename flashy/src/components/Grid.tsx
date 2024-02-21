@@ -82,7 +82,8 @@ function Grid(){
           <div className="grid-container">
               {itemsArray.map((item, index) => (
                   <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
-                      <div onClick={gotoPage}>{item.name}</div>
+                      <div>{item.name}</div>
+                      <button onClick={gotoEdit(item.id)}>Rediger</button>
                       {isAdmin && (
                         <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
                       )}
