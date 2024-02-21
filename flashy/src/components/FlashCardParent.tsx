@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Buttons from "./Buttons";
 import FlashCard from "./FlashCard";
-import UseCardStrings from "./FlashCardSet";
+import UseCardStrings, { FetchFlashCardset } from "./FlashCardSet";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardParentProps {}
@@ -11,7 +11,7 @@ function FlashCardParent(props: FlashCardParentProps){
     const location = useLocation();
     const id = location.state.id;
     // const { cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
-    const { cardsData, fetchData} = UseCardStrings(id);
+    const { cardsData, fetchData} = FetchFlashCardset(id);
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn.."]]);
     const [card, setCard] = useState(0); 
     const [side, setSide] = useState(0); 
