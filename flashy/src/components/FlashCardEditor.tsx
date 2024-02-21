@@ -136,12 +136,17 @@ const Page: React.FC = () => {
 
     // Deleting card
     const handleDeleteCard = async () => {
-        console.log(studySet[card][2])
+        try {
+            if (id !== undefined) {
+                console.log(studySet[card][2])
+                const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
+                await deleteDoc(docRef).then(() => setDummy(dummy + 1));
+                setCard(-1);
+            }
+        }
+        catch (e) {
+            return;
 
-        const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
-
-        await deleteDoc(docRef).then(() => setDummy(dummy + 1));
-        setCard(-1);
         
     }
 
