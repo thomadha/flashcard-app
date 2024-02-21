@@ -28,7 +28,9 @@ function Grid(){
 
     const gotoEdit = (id: string) => (event: React.MouseEvent) => {
         event.stopPropagation();
-        navigateTo("/edit", { state: { id } });
+        console.log("Editing ", id);
+        const editArray = [id, "", false];
+        navigateTo("/edit", { state: { editArray } });
     }
   
     return (
