@@ -11,8 +11,12 @@ function Navbar() {
     return (
     <nav role="main" className="navbar-flashy">
       <p id="Title">Flashy!</p>
-      <button id="HomeButton" onClick={goToHome}>Hjem</button>
-      <button id="UserButton">Bruker</button>
+      <Link to="/home" >
+        <button id="HomeButton">Hjem</button>
+      </Link>
+      <Link to="/userpage">
+        <button id="UserButton">Bruker</button>
+      </Link>
     </nav>
   )
 }

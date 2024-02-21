@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useSetNames from "./FetchSetNames";
 import { useNavigate } from "react-router-dom";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../lib/firebase/firebase";
+import { doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase/firebase';
+import { getAuth } from 'firebase/auth';
+
 
 export interface Item {
     id: string; // Add id property
@@ -18,12 +20,38 @@ function Grid(){
     const { flashcardSetData, fetchData} = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
 
+    const [isAdmin, setIsAdmin] = useState(false);
+    const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
+
     useEffect(() => {
         if (flashcardSetData) {
             setItemsArray(flashcardSetData);
         }
     }, [flashcardSetData]);
 
+    useEffect(() => {
+        const checkAdminStatus = async () => {
+            const isAdminResult= await CheckIfAdmin();
+            if(isAdminResult){
+                setIsAdmin(true); 
+            }
+        };
+        checkAdminStatus();
+    }, []);
+
+    async function CheckIfAdmin(){
+        
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if(user != null && user.email != null){
+            const mail = user.email;
+            const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
+            const AdminArrayDoc = await getDoc(arrayRef); 
+            return AdminArrayDoc.get("AdminArray").includes(mail);
+        } else{
+            return false; 
+        }
+    }
     const gotoPage = (id: string) => {
         navigateTo("/cards", { state: { id } });
     }
@@ -49,19 +77,20 @@ function Grid(){
         }
     }
   
-    return (
-        <>
-            <div className="grid-container">
-                {itemsArray.map((item, index) => (
-                    <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
-                        <div>{item.name}</div>
-                        <button onClick={gotoEdit(item.id)}>Rediger</button>
+  return (
+      <>
+          <div className="grid-container">
+              {itemsArray.map((item, index) => (
+                  <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
+                      <div onClick={gotoPage}>{item.name}</div>
+                      {isAdmin && (
                         <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
-                    </div>
-                ))}
-            </div>
-        </>
-    );
+                      )}
+                  </div>
+              ))}
+          </div>
+      </>
+  );
 }
 
 export default Grid;

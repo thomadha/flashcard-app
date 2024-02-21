@@ -46,13 +46,11 @@ body {
 
 #flashCardText {
     text-align: center;
-    /* font-family: 'Lucida Sans'; */
     font-size: 30px;
 }
 
 #Title {
     padding-top: 10px;
-    /* font-family: 'papyrus'; */
     font-size: 65px;
     margin-left: 30px;
 }
@@ -153,7 +151,13 @@ body {
     text-align: center;
 }
 
-#submitButton {
+#LoggInnBtn {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+#RegisterBtn {
     background-color: white;
     border-radius: 8px;
     filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
@@ -250,4 +254,18 @@ Nav>homenav {
     border-radius: 8px;
     font-size: 20px;
     filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+}
+
+/* AdminPanel CSS */
+
+#addAdminBtn, #removeAdminBtn {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+
+#divUser{
+    margin-left: 30px;
+    font-size: 20px;
 }
