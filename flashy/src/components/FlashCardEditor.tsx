@@ -27,7 +27,8 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 const Page: React.FC = () => {
 
     const location = useLocation();
-    var id = location.state.id;
+    const [id, setId] = useState("AEM8Vg71YOYv1JwWOttA"); // Placeholder ID
+    const [locationId, setName, isNew] = location.state.editArray;
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
@@ -42,18 +43,22 @@ const Page: React.FC = () => {
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
     
     useEffect(() => {
-        console.log("Will try generating new set");
-        if (id === "new") {
-            const createDoc = async () => {
-                const docRef = await addDoc(collection(db, "flashcardSets"), {
-                    name: "Nytt sett"
-                });
-                console.log("Document written with ID: ", docRef.id);
-                id = docRef.id;
-            };
-            createDoc();
-        }
-    }, []);
+            if (isNew) {
+                console.log("Will try generating new set with name: ", setName);
+                const createDoc = async () => {
+                    const docRef = await addDoc(collection(db, "flashcardSets"), {
+                        name: setName
+                    });
+                    console.log("Document written with ID: ", docRef.id);
+                    console.log("Document written with set name: ", setName);
+                    setId(docRef.id);
+                };
+                createDoc();
+            } 
+            else {
+                setId(locationId);
+            }
+        }, []);
 
     // Check if card is selected for editing, or making new card
     useEffect(() => { 
