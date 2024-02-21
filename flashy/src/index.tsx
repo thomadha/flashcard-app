@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
 import CardViewer from "./pages/CardViewer";
+import AddCards from "./pages/AddCards";
 import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />}></Route>
         <Route path="/cards" element={<CardViewer />}></Route>
+        <Route path="/edit" element={<AddCards />}></Route>
         <Route path="/home" element={<HomePage />}></Route>
         <Route path="/userpage" element={<UserPage />}></Route>
       </Routes>

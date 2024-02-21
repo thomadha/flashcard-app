@@ -1,9 +1,14 @@
 interface ButtonsProps {
   handleBackClick: () => void;
   handleNextClick: () => void;
+  handleShuffleCards: () => void;
 }
 
-function Buttons({ handleBackClick, handleNextClick }: ButtonsProps) {
+function Buttons({
+  handleBackClick,
+  handleNextClick,
+  handleShuffleCards,
+}: ButtonsProps) {
   return (
     <>
       <button id="BackButton" onClick={handleBackClick}>
@@ -11,6 +16,9 @@ function Buttons({ handleBackClick, handleNextClick }: ButtonsProps) {
       </button>
       <button id="NextButton" onClick={handleNextClick}>
         Neste
+      </button>
+      <button id="ShuffleCards" onClick={handleShuffleCards}>
+        Tilfeldig rekkefølge
       </button>
     </>
   );
