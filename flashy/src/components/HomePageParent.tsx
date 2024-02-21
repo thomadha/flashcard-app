@@ -3,17 +3,15 @@ import Navbar from "./NavBar";
 import Grid from "./Grid";
 
 function HomePageParent() {
-    return (
-        <>
-            <div>
-                <Navbar />
-                <HomePageNav />
-                <Grid />
-            </div>
-            
-        </>
-        )
+  return (
+    <>
+      <div>
+        <Navbar />
+        <HomePageNav />
+        <Grid />
+      </div>
+    </>
+  );
 }
 
-
-export default HomePageParent
+export default HomePageParent;

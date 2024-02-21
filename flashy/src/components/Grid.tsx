@@ -11,7 +11,6 @@ export interface GridItemArray {
     items: Item[];
 }
 
-
 function Grid(){
     const navigateTo = useNavigate();
     const { flashcardSetData, loading } = useSetNames();
@@ -23,23 +22,21 @@ function Grid(){
         }
     }, [loading, flashcardSetData]);
 
-  const gotoPage = () => {
-    navigateTo("/cards")
-  }
+    const gotoPage = (id: string) => {
+        navigateTo("/cards", { state: { id } });
+    }
   
-  return (
-      <>
-          <div className="grid-container">
-              {itemsArray.map((item, index) => (
-                  <div key={item.id} className="grid-item"> {/* Use 'item.id' as key */}
-                      <div onClick={gotoPage}>{item.name}</div>
-                      <button className="likeSet"> Like </button>
-                      <button className="commentSet"> Comment </button>
-                  </div>
-              ))}
-          </div>
-      </>
-  );
+    return (
+        <>
+            <div className="grid-container">
+                {itemsArray.map((item, index) => (
+                    <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
+                        <div>{item.name}</div>
+                    </div>
+                ))}
+            </div>
+        </>
+    );
 }
 
 export default Grid;
