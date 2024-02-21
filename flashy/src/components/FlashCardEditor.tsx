@@ -3,8 +3,10 @@ import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 import UseCardStrings, { useCardStrings } from "./FlashCardSet";
+import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
+    
     text: string;
     handleTextChange: (newText:string) => void;
 }
@@ -24,6 +26,9 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 
 const Page: React.FC = () => {
 
+    const location = useLocation();
+    const id = location.state.id;
+
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
@@ -31,7 +36,7 @@ const Page: React.FC = () => {
 
     //const [cardsData, setCardsData] = useState(UseCardStrings("uL5B3RmmHwv8fI57sdPy"));
 
-    const {cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
+    const {cardsData, fetchData} = UseCardStrings(id);
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
 
@@ -73,7 +78,7 @@ const Page: React.FC = () => {
             if (studySet[card]) {
                 console.log("Document updated with ID: ", studySet[card]);
                 console.log(text2)
-                const docRef = doc(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards", studySet[card][2]);
+                const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
 
                 await updateDoc(docRef, {
                     flashcardFront: text1,
@@ -82,7 +87,7 @@ const Page: React.FC = () => {
             
 
             } else {
-                const docRef = await addDoc(collection(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards"), {
+                const docRef = await addDoc(collection(db, "flashcardSets", id, "cards"), {
                     flashcardFront: text1,
                     flashcardBack: text2
                 });
@@ -121,7 +126,7 @@ const Page: React.FC = () => {
     const handleDeleteCard = async () => {
         console.log(studySet[card][2])
 
-        const docRef = doc(db, "flashcardSets", "uL5B3RmmHwv8fI57sdPy", "cards", studySet[card][2]);
+        const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
 
         await deleteDoc(docRef).then(() => setDummy(dummy + 1));
         setCard(-1);

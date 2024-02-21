@@ -25,6 +25,11 @@ function Grid(){
     const gotoPage = (id: string) => {
         navigateTo("/cards", { state: { id } });
     }
+
+    const gotoEdit = (id: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        navigateTo("/edit", { state: { id } });
+    }
   
     return (
         <>
@@ -32,6 +37,7 @@ function Grid(){
                 {itemsArray.map((item, index) => (
                     <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
                         <div>{item.name}</div>
+                        <button onClick={gotoEdit(item.id)}>Rediger</button>
                     </div>
                 ))}
             </div>
