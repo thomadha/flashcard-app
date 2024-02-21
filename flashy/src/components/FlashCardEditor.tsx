@@ -27,12 +27,11 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 const Page: React.FC = () => {
 
     const location = useLocation();
-    const id = location.state.id;
+    var id = location.state.id;
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
-    
 
     //const [cardsData, setCardsData] = useState(UseCardStrings("uL5B3RmmHwv8fI57sdPy"));
 
@@ -41,7 +40,20 @@ const Page: React.FC = () => {
     const [card, setCard] = useState(-1); 
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
-
+    
+    useEffect(() => {
+        console.log("Will try generating new set");
+        if (id === "new") {
+            const createDoc = async () => {
+                const docRef = await addDoc(collection(db, "flashcardSets"), {
+                    name: "Nytt sett"
+                });
+                console.log("Document written with ID: ", docRef.id);
+                id = docRef.id;
+            };
+            createDoc();
+        }
+    }, []);
 
     // Check if card is selected for editing, or making new card
     useEffect(() => { 
