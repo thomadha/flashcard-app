@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 import { getAuth } from "firebase/auth";
-import { Link } from "react-router-dom";
 
 function AdminPanel(){
     const [email, setEmail] = useState("");
@@ -10,16 +9,6 @@ function AdminPanel(){
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
     const [AdminArray, setAdminArray] = useState<string[]>([]);
     
-
-    useEffect(() => {
-        const checkAdminStatus = async () => {
-            const isAdminResult= await CheckIfAdmin();
-            if(isAdminResult){
-                setIsAdmin(true); 
-            }
-        };
-        checkAdminStatus();
-    }, []);
 
     async function CheckIfAdmin(){
         
@@ -35,6 +24,19 @@ function AdminPanel(){
             return false; 
         }
     }
+
+    
+    useEffect(() => {
+        const checkAdminStatus = async () => {
+            const isAdminResult= await CheckIfAdmin();
+            if(isAdminResult){
+                setIsAdmin(true); 
+            }
+        };
+        checkAdminStatus();
+    }, []);
+
+
 
     async function addUser(event: React.SyntheticEvent) {
         event.preventDefault();
