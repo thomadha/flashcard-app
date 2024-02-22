@@ -14,10 +14,7 @@ export const useCardStrings = (flashCardSetId: string) => {
       setCardsData(data);
     };
 
-    useEffect(() => {
-      
-      fetchData();
-    }, [flashCardSetId]);
+    fetchData();
   
     return {cardsData, fetchData};
 }

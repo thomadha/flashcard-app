@@ -27,7 +27,7 @@ function Grid(){
         if (flashcardSetData) {
             setItemsArray(flashcardSetData);
         }
-    }, [flashcardSetData]);
+    }, []);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -43,14 +43,14 @@ function Grid(){
         
         const auth = getAuth();
         const user = auth.currentUser;
-        if(user != null && user.email != null){
-            const mail = user.email;
-            const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
-            const AdminArrayDoc = await getDoc(arrayRef); 
-            return AdminArrayDoc.get("AdminArray").includes(mail);
-        } else{
-            return false; 
-        }
+            if (user != null && user.email != null) {
+                const mail = user.email;
+                const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
+                const AdminArrayDoc = await getDoc(arrayRef);
+                return AdminArrayDoc.get("AdminArray").includes(mail);
+            } else {
+                return false;
+            }
     }
     const gotoPage = (id: string) => {
         navigateTo("/cards", { state: { id } });

@@ -3,13 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCbY5vHuH23apAuWR9Qf9MR6JQSmRvtLKI",
-    authDomain: "tdt4140-2024-dev.firebaseapp.com",
-    projectId: "tdt4140-2024-dev",
-    storageBucket: "tdt4140-2024-dev.appspot.com",
-    messagingSenderId: "218367360984",
-    appId: "1:218367360984:web:17f6ca0e4b44b1b54dbcad",
-    measurementId: "G-DW83FFH8V0"
+    apiKey: "AIzaSyCWilfenTq7cy67mr1y6Six9dR1KlHGi7M",
+    authDomain: "tdt4140-2024.firebaseapp.com",
+    projectId: "tdt4140-2024",
+    storageBucket: "tdt4140-2024.appspot.com",
+    messagingSenderId: "55189380953",
+    appId: "1:55189380953:web:768d6c6b3827dd123eb648",
+    measurementId: "G-MFK951QCKC"
 };  
 
 export const firebaseClient = initializeApp(firebaseConfig);
