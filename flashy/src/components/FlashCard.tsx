@@ -9,7 +9,7 @@ function FlashCard({ text, handleClickOnFlashCard }: FlashCardProps) {
       <div id="flashCard" onClick={handleClickOnFlashCard}>
         <p id="flashCardText">{text}</p>
         <button id="DifficultCard">Vanskelig</button>
-        <button id="EditFlashCard">Rediger</button>
+        {/* <button id="EditFlashCard">Rediger</button> */}
       </div>
     </>
   );
