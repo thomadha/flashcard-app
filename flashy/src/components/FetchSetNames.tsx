@@ -10,10 +10,7 @@ export const useSetNames = () => {
         const cardsCollectionRef = collection(db, 'flashcardSets');
         const querySnapshot = await getDocs(cardsCollectionRef);
         const data = querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
-        setFlashcardSetData(data);
-        console.log(data);
-        console.log("");
-        
+        setFlashcardSetData(data);        
       } catch (error) {
         console.error("Error fetching flashcard set data:", error);
       }

@@ -3,11 +3,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 import exp from 'constants';
 
-export const useCardStrings = (flashCardSetId: string) => {
+export const useCardStrings = () => {
     const [cardsData, setCardsData] = useState<string[][] | null>(null);
   
 
-    const fetchData = async () => {
+  const fetchData = async (flashCardSetId: string) => {
       const cardsCollectionRef = collection(db, 'flashcardSets', flashCardSetId, 'cards');
       const querySnapshot = await getDocs(cardsCollectionRef);
       const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack, doc.id]);

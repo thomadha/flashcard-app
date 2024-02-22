@@ -12,13 +12,16 @@ function FlashCardParent(props: FlashCardParentProps) {
     const id = location.state.id;
   // const { cardsData, fetchData} = UseCardStrings("uL5B3RmmHwv8fI57sdPy");
   //Cardsdata har [0] framsiden, [1] baksiden, [2] IDen til card collection
-    const { cardsData, fetchData } = UseCardStrings(id);
+    const { cardsData, fetchData } = UseCardStrings();
     //Framside og bakside av Flashcards
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn.."]]);
     const [card, setCard] = useState(0); 
     const [side, setSide] = useState(0); 
     const [text, setText] = useState(studySet[0][0]);
-
+    useEffect(() => {
+      fetchData(id);
+    }, []);
+  
     useEffect(() => {
       if (cardsData) {
         const extractedData = cardsData.map(card => [card[0], card[1]]);

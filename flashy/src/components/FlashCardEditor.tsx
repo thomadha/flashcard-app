@@ -35,29 +35,34 @@ const Page: React.FC = () => {
     const [dummy, setDummy] = useState(0)
     
 
-    const {cardsData, fetchData} = UseCardStrings(id);
+    const {cardsData, fetchData} = UseCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
     
     useEffect(() => {
-            if (isNew) {
-                console.log("Will try generating new set with name: ", setName);
-                const createDoc = async () => {
-                    const docRef = await addDoc(collection(db, "flashcardSets"), {
-                        name: setName
-                    });
-                    console.log("Document written with ID: ", docRef.id);
-                    console.log("Document written with set name: ", setName);
-                    setId(docRef.id);
-                };
-                createDoc();
-            } 
-            else {
+        if (isNew) {
+            console.log("Will try generating new set with name: ", setName);
+            const createDoc = async () => {
+                const docRef = await addDoc(collection(db, "flashcardSets"), {
+                    name: setName
+                });
+                console.log("Document written with ID: ", docRef.id);
+                console.log("Document written with set name: ", setName);
+                setId(docRef.id);
+            };
+            createDoc();
+        }
+        else {
+            console.log("Will try setting id: ", locationId);
+            const setIdAsync = async () => {
                 setId(locationId);
+                fetchData(id);
             }
-        }, []);
+            setIdAsync();
+        }
+    }, [id]);
 
     // Check if card is selected for editing, or making new card
     useEffect(() => { 
@@ -83,7 +88,7 @@ const Page: React.FC = () => {
     // Updates cardsData with function from useCardStrings, when dummy value is changed
     // Dummy value is changed when updating, adding or deleting card.
     useEffect(() => { 
-        fetchData();
+        fetchData(id);
         
       }, [dummy]);
 

@@ -17,9 +17,7 @@ export interface GridItemArray {
 
 function Grid(){
     const navigateTo = useNavigate();
-    const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter
-    console.log(fetchData);
-    
+    const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
@@ -73,6 +71,7 @@ function Grid(){
                 console.log("Deleting ", id);
                 const docRef = doc(db, "flashcardSets", id);
                 await deleteDoc(docRef);
+                fetchData();
             }
         }
         catch (e) {
