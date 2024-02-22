@@ -13,9 +13,6 @@ export const useCardStrings = (flashCardSetId: string) => {
       const data = querySnapshot.docs.map(doc => [doc.data().flashcardFront, doc.data().flashcardBack, doc.id]);
       setCardsData(data);
     };
-
-    fetchData();
-  
     return {cardsData, fetchData};
 }
 

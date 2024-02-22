@@ -17,17 +17,20 @@ export interface GridItemArray {
 
 function Grid(){
     const navigateTo = useNavigate();
-    const { flashcardSetData, fetchData} = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter
+    const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter
+    console.log(fetchData);
+    
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
-
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
-
+    useEffect(() => {
+        fetchData()
+    }, []);
     useEffect(() => {
         if (flashcardSetData) {
             setItemsArray(flashcardSetData);
         }
-    }, []);
+    }, [flashcardSetData]);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
