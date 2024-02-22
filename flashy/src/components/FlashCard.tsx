@@ -11,11 +11,11 @@ function FlashCard({
   handleClickOnFlashCard,
   handleDiffficultState,
 }: FlashCardProps) {
-  const [isDuplicatedVisible, setIsDuplicatedVisible] = useState(false);
+/*   const [isDuplicatedVisible, setIsDuplicatedVisible] = useState(false); */
   const handleDifficultClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     handleDiffficultState();
-    setIsDuplicatedVisible(!isDuplicatedVisible);
+/*     setIsDuplicatedVisible(!isDuplicatedVisible); */
   };
 
   return (
@@ -26,7 +26,7 @@ function FlashCard({
           Vanskelig
         </button>
         <button id="EditFlashCard">Rediger</button>
-        {isDuplicatedVisible && <p id="DuplicatedCard">Prøv deg på denne igjen!</p>}
+{/*         {isDuplicatedVisible && <p id="DuplicatedCard">Prøv deg på denne igjen!</p>} */}
       </div>
     </>
   );

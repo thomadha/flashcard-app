@@ -21,17 +21,11 @@ function FlashCardParent(props: FlashCardParentProps) {
   const [card, setCard] = useState(0);
   const [side, setSide] = useState(0);
   const [text, setText] = useState(studySet[0][0]);
-  const [isDuplicatedVisible, setIsDuplicatedVisible] = useState(false);
+  /*   const [isDuplicatedVisible, setIsDuplicatedVisible] = useState(false); */
 
   useEffect(() => {
     fetchData(id);
   }, []);
-
-/*   useEffect(() => {
-    if (studySet[card][3] === true) {
-      setIsDuplicatedVisible(Boolean(studySet[card][3]));
-    }
-  }, [card]); */
 
   useEffect(() => {
     if (cardsData) {
@@ -133,7 +127,10 @@ function FlashCardParent(props: FlashCardParentProps) {
               updatedStudySet[card][2] + "-duplicate",
               updatedStudySet[card][3],
             ]);
-            console.log("Card duplicated");
+            /*             console.log("Card duplicated");
+            if (studySet[card][3] === true) {
+              setIsDuplicatedVisible(true);
+            } */
           } else {
             // If difficultState is set to false, remove the duplicated card
             const duplicateIndex = updatedStudySet.findIndex(
