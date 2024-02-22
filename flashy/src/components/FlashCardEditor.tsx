@@ -56,13 +56,9 @@ const Page: React.FC = () => {
         }
         else {
             console.log("Will try setting id: ", locationId);
-            const setIdAsync = async () => {
-                setId(locationId);
-                fetchData(id);
-            }
-            setIdAsync();
+            setId(locationId);
         }
-    }, [id]);
+    }, []);
 
     // Check if card is selected for editing, or making new card
     useEffect(() => { 
@@ -90,7 +86,7 @@ const Page: React.FC = () => {
     useEffect(() => { 
         fetchData(id);
         
-      }, [dummy]);
+      }, [dummy, id]);
 
     
     // Define handleSaveChanges here, outside useEffect
