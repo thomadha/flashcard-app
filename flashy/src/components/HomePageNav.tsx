@@ -5,7 +5,7 @@ function HomePageNav() {
 
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
-    const [setName, setSetName] = useState("");
+    const [setName, setSetName] = useState("Skriv inn navn...");
 
     const gotoEdit = (setName: string, newSet: Boolean) => {
         const editArray = ["", setName, newSet];
@@ -35,7 +35,7 @@ function HomePageNav() {
             {showModal && (
                 <div>
                     <input type="text" value={setName} onChange={handleSetName} />
-                    <button onClick={handleConfirmSetName}>Confirm</button>
+                    <button onClick={handleConfirmSetName}>Bekreft</button>
                 </div>
             )}
         </div>
