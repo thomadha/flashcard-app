@@ -24,6 +24,13 @@ body {
     align-items: center;
 }
 
+#DuplicatedCard {
+    font-size: 20px;
+    position: absolute;
+    align-items: center;
+    bottom: 10px;
+}
+
 #DifficultCard {
     position: absolute;
     right: 20px;
