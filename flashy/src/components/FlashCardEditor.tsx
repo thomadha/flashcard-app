@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { db } from "../lib/firebase/firebase";
+import { db, auth } from "../lib/firebase/firebase";
 import UseCardStrings, { useCardStrings } from "./FlashCardSet";
 import { useLocation } from "react-router-dom";
 
@@ -41,12 +41,15 @@ const Page: React.FC = () => {
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
     
+    const user = auth.currentUser;
+
     useEffect(() => {
         if (isNew) {
             console.log("Will try generating new set with name: ", setName);
             const createDoc = async () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
-                    name: setName
+                    name: setName,
+                    creatorId: user?.uid
                 });
                 console.log("Document written with ID: ", docRef.id);
                 console.log("Document written with set name: ", setName);
