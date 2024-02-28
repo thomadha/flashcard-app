@@ -1,0 +1,278 @@
+body {
+    background-color: #DEFEDD;
+}
+
+.navbar-flashy {
+    background-color: #EF8CAD;
+    width: 100%;
+    height: 15%;
+}
+
+/* CardViewerCSS */
+
+#flashCard {
+    position: relative;
+    margin: auto;
+    margin-top: 80px;
+    width: 800px;
+    height: 522px;
+    background-color: white;
+    border-radius: 30px;
+    filter: drop-shadow(4px 4px 4px rgb(87, 85, 85));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* #DuplicatedCard {
+    font-size: 20px;
+    position: absolute;
+    align-items: center;
+    bottom: 10px;
+} */
+
+#DifficultCard {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+
+#EditFlashCard {
+    position: absolute;
+    right: 20px;
+    top: 70px;
+    background-color: white;
+    border-radius: 4px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;    
+}
+
+#flashCardText {
+    text-align: center;
+    font-size: 30px;
+}
+
+#Title {
+    padding-top: 10px;
+    font-size: 65px;
+    margin-left: 30px;
+}
+
+#BackButton {
+    position: absolute;
+    left: 0;
+    top: 220px;
+    margin-left: 120px; 
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
+#NextButton {
+    position: absolute;
+    right: 0; 
+    top: 220px;
+    margin-right: 120px;
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
+#ShuffleCards {
+    position: absolute;
+    bottom: 5px;
+    left: 40vw;
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 35px;
+}
+
+#HomeButton{
+    /* Spurte chat om hvordan sentrere knappene på høyre side */
+    padding: 5px;
+    position:absolute; 
+    right: 180px;
+    top: 3%;
+    transform: translateY(-5%);
+    background-color: white;
+    border-radius: 8px;
+    font-size: 35px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+#UserButton {
+    padding: 5px;
+    position:absolute; 
+    right: 30px;
+    top: 3%;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 35px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+/* InlogCSS */
+
+#BackPanel {
+    height: 100vh;
+    background-color: #A6526D;
+}
+
+#PinkPanel {
+    background-color: #EF8CAD;
+    width: 85vw;
+    height: 100%;
+    left: 0;
+}
+
+#LigthPinkPanel {
+    background-color: #F6C3D4;
+    width: 70vw;
+    height: 100%;
+    left: 0;
+}
+
+#GreenPanel {
+    background-color: #DEFEDD;
+    width: 55vw;
+    height: 100%;
+    left:0
+}
+
+#LogInLogo {
+    padding-top: 20vh;
+    text-align: center;
+    font-size: 60px;
+    font-family: 'Lucida Sans';
+}
+
+#InlogField{
+    text-align: center;
+}
+
+#LoggInnBtn {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+#RegisterBtn {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+
+
+/* CSS for homepage */
+
+#HomePageNavButton {
+    padding: 1%;
+    transform: translateY(-5%);
+    background-color: #DEFEDD;
+    font-size: 30px;
+    border: transparent;
+}
+
+
+#HomePageNavButton:hover {
+    text-decoration: underline;
+}
+
+
+
+#CreateSetButton {
+    padding: 1px;
+    position: absolute;
+    right: 30px;
+    margin-top: 15px;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 30px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+#SearchSetButton{
+    position: absolute;
+    padding: 1px;
+    right: 250px;
+    margin-top: 15px;
+    transform: translateY(-5%);
+    background-color: White;
+    border-radius: 8px;
+    font-size: 30px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+}
+
+Nav>homenav {
+    background-color: #DEFEDD;
+}
+
+.Container {
+    display: flex;
+    max-width: 100%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px;
+    margin: 30px;
+}
+
+.grid-item {
+    position: relative;
+    background-color: #F6C3D4;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    height: 240px;
+}
+
+.likeSet {
+    padding: 5px;
+    position: absolute;
+    margin-top: 5px;
+    right: 10px;
+    bottom: 60px;
+    background-color: White;
+    border-radius: 8px;
+    font-size: 20px;
+    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+}
+
+.commentSet {
+    padding: 5px;
+    position: absolute;
+    margin-top: 5px;
+    right: 10px;
+    bottom: 10px;
+    background-color: White;
+    border-radius: 8px;
+    font-size: 20px;
+    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+}
+
+/* AdminPanel CSS */
+
+#addAdminBtn, #removeAdminBtn {
+    background-color: white;
+    border-radius: 8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 20px;
+}
+
+#divUser{
+    margin-left: 30px;
+    font-size: 20px;
+}
