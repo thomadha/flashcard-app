@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SearchFunction from "./SearchFunction";
 
 function HomePageNav() {
 
@@ -38,6 +39,7 @@ function HomePageNav() {
                     <button onClick={handleConfirmSetName}>Bekreft</button>
                 </div>
             )}
+            <SearchFunction/>
         </div>
     )
 }
