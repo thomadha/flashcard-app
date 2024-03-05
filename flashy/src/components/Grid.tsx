@@ -21,9 +21,11 @@ function Grid(){
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
+
     useEffect(() => {
         fetchData()
     }, []);
+
     useEffect(() => {
         if (flashcardSetData) {
             setItemsArray(flashcardSetData);
@@ -53,6 +55,7 @@ function Grid(){
                 return false;
             }
     }
+    
     const gotoPage = (id: string) => {
         navigateTo("/cards", { state: { id } });
     }

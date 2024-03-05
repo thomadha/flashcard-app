@@ -133,6 +133,7 @@ const Page: React.FC = () => {
 
     // Click to select different card for editing
     const handleClickOnHeader = (i: number) => {
+        console.log(user?.email);
         setCard(i);
         console.log(i);
     }
@@ -164,6 +165,7 @@ const Page: React.FC = () => {
         <div className="page">
     
             <div>
+                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 
