@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase/firebase';
 import { getAuth } from 'firebase/auth';
-
+import { collection, getDocs } from "firebase/firestore";
+import { isPropertySignature } from 'typescript';
 
 export interface Item {
     id: string; // Add id property
@@ -15,20 +16,60 @@ export interface GridItemArray {
     items: Item[];
 }
 
+
 function Grid(){
     const navigateTo = useNavigate();
     const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
+
+    const [flashcardSetNameID, setFlashcardSetNameID] = useState<{ id: string; name: string }[]>([]);
+    const [searchItem, setSearchItem] = useState('')
+    const [filteredNameID, setFilteredNameID] = useState<{ id: string; name: string }[]>([]);
+
+    useEffect(() => { 
+        const fetchFlashcardSets = async () => {
+            try {
+                const cardsCollectionRef = collection(db, 'flashcardSets');
+                const querySnapshot = await getDocs(cardsCollectionRef);
+                const data = querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name }));
+                setFlashcardSetNameID(data);
+                setFilteredNameID(data)
+            } catch (error) {
+                console.error("Error fetching flashcard set data:", error);
+            }
+        };
+    
+        fetchFlashcardSets(); // Call the function to fetch flashcard sets when the component mounts
+    }, []); // Empty dependency array ensures this effect runs only once on mount
+
+    const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
+        setSearchItem(event.target.value)
+    }
+
+    useEffect(() => {
+        const filtered = flashcardSetNameID.filter(item =>
+            item.name.toLowerCase().startsWith(searchItem.toLowerCase())
+        );
+        setFilteredNameID(filtered);
+    }, [searchItem, flashcardSetNameID]);
+
+
+
     useEffect(() => {
         fetchData()
     }, []);
     useEffect(() => {
-        if (flashcardSetData) {
-            setItemsArray(flashcardSetData);
+        if (flashcardSetData ) { 
+            const isFiltered = flashcardSetData.some(item =>
+                filteredNameID.some(filteredItem => filteredItem.id === item.id)
+            );
+            if (isFiltered) {
+                setItemsArray(filteredNameID);
+            }
         }
-    }, [flashcardSetData]);
+    }, [flashcardSetData, filteredNameID]);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -81,6 +122,15 @@ function Grid(){
   
   return (
       <>
+        <div className="search-bar"> 
+            <input
+                type="text"
+                value={searchItem}
+                onChange={handleInputChange}
+                placeholder='Type to search'
+            />
+        </div>
+
           <div className="grid-container">
               {itemsArray.map((item, index) => (
                   <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
@@ -92,8 +142,10 @@ function Grid(){
                   </div>
               ))}
           </div>
+          
       </>
   );
 }
+
 
 export default Grid;

@@ -8,7 +8,7 @@ function HomePageParent() {
             <div>
                 <Navbar />
                 <HomePageNav />
-                <Grid />
+                <Grid/>
             </div>
             
         </>
