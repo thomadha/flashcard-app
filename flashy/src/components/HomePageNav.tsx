@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { db, auth } from "../lib/firebase/firebase";
 
-function HomePageNav() {
+interface HomePageNavProps {
+    filter: string;
+    setFilter: (filterChange:string) => void;
+}
+
+const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter}) => {
 
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [setName, setSetName] = useState("");
+
+    const user = auth.currentUser
 
     const gotoEdit = (setName: string, newSet: Boolean) => {
         const editArray = ["", setName, newSet];
@@ -25,12 +33,25 @@ function HomePageNav() {
         gotoEdit(setName, true);
     }
 
+    // Functions to differentiate between explore and my own:
+    const handleFilterClick = () => {
+        if (user?.uid) {
+            setFilter(user?.uid)
+        }
+    }
+
+    const handleExploreClick = () => {
+        setFilter('')
+    }
+
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
             {/* <button id="HomePageNavButton">Mine sett</button>
             <button id="HomePageNavButton">Utforsk</button>
             <button id="HomePageNavButton">Favoritter</button>
             <button id="SearchSetButton">Søk</button> */}
+            <button onClick={handleFilterClick}>Mine sett</button>
+            <button onClick={handleExploreClick}>Utforsk</button>
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
                 <div>

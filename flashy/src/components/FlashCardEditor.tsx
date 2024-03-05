@@ -26,9 +26,9 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 
 const Page: React.FC = () => {
 
-    const location = useLocation();
+    const location = useLocation(); 
     const [id, setId] = useState("AEM8Vg71YOYv1JwWOttA"); // Placeholder ID
-    const [locationId, setName, isNew] = location.state.editArray;
+    const [locationId, setName, isNew] = location.state.editArray; // ['', setName: string, newSet: Boolean ] - Info from createSet functions in HomePageNav.tsx
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
