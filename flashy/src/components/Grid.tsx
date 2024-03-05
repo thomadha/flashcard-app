@@ -68,6 +68,9 @@ function Grid(){
             if (isFiltered) {
                 setItemsArray(filteredNameID);
             }
+            if (!isFiltered && searchItem.length > 0 ){
+                setItemsArray([])
+            }
         }
     }, [flashcardSetData, filteredNameID]);
 
