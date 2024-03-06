@@ -26,9 +26,9 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 
 const Page: React.FC = () => {
 
-    const location = useLocation();
+    const location = useLocation(); 
     const [id, setId] = useState("AEM8Vg71YOYv1JwWOttA"); // Placeholder ID
-    const [locationId, setName, isNew] = location.state.editArray;
+    const [locationId, setName, isNew] = location.state.editArray; // ['', setName: string, newSet: Boolean ] - Info from createSet functions in HomePageNav.tsx
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
@@ -133,6 +133,7 @@ const Page: React.FC = () => {
 
     // Click to select different card for editing
     const handleClickOnHeader = (i: number) => {
+        console.log(user?.email);
         setCard(i);
         console.log(i);
     }
@@ -164,6 +165,7 @@ const Page: React.FC = () => {
         <div className="page">
     
             <div>
+                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 

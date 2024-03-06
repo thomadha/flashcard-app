@@ -4,31 +4,63 @@ import { useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase/firebase';
 import { getAuth } from 'firebase/auth';
-
+import { collection, getDocs } from "firebase/firestore";
+import { isPropertySignature } from 'typescript';
 
 export interface Item {
     id: string; // Add id property
     name: string; // Add name property
+    creatorId: string // Add creator property
 }
 
 export interface GridItemArray {
     items: Item[];
 }
 
-function Grid(){
+
+interface gridProps {
+    filter: string;
+    searchItem: string // Pass down filter variable from parent, this will choose what will be in the grid.
+}
+
+const Grid: React.FC<gridProps> = ({filter, searchItem}) => { 
     const navigateTo = useNavigate();
     const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
+    
+    const [filteredNameID, setFilteredNameID] = useState<{ id: string; name: string; creatorId: string }[]>([]);
+
+    
+
     useEffect(() => {
-        fetchData()
-    }, []);
+        console.log("ItemChange")
+        const filtered = flashcardSetData.filter(item =>
+            item.name.toLowerCase().startsWith(searchItem.toLowerCase())
+        );
+        setFilteredNameID(filtered);
+    }, [searchItem, flashcardSetData]);
+
+
+
     useEffect(() => {
-        if (flashcardSetData) {
-            setItemsArray(flashcardSetData);
+        fetchData(filter)
+    }, [filter, ]);
+
+    useEffect(() => {
+        if (flashcardSetData) { 
+            const isFiltered = flashcardSetData.some(item =>
+                filteredNameID.some(filteredItem => filteredItem.id === item.id)
+            );
+            if (isFiltered) {
+                setItemsArray(filteredNameID);
+            }
+            if (!isFiltered && searchItem.length > 0 ){
+                setItemsArray([])
+            }
         }
-    }, [flashcardSetData]);
+    }, [flashcardSetData, filteredNameID]);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -53,8 +85,12 @@ function Grid(){
                 return false;
             }
     }
-    const gotoPage = (id: string) => {
-        navigateTo("/cards", { state: { id } });
+    
+    const gotoPage = (id: string, creatorId: string) => {
+        
+        // pageArray sends set id and creator id, allowing us to use creator id to retrieve creator information later
+        const pageArray = [id, creatorId];
+        navigateTo("/cards", { state: { pageArray } });
     }
 
     const gotoEdit = (id: string) => (event: React.MouseEvent) => {
@@ -71,7 +107,7 @@ function Grid(){
                 console.log("Deleting ", id);
                 const docRef = doc(db, "flashcardSets", id);
                 await deleteDoc(docRef);
-                fetchData();
+                fetchData("");
             }
         }
         catch (e) {
@@ -81,9 +117,11 @@ function Grid(){
   
   return (
       <>
+        
+
           <div className="grid-container">
               {itemsArray.map((item, index) => (
-                  <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id)}>
+                  <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
                       <div>{item.name}</div>
                       <button onClick={gotoEdit(item.id)}>Rediger</button>
                       {isAdmin && (
@@ -92,8 +130,10 @@ function Grid(){
                   </div>
               ))}
           </div>
+          
       </>
   );
 }
+
 
 export default Grid;
