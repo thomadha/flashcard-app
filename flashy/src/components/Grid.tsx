@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useSetNames from "./FetchSetNames";
+import { useSetNames } from "./FetchFirestoreData";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase/firebase';
