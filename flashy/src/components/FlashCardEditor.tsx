@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import UseCardStrings, { useCardStrings } from "./FlashCardSet";
+import { useCardStrings } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
@@ -35,7 +35,7 @@ const Page: React.FC = () => {
     const [dummy, setDummy] = useState(0)
     
 
-    const {cardsData, fetchData} = UseCardStrings();
+    const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
 

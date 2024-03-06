@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useSetNames from "./FetchSetNames";
+import { useSetNames } from "./FetchFirestoreData";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase/firebase';
@@ -19,24 +19,23 @@ export interface GridItemArray {
 
 
 interface gridProps {
-    filter: string; // Pass down filter variable from parent, this will choose what will be in the grid.
+    filter: string;
+    searchItem: string // Pass down filter variable from parent, this will choose what will be in the grid.
 }
 
-const Grid: React.FC<gridProps> = ({filter}) => { 
+const Grid: React.FC<gridProps> = ({filter, searchItem}) => { 
     const navigateTo = useNavigate();
     const { flashcardSetData, fetchData } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
-
-    const [searchItem, setSearchItem] = useState('')
+    
     const [filteredNameID, setFilteredNameID] = useState<{ id: string; name: string; creatorId: string }[]>([]);
 
-    const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
-        setSearchItem(event.target.value)
-    }
+    
 
     useEffect(() => {
+        console.log("ItemChange")
         const filtered = flashcardSetData.filter(item =>
             item.name.toLowerCase().startsWith(searchItem.toLowerCase())
         );
@@ -118,14 +117,7 @@ const Grid: React.FC<gridProps> = ({filter}) => {
   
   return (
       <>
-        <div className="search-bar"> 
-            <input
-                type="text"
-                value={searchItem}
-                onChange={handleInputChange}
-                placeholder='Type to search'
-            />
-        </div>
+        
 
           <div className="grid-container">
               {itemsArray.map((item, index) => (

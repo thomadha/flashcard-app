@@ -5,15 +5,18 @@ import { db, auth } from "../lib/firebase/firebase";
 interface HomePageNavProps {
     filter: string;
     setFilter: (filterChange:string) => void;
+    searchItem: string;
+    setSearchItem: (searchItemChange:string) => void;
 }
 
-const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter}) => {
+const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem, setSearchItem}) => {
 
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [setName, setSetName] = useState("");
 
     const user = auth.currentUser
+
 
     const gotoEdit = (setName: string, newSet: Boolean) => {
         const editArray = ["", setName, newSet];
@@ -44,6 +47,10 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter}) => {
         setFilter('')
     }
 
+    const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
+        setSearchItem(event.target.value)
+    }
+
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
             {/* <button id="HomePageNavButton">Mine sett</button>
@@ -52,6 +59,15 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter}) => {
             <button id="SearchSetButton">Søk</button> */}
             <button onClick={handleFilterClick}>Mine sett</button>
             <button onClick={handleExploreClick}>Utforsk</button>
+            <div className="search-bar"> 
+                <input
+                    type="text"
+                    value={searchItem}
+                    onChange={handleInputChange}
+                    placeholder='Type to search'
+                />
+            </div>
+
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
                 <div>

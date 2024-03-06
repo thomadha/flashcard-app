@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Buttons from "./Buttons";
 import FlashCard from "./FlashCard";
-import UseCardStrings from "./FlashCardSet";
+import { useCardStrings } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 import { doc, updateDoc, collection, getDocs, query, where} from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
@@ -18,7 +18,7 @@ function FlashCardParent(props: FlashCardParentProps) {
   
   
   //cardsData har [0] framsiden, [1] baksiden, [2] IDen til card collection
-  const { cardsData, fetchData } = UseCardStrings();
+  const { cardsData, fetchData } = useCardStrings();
   //Framside og bakside av Flashcards
   const [studySet, setStudySet] = useState([
     ["Laster inn..", "Laster inn..", "Laster inn...", false],
