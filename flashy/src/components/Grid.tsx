@@ -29,36 +29,19 @@ const Grid: React.FC<gridProps> = ({filter}) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
 
-    const [flashcardSetNameID, setFlashcardSetNameID] = useState<{ id: string; name: string; creatorId: string }[]>([]);
     const [searchItem, setSearchItem] = useState('')
     const [filteredNameID, setFilteredNameID] = useState<{ id: string; name: string; creatorId: string }[]>([]);
-
-    useEffect(() => { 
-        const fetchFlashcardSets = async () => {
-            try {
-                const cardsCollectionRef = collection(db, 'flashcardSets');
-                const querySnapshot = await getDocs(cardsCollectionRef);
-                const data = querySnapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name, creatorId: doc.data().creatorId }));
-                setFlashcardSetNameID(data);
-                setFilteredNameID(data)
-            } catch (error) {
-                console.error("Error fetching flashcard set data:", error);
-            }
-        };
-    
-        fetchFlashcardSets(); // Call the function to fetch flashcard sets when the component mounts
-    }, []); // Empty dependency array ensures this effect runs only once on mount
 
     const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
         setSearchItem(event.target.value)
     }
 
     useEffect(() => {
-        const filtered = flashcardSetNameID.filter(item =>
+        const filtered = flashcardSetData.filter(item =>
             item.name.toLowerCase().startsWith(searchItem.toLowerCase())
         );
         setFilteredNameID(filtered);
-    }, [searchItem, flashcardSetNameID]);
+    }, [searchItem, flashcardSetData]);
 
 
 
@@ -67,7 +50,7 @@ const Grid: React.FC<gridProps> = ({filter}) => {
     }, [filter, ]);
 
     useEffect(() => {
-        if (flashcardSetData ) { 
+        if (flashcardSetData) { 
             const isFiltered = flashcardSetData.some(item =>
                 filteredNameID.some(filteredItem => filteredItem.id === item.id)
             );
