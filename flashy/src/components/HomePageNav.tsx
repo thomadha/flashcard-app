@@ -7,9 +7,10 @@ interface HomePageNavProps {
     setFilter: (filterChange:string) => void;
     searchItem: string;
     setSearchItem: (searchItemChange:string) => void;
+    updatePage: (newValue: number) => void;
 }
 
-const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem, setSearchItem}) => {
+const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem, setSearchItem, updatePage}) => {
 
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -22,7 +23,6 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         const editArray = ["", setName, newSet];
         navigateTo("/edit", { state: { editArray } });
     }
-
     const handleCreateSet = () => {
         setShowModal(true);
     }
@@ -34,6 +34,9 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
     const handleConfirmSetName = () => {
         setShowModal(false);
         gotoEdit(setName, true);
+    }
+    const handlemip = (verdi : number) => {
+        updatePage(verdi)
     }
 
     // Functions to differentiate between explore and my own:
@@ -53,12 +56,9 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
 
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
-            {/* <button id="HomePageNavButton">Mine sett</button>
-            <button id="HomePageNavButton">Utforsk</button>
-            <button id="HomePageNavButton">Favoritter</button>
-            <button id="SearchSetButton">Søk</button> */}
-            <button onClick={handleFilterClick}>Mine sett</button>
-            <button onClick={handleExploreClick}>Utforsk</button>
+            <button id="HomePageNavButton" onClick={() => handlemip(0)}>Mine sett</button>
+            <button id="HomePageNavButton" onClick={() => handlemip(1)}>Utforsk</button>
+            <button id="HomePageNavButton" onClick={() => handlemip(2)}>Favoritter</button>
             <div className="search-bar"> 
                 <input
                     type="text"
@@ -67,7 +67,6 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     placeholder='Type to search'
                 />
             </div>
-
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
                 <div>
@@ -78,5 +77,4 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         </div>
     )
 }
-
-export default HomePageNav
+export default HomePageNav;
