@@ -52,13 +52,13 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
     }
 
     return (
-        <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
+        <div id="homePageNav" className="Container">
             {/* <button id="HomePageNavButton">Mine sett</button>
             <button id="HomePageNavButton">Utforsk</button>
             <button id="HomePageNavButton">Favoritter</button>
             <button id="SearchSetButton">Søk</button> */}
-            <button onClick={handleFilterClick}>Mine sett</button>
-            <button onClick={handleExploreClick}>Utforsk</button>
+            <button className="homeNavButtons" onClick={handleFilterClick}>Mine sett</button>
+            <button className="homeNavButtons" onClick={handleExploreClick}>Utforsk</button>
             <div className="search-bar"> 
                 <input
                     type="text"

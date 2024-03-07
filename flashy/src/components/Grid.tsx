@@ -6,6 +6,7 @@ import { db } from '../lib/firebase/firebase';
 import { getAuth } from 'firebase/auth';
 import { collection, getDocs } from "firebase/firestore";
 import { isPropertySignature } from 'typescript';
+import DarkMode from './DarkMode/DarkMode';
 
 export interface Item {
     id: string; // Add id property
@@ -117,8 +118,6 @@ const Grid: React.FC<gridProps> = ({filter, searchItem}) => {
   
   return (
       <>
-        
-
           <div className="grid-container">
               {itemsArray.map((item, index) => (
                   <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getAuth, setPersistence, browserLocalPersistence, connectAuthEmulator } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCbY5vHuH23apAuWR9Qf9MR6JQSmRvtLKI",
@@ -15,7 +15,9 @@ const firebaseConfig = {
 export const firebaseClient = initializeApp(firebaseConfig);
 
 export const db = getFirestore(firebaseClient);
+connectFirestoreEmulator(db, '127.0.0.1', 8081)
 export const auth = getAuth(firebaseClient);
+connectAuthEmulator(auth, "http://127.0.0.1:9099")
 
 setPersistence(auth, browserLocalPersistence);
 
