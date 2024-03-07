@@ -50,7 +50,7 @@ const Page: React.FC = () => {
                     name: setName,
                     creatorId: user?.uid,
                     isFavorite: false,
-                    isPublic: false
+                    isPublic: true
                 });
                 setId(docRef.id);
             };
