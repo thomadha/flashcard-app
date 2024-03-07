@@ -31,7 +31,6 @@ const Grid: React.FC<gridProps> = ({filter, searchItem}) => {
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
     
     const [filteredNameID, setFilteredNameID] = useState<{ id: string; name: string; creatorId: string }[]>([]);
-
     
 
     useEffect(() => {
