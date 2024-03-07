@@ -50,7 +50,7 @@ const Page: React.FC = () => {
                     name: setName,
                     creatorId: user?.uid,
                     isFavorite: false,
-                    isPublic: true
+                    isPublic: true //ENDRE PÅ DENNE NÅR GJØR OFFENTLIG TOGGLE BLIR IMPLEMENTERT
                 });
                 setId(docRef.id);
             };
