@@ -6,7 +6,6 @@ import { useCardStrings } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
-    
     text: string;
     handleTextChange: (newText:string) => void;
 }
@@ -49,10 +48,10 @@ const Page: React.FC = () => {
             const createDoc = async () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
                     name: setName,
-                    creatorId: user?.uid
+                    creatorId: user?.uid,
+                    isFavorite: false,
+                    isPublic: false
                 });
-                console.log("Document written with ID: ", docRef.id);
-                console.log("Document written with set name: ", setName);
                 setId(docRef.id);
             };
             createDoc();
