@@ -67,6 +67,28 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     placeholder='Type to search'
                 />
             </div>
+            <div className="dropdown">
+                <button className = "filter-dropdown">Filter</button>
+                <div className="dropdown-content">
+                <input type="checkbox" id="tag1" name="tag1" value="TAG1"></input>
+                <label htmlFor="tag1"> Naturfag</label><br></br>
+                <input type="checkbox" id="tag2" name="tag2" value="TAG2"></input>
+                <label htmlFor="tag2"> Matte</label><br></br>
+                <input type="checkbox" id="tag3" name="tag3" value="TAG3"></input>
+                <label htmlFor="tag3"> Historie</label><br></br>
+                <input type="checkbox" id="tag4" name="tag4" value="TAG4"></input>
+                <label htmlFor="tag4"> Norsk</label><br></br>
+                <input type="checkbox" id="tag5" name="tag5" value="TAG5"></input>
+                <label htmlFor="tag5"> Engelsk</label><br></br>
+                <input type="checkbox" id="tag6" name="tag6" value="TAG6"></input>
+                <label htmlFor="tag6"> Geografi</label><br></br>
+                <input type="checkbox" id="tag7" name="tag7" value="TAG7"></input>
+                <label htmlFor="tag7"> Samfunn</label><br></br>
+                <input type="checkbox" id="tag8" name="tag8" value="TAG8"></input>
+                <label htmlFor="tag8"> PU</label>
+            </div>
+        </div>
+
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
                 <div>
