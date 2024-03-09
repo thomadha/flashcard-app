@@ -174,14 +174,12 @@ const Page: React.FC = () => {
     const handleButtonClick = () => {
         // Toggle the visibility of the options div when the button is clicked
         setOptionsVisible(!isOptionsVisible);
-        console.log(flashcardTags)
     };
 
     const handleTagSelection = (tag:string) => {
         // Update the selected tag and hide the options div when a tag is selected
         setFlashcardSetChosenTag(tag);
         setOptionsVisible(false);
-        console.log("Tag selection")
     };
 
     return (
@@ -205,8 +203,8 @@ const Page: React.FC = () => {
             <div className="cardback">Bakside</div>
 
             <div className="dropdown">
-                <button onClick={handleButtonClick}
-                >Select Tag</button>
+                <button className="tagButton" onClick={handleButtonClick}
+                >Kategori</button>
                 {isOptionsVisible && (
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     {flashcardTags.map((tag, index) => (
@@ -214,7 +212,7 @@ const Page: React.FC = () => {
                         style={{
                             padding: '5px',
                             cursor: 'pointer',
-                            backgroundColor: flashcardSetChosenTag === tag.tag ? '#eee' : 'transparent',
+                            backgroundColor: flashcardSetChosenTag === tag.tag ? '#EF8CAD' : 'transparent',
                         }}>
                             {tag.tag}
                         </div>

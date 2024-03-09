@@ -51,6 +51,14 @@
     font-size: 40px;
 }
 
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    top: 325px;
+    left: 83%;
+    font-size: 12px;
+}
+
 button {
     background-color: white;
     color: black;
@@ -70,18 +78,6 @@ button:hover {
     background-color: #EF8CAD;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-.filter-dropdown{
-    position: absolute;
-    top: 320px;
-    left: 83%;
-    font-size: 25px;
-}
-  
 .dropdown-content {
 display: none;
 position: absolute;

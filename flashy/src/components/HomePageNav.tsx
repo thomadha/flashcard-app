@@ -17,6 +17,10 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
     const [showModal, setShowModal] = useState(false);
     const [setName, setSetName] = useState("");
 
+    const {flashcardTags, fetchSetTags} = useSetTags();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>("");
+    const [isOptionsVisible, setOptionsVisible] = useState(false);
+
     const user = auth.currentUser
 
 
@@ -36,7 +40,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         setShowModal(false);
         gotoEdit(setName, true);
     }
-    const handlemip = (verdi : number) => {
+    const handlePageChange = (verdi : number) => {
         updatePage(verdi)
     }
 
@@ -51,44 +55,52 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         setFilter('')
     }
 
+    const handleButtonClick = () => {
+        // Toggle the visibility of the options div when the button is clicked
+        fetchSetTags("");
+        setOptionsVisible(!isOptionsVisible);
+    };
+
+    const handleTagSelection = (tag:string) => {
+        // Update the selected tag and hide the options div when a tag is selected
+        setFlashcardSetChosenTag(tag);
+        setOptionsVisible(false);
+        setSearchItem(tag)
+    };
+ 
     const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
         setSearchItem(event.target.value)
     }
 
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
-            <button id="HomePageNavButton" onClick={() => handlemip(0)}>Mine sett</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(1)}>Utforsk</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(2)}>Favoritter</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(0)}>Mine sett</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(1)}>Utforsk</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(2)}>Favoritter</button>
+            <button onClick={handleButtonClick}>Kategorier</button>
+            {isOptionsVisible && (
+            <div className='tagBox' style={{ display: 'flex', flexDirection: 'column' }}>
+                {flashcardTags.map((tag, index) => (
+                    <div key={index} onClick={() => handleTagSelection(tag.tag)} 
+                    style={{
+                        padding: '5px',
+                        cursor: 'pointer',
+                        backgroundColor: flashcardSetChosenTag === tag.tag ? '#EF8CAD' : 'transparent',
+                    }}>
+                        {tag.tag}
+                    </div>
+                ))}
+            </div>
+            )}
             <div className="search-bar"> 
                 <input
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Type to search'
+                    placeholder='Søk...'
                 />
             </div>
-            {/* <div className="dropdown">
-                <button className = "filter-dropdown">Filter</button>
-                <div className="dropdown-content">
-                <input type="checkbox" id="tag1" name="tag1" value="TAG1"></input>
-                <label htmlFor="tag1"> Naturfag</label><br></br>
-                <input type="checkbox" id="tag2" name="tag2" value="TAG2"></input>
-                <label htmlFor="tag2"> Matte</label><br></br>
-                <input type="checkbox" id="tag3" name="tag3" value="TAG3"></input>
-                <label htmlFor="tag3"> Historie</label><br></br>
-                <input type="checkbox" id="tag4" name="tag4" value="TAG4"></input>
-                <label htmlFor="tag4"> Norsk</label><br></br>
-                <input type="checkbox" id="tag5" name="tag5" value="TAG5"></input>
-                <label htmlFor="tag5"> Engelsk</label><br></br>
-                <input type="checkbox" id="tag6" name="tag6" value="TAG6"></input>
-                <label htmlFor="tag6"> Geografi</label><br></br>
-                <input type="checkbox" id="tag7" name="tag7" value="TAG7"></input>
-                <label htmlFor="tag7"> Samfunn</label><br></br>
-                <input type="checkbox" id="tag8" name="tag8" value="TAG8"></input>
-                <label htmlFor="tag8"> PU</label>
-            </div>
-        </div> */}
+        
 
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
@@ -98,6 +110,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                 </div>
             )}
         </div>
+    
     )
 }
 export default HomePageNav;
