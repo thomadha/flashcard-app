@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db, auth } from "../lib/firebase/firebase";
+import { useSetTags } from "./FetchFirestoreData";
 
 interface HomePageNavProps {
     filter: string;
@@ -67,7 +68,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     placeholder='Type to search'
                 />
             </div>
-            <div className="dropdown">
+            {/* <div className="dropdown">
                 <button className = "filter-dropdown">Filter</button>
                 <div className="dropdown-content">
                 <input type="checkbox" id="tag1" name="tag1" value="TAG1"></input>
@@ -87,7 +88,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                 <input type="checkbox" id="tag8" name="tag8" value="TAG8"></input>
                 <label htmlFor="tag8"> PU</label>
             </div>
-        </div>
+        </div> */}
 
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (

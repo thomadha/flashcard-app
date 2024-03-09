@@ -35,11 +35,41 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     }, [filter, page]);
 
     useEffect(() => {
-        if (flashcardSetData) {
-            const filtered = flashcardSetData.filter(item =>
-                item.name.toLowerCase().startsWith(searchItem.toLowerCase())
+        
+        
+        const filtered = flashcardSetData.filter(item =>
+            item.name.toLowerCase().startsWith(searchItem.toLowerCase()));
+        
+        let filteredByTag: { id: string; name: string; creatorId: string; tag: string; }[] = [];
+        if (searchItem.trim() !== '') {
+            // Only filter by tag if searchItem is not empty
+            filteredByTag = flashcardSetData.filter(item =>
+                item.tag && item.tag.toLowerCase().startsWith(searchItem.toLowerCase())
             );
-            setItemsArray(filtered);
+        }
+        const filteredResults = [...filtered, ...filteredByTag];
+        setFilteredNameID(filteredResults);
+        
+        
+    }, [searchItem, flashcardSetData]);
+
+
+
+    useEffect(() => {
+        fetchDataSetNames(filter, page)
+    }, [filter, ]);
+
+    useEffect(() => {
+        if (flashcardSetData) { 
+            const isFiltered = flashcardSetData.some(item =>
+                filteredNameID.some(filteredItem => filteredItem.id === item.id)
+            );
+            if (isFiltered) {
+                setItemsArray(filteredNameID);
+            }
+            if (!isFiltered && searchItem.length > 0 ){
+                setItemsArray([])
+            }
         }
     }, [flashcardSetData, searchItem]);
 

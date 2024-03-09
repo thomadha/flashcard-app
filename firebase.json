@@ -15,12 +15,6 @@
       "enabled": true,
       "port": 8182
     },
-    "singleProjectMode": true,
-    "auth": {
-      "port": 9099
-    },
-    "firestore": {
-      "port": 8081
-    }
+    "singleProjectMode": true
   }
 }

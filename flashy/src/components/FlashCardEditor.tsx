@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
-import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import { useCardStrings, useSetNames, useSetTags } from "./FetchFirestoreData";
+import { useCardStrings, useSetTags } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
@@ -32,11 +32,10 @@ const Page: React.FC = () => {
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
-    
-    const [isHovered, setIsHovered] = useState(false);
-    //const {flashcardSetData, fetchDataSetNames} = useSetNames();
+
     const {flashcardTags, fetchSetTags} = useSetTags();
-    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>("Annet");
+    const [isOptionsVisible, setOptionsVisible] = useState(false);
     
     const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
@@ -92,6 +91,8 @@ const Page: React.FC = () => {
     // Dummy value is changed when updating, adding or deleting card.
     useEffect(() => { 
         fetchData(id);
+        fetchSetTags("");
+        console.log("No vart eg kjørt")
         
       }, [dummy, id]);
 
@@ -103,10 +104,15 @@ const Page: React.FC = () => {
                 console.log("Document updated with ID: ", studySet[card]);
                 console.log(text2)
                 const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
+                const docRef2 = doc(db, "flashcardSets", id);
+                const docSnap = await getDoc(docRef2);
+                if (docSnap.exists()) {
+                    await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
+                }
 
                 await updateDoc(docRef, {
                     flashcardFront: text1,
-                    flashcardBack: text2
+                    flashcardBack: text2,
                 }).then(() => setDummy(dummy + 1));
             
 
@@ -115,6 +121,8 @@ const Page: React.FC = () => {
                     flashcardFront: text1,
                     flashcardBack: text2
                 });
+                const docRef2 = doc(db, "flashcardSets", id);
+                await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
 
                 if (docRef){
                     setDummy(dummy + 1);
@@ -163,6 +171,18 @@ const Page: React.FC = () => {
         }
     }
 
+    const handleButtonClick = () => {
+        // Toggle the visibility of the options div when the button is clicked
+        setOptionsVisible(!isOptionsVisible);
+        console.log(flashcardTags)
+    };
+
+    const handleTagSelection = (tag:string) => {
+        // Update the selected tag and hide the options div when a tag is selected
+        setFlashcardSetChosenTag(tag);
+        setOptionsVisible(false);
+        console.log("Tag selection")
+    };
 
     return (
 
@@ -183,25 +203,27 @@ const Page: React.FC = () => {
 
             <div className="cardfront">Framside</div>
             <div className="cardback">Bakside</div>
-            <div className="cardtag"><button
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-            >
-                Kategori
-            </button></div>
 
-            {isHovered && (
-                <div>
-                    {flashcardTags.map(item => (
-                        <div
-                            onClick={() => setFlashcardSetChosenTag(item.tag)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {item.tag}
+            <div className="dropdown">
+                <button onClick={handleButtonClick}
+                >Select Tag</button>
+                {isOptionsVisible && (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {flashcardTags.map((tag, index) => (
+                        <div key={index} onClick={() => handleTagSelection(tag.tag)} 
+                        style={{
+                            padding: '5px',
+                            cursor: 'pointer',
+                            backgroundColor: flashcardSetChosenTag === tag.tag ? '#eee' : 'transparent',
+                        }}>
+                            {tag.tag}
                         </div>
                     ))}
                 </div>
             )}
+            </div>
+            
+
 
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
