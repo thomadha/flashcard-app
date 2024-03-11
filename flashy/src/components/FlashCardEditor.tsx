@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import { useCardStrings } from "./FetchFirestoreData";
+import { useCardStrings, useSetNames, useSetTags } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
@@ -33,7 +33,11 @@ const Page: React.FC = () => {
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
     
-
+    const [isHovered, setIsHovered] = useState(false);
+    //const {flashcardSetData, fetchDataSetNames} = useSetNames();
+    const {flashcardTags, fetchSetTags} = useSetTags();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>();
+    
     const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
@@ -49,6 +53,7 @@ const Page: React.FC = () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
                     name: setName,
                     creatorId: user?.uid,
+                    tag: flashcardSetChosenTag,
                     isFavorite: false,
                     isPublic: true //ENDRE PÅ DENNE NÅR GJØR OFFENTLIG TOGGLE BLIR IMPLEMENTERT
                 });
@@ -178,6 +183,26 @@ const Page: React.FC = () => {
 
             <div className="cardfront">Framside</div>
             <div className="cardback">Bakside</div>
+            <div className="cardtag"><button
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                Kategori
+            </button></div>
+
+            {isHovered && (
+                <div>
+                    {flashcardTags.map(item => (
+                        <div
+                            onClick={() => setFlashcardSetChosenTag(item.tag)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            {item.tag}
+                        </div>
+                    ))}
+                </div>
+            )}
+
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
                 <FlashCardEditor text={text2} handleTextChange={setText2} />

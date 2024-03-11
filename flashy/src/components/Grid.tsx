@@ -7,10 +7,15 @@ import { getAuth } from 'firebase/auth';
 import { favoriteHandler, logButtonclick } from './GridHelper';
 
 export interface Item {
-    id: string;
-    name: string;
-    creatorId: string;
+    id: string; // Add id property
+    name: string; // Add name property
+    creatorId: string; // Add creator property
     likes: number;
+    tag: string;
+}
+
+export interface GridItemArray {
+    items: Item[];
 }
 
 interface gridProps {
@@ -21,13 +26,13 @@ interface gridProps {
 
 const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const navigateTo = useNavigate();
-    const { flashcardSetData, fetchData } = useSetNames();
+    const { flashcardSetData, fetchDataSetNames } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
-
+    
     useEffect(() => {
-        fetchData(filter, page);
-    }, [filter, page]); // Fetch data when filter or page changes
+        fetchDataSetNames(filter, page)
+    }, [filter, page]);
 
     useEffect(() => {
         if (flashcardSetData) {
@@ -78,7 +83,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             if (id !== undefined) {
                 const docRef = doc(db, "flashcardSets", id);
                 await deleteDoc(docRef);
-                fetchData(filter, page);
+                fetchDataSetNames(filter, page);
             }
         } catch (e) {
             return;
@@ -89,14 +94,14 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const changeLike = (itemId: string) => async (event: React.MouseEvent) => {
         event.stopPropagation();
         logButtonclick(itemId);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     //Håndterer når favoritt knappen blir trykket på
     const changeFavorite = (id: string) => (event: React.MouseEvent) => {
         event.stopPropagation();
         favoriteHandler(id);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     return (

@@ -51,6 +51,13 @@
     font-size: 40px;
 }
 
+.cardtag {
+    position: absolute;
+    top: 320px;
+    left: 83%;
+    font-size: 25px;
+}
+
 button {
     background-color: white;
     color: black;
