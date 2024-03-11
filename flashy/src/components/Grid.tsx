@@ -110,7 +110,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
 
     return (
         <div className="grid-container">
-            {itemsArray.map((item, index) => (
+            {itemsArray.map((item) => (
                 <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
                 <div>{item.name}</div>
                 <button onClick={gotoEdit(item.id)}>Rediger</button>
