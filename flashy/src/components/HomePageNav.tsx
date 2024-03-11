@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db, auth } from "../lib/firebase/firebase";
+import { useSetTags } from "./FetchFirestoreData";
 
 interface HomePageNavProps {
     filter: string;
@@ -15,6 +16,10 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const [setName, setSetName] = useState("");
+
+    const {flashcardTags, fetchSetTags} = useSetTags();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>("");
+    const [isOptionsVisible, setOptionsVisible] = useState(false);
 
     const user = auth.currentUser
 
@@ -35,7 +40,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         setShowModal(false);
         gotoEdit(setName, true);
     }
-    const handlemip = (verdi : number) => {
+    const handlePageChange = (verdi : number) => {
         updatePage(verdi)
     }
 
@@ -50,23 +55,53 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
         setFilter('')
     }
 
+    const handleButtonClick = () => {
+        // Toggle the visibility of the options div when the button is clicked
+        fetchSetTags("");
+        setOptionsVisible(!isOptionsVisible);
+    };
+
+    const handleTagSelection = (tag:string) => {
+        // Update the selected tag and hide the options div when a tag is selected
+        setFlashcardSetChosenTag(tag);
+        setOptionsVisible(false);
+        setSearchItem(tag)
+    };
+ 
     const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => { 
         setSearchItem(event.target.value)
     }
 
     return (
         <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
-            <button id="HomePageNavButton" onClick={() => handlemip(0)}>Mine sett</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(1)}>Utforsk</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(2)}>Favoritter</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(0)}>Mine sett</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(1)}>Utforsk</button>
+            <button id="HomePageNavButton" onClick={() => handlePageChange(2)}>Favoritter</button>
+            <button onClick={handleButtonClick}>Kategorier</button>
+            {isOptionsVisible && (
+            <div className='tagBox' style={{ display: 'flex', flexDirection: 'column' }}>
+                {flashcardTags.map((tag, index) => (
+                    <div key={index} onClick={() => handleTagSelection(tag.tag)} 
+                    style={{
+                        padding: '5px',
+                        cursor: 'pointer',
+                        backgroundColor: flashcardSetChosenTag === tag.tag ? '#EF8CAD' : 'transparent',
+                    }}>
+                        {tag.tag}
+                    </div>
+                ))}
+            </div>
+            )}
             <div className="search-bar"> 
                 <input
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Type to search'
+                    placeholder='Søk...'
                 />
             </div>
+        
+
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
                 <div>
@@ -75,6 +110,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                 </div>
             )}
         </div>
+    
     )
 }
 export default HomePageNav;
