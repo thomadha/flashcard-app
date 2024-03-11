@@ -55,7 +55,13 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             const mail = user.email;
             const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
             const AdminArrayDoc = await getDoc(arrayRef);
-            return AdminArrayDoc.get("AdminArray").includes(mail);
+            try {
+                const Array = AdminArrayDoc.get("AdminArray").includes(mail);
+                return Array;
+            } catch (error) {
+                return []
+            }
+
         } else {
             return false;
         }
