@@ -7,10 +7,15 @@ import { getAuth } from 'firebase/auth';
 import { favoriteHandler, logButtonclick } from './GridHelper';
 
 export interface Item {
-    id: string;
-    name: string;
-    creatorId: string;
+    id: string; // Add id property
+    name: string; // Add name property
+    creatorId: string; // Add creator property
     likes: number;
+    tag: string;
+}
+
+export interface GridItemArray {
+    items: Item[];
 }
 
 interface gridProps {
@@ -21,20 +26,50 @@ interface gridProps {
 
 const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const navigateTo = useNavigate();
-    const { flashcardSetData, fetchData } = useSetNames();
+    const { flashcardSetData, fetchDataSetNames } = useSetNames(); // fetchData funksjon er hentet for å kunne oppdatere siden dersom en admin sletter   
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
+    
+    useEffect(() => {
+        fetchDataSetNames(filter, page)
+    }, [filter, page]);
 
     useEffect(() => {
-        fetchData(filter, page);
-    }, [filter, page]); // Fetch data when filter or page changes
-
-    useEffect(() => {
-        if (flashcardSetData) {
-            const filtered = flashcardSetData.filter(item =>
-                item.name.toLowerCase().startsWith(searchItem.toLowerCase())
+        
+        
+        const filtered = flashcardSetData.filter(item =>
+            item.name.toLowerCase().startsWith(searchItem.toLowerCase()));
+        
+        let filteredByTag: { id: string; name: string; creatorId: string; tag: string; }[] = [];
+        if (searchItem.trim() !== '') {
+            // Only filter by tag if searchItem is not empty
+            filteredByTag = flashcardSetData.filter(item =>
+                item.tag && item.tag.toLowerCase().startsWith(searchItem.toLowerCase())
             );
-            setItemsArray(filtered);
+        }
+        const filteredResults = [...filtered, ...filteredByTag];
+        setFilteredNameID(filteredResults);
+        
+        
+    }, [searchItem, flashcardSetData]);
+
+
+
+    useEffect(() => {
+        fetchDataSetNames(filter, page)
+    }, [filter, ]);
+
+    useEffect(() => {
+        if (flashcardSetData) { 
+            const isFiltered = flashcardSetData.some(item =>
+                filteredNameID.some(filteredItem => filteredItem.id === item.id)
+            );
+            if (isFiltered) {
+                setItemsArray(filteredNameID);
+            }
+            if (!isFiltered && searchItem.length > 0 ){
+                setItemsArray([])
+            }
         }
     }, [flashcardSetData, searchItem]);
 
@@ -78,7 +113,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             if (id !== undefined) {
                 const docRef = doc(db, "flashcardSets", id);
                 await deleteDoc(docRef);
-                fetchData(filter, page);
+                fetchDataSetNames(filter, page);
             }
         } catch (e) {
             return;
@@ -89,14 +124,14 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const changeLike = (itemId: string) => async (event: React.MouseEvent) => {
         event.stopPropagation();
         logButtonclick(itemId);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     //Håndterer når favoritt knappen blir trykket på
     const changeFavorite = (id: string) => (event: React.MouseEvent) => {
         event.stopPropagation();
         favoriteHandler(id);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     return (
