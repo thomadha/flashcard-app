@@ -6,7 +6,6 @@ import { useCardStrings, usePublicState } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
-    
     text: string;
     handleTextChange: (newText:string) => void;
 }
@@ -26,9 +25,9 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 
 const Page: React.FC = () => {
 
-    const location = useLocation();
+    const location = useLocation(); 
     const [id, setId] = useState("AEM8Vg71YOYv1JwWOttA"); // Placeholder ID
-    const [locationId, setName, isNew] = location.state.editArray;
+    const [locationId, setName, isNew] = location.state.editArray; // ['', setName: string, newSet: Boolean ] - Info from createSet functions in HomePageNav.tsx
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
@@ -51,10 +50,10 @@ const Page: React.FC = () => {
             const createDoc = async () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
                     name: setName,
-                    creatorId: user?.uid
+                    creatorId: user?.uid,
+                    isFavorite: false,
+                    isPublic: true //ENDRE PÅ DENNE NÅR GJØR OFFENTLIG TOGGLE BLIR IMPLEMENTERT
                 });
-                console.log("Document written with ID: ", docRef.id);
-                console.log("Document written with set name: ", setName);
                 setId(docRef.id);
             };
             createDoc();
@@ -165,6 +164,7 @@ const Page: React.FC = () => {
 
     // Click to select different card for editing
     const handleClickOnHeader = (i: number) => {
+        console.log(user?.email);
         setCard(i);
         console.log(i);
     }
@@ -207,6 +207,7 @@ const Page: React.FC = () => {
                 />
                 <label htmlFor="public">Vis settet til andre brukere</label>
                 </div>
+                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 
