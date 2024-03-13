@@ -11,7 +11,9 @@ export interface Item {
     name: string;
     creatorId: string;
     likes: number;
+    username: string
 }
+
 
 interface gridProps {
     filter: string;
@@ -30,12 +32,19 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     }, [filter, page]); // Fetch data when filter or page changes
 
     useEffect(() => {
-        if (flashcardSetData) {
-            const filtered = flashcardSetData.filter(item =>
-                item.name.toLowerCase().startsWith(searchItem.toLowerCase())
-            );
-            setItemsArray(filtered);
+        const getFilteredItemsArray =async () => {
+            if (flashcardSetData) {
+                const filtered = flashcardSetData.filter(item =>
+                    item.name.toLowerCase().startsWith(searchItem.toLowerCase())
+                )
+                
+                
+                setItemsArray(filtered);
+            }
         }
+        
+
+        getFilteredItemsArray()
     }, [flashcardSetData, searchItem]);
 
     useEffect(() => {
@@ -103,15 +112,17 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
         <div className="grid-container">
             {itemsArray.map((item) => (
                 <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
-                    <div>{item.name}</div>
-                    <button onClick={gotoEdit(item.id)}>Rediger</button>
-                    {isAdmin && (
-                        <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
-                    )}
-                    <img src={require('../pictures/1000_F_238719835_fdgaiXccSVeBhcr0ZSAn1c1iny0T764d.png')} id='favoriteimage'
-                        onClick={(event) => changeFavorite(item.id)(event)}></img>
-                    <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
-                </div>
+                <div>{item.name}</div>
+                <button onClick={gotoEdit(item.id)}>Rediger</button>
+                {isAdmin && (
+                    <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
+                )}
+                <img src={require('../pictures/1000_F_238719835_fdgaiXccSVeBhcr0ZSAn1c1iny0T764d.png')} id='favoriteimage'
+                    onClick={(event) => changeFavorite(item.id)(event)}></img>
+                <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
+
+                <p>Laget av: {item.username}</p>
+            </div>
             ))}
         </div>
     );

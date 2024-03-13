@@ -3,9 +3,10 @@ import {
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import firebaseClient, { auth } from "../lib/firebase/firebase";
+import firebaseClient, { auth, db } from "../lib/firebase/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 function InlogPanel() {
   const [email, setEmail] = useState("");
@@ -44,6 +45,17 @@ function InlogPanel() {
           email,
           password
         );
+        
+        // Legger til i brukertabell
+        if (loginInfo) {
+          if (auth.currentUser){
+            await setDoc(doc(db, "user", auth.currentUser.uid), {
+              email: email,
+              username: email + '-Brukernavn'
+            });
+          }
+        }
+
         console.log("Success. Registered ", loginInfo.user.email);
         navigateTo("/home");
       } catch (e) {

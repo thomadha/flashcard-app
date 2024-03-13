@@ -38,6 +38,18 @@ export async function initLikes(itemId: string) {
     return likes.length;
 }
 
+export async function getUsername(userId: string) {
+    const userRef = doc(db, 'user', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+        return 0;
+    }
+
+    const username = userDoc.data()?.username || '';
+    return username;
+}
+
 export async function favoriteHandler(itemId : string){
     const uid = auth.currentUser?.uid;
 
