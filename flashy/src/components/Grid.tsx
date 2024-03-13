@@ -26,6 +26,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const { flashcardSetData, fetchData } = useSetNames();
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
         fetchData(filter, page);
@@ -62,6 +63,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
         const user = auth.currentUser;
         if (user != null && user.email != null) {
             const mail = user.email;
+            setUserId(user.uid);
             const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
             const AdminArrayDoc = await getDoc(arrayRef);
             return AdminArrayDoc.get("AdminArray").includes(mail);
@@ -114,7 +116,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
                 <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
                 <div>{item.name}</div>
                 <button onClick={gotoEdit(item.id)}>Rediger</button>
-                {isAdmin && (
+                {(isAdmin || item.creatorId === userId) && (
                     <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
                 )}
                 <img src={require('../pictures/1000_F_238719835_fdgaiXccSVeBhcr0ZSAn1c1iny0T764d.png')} id='favoriteimage'
