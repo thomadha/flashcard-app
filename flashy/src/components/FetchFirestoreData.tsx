@@ -30,4 +30,23 @@ export const useCardStrings = () => {
     };
     return {cardsData, fetchData};
 }
-export default { useSetNames, useCardStrings };
+
+export const usePublicState = () => {
+
+  const [publicState, setpublicState] = useState<{ id: string; isPublic: boolean }[]>([]); // Object containing docId and isPublic boolean value
+
+  const fetchData = async () => {
+    try {
+      const cardsCollectionRef = collection(db, 'flashcardSets');
+      const querySnapshot = await getDocs(cardsCollectionRef);
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, isPublic: doc.data().isPublic }));
+      setpublicState(data);        
+    } catch (error) {
+      console.error("Error fetching flashcard set public state:", error);
+    }
+  };
+    return {publicState, fetchData};
+}
+
+
+export default { useSetNames, useCardStrings, usePublicState };
