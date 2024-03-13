@@ -94,7 +94,7 @@ const Comment = ({
               autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="type..."
+              placeholder="Type here..."
             />
 
             {/* Action button for adding a comment */}

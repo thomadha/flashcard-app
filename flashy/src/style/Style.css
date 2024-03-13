@@ -342,8 +342,9 @@ border-radius: 50%;}
 
 /* Kommentar styling */
 .commentContainer {
-    margin-top: 6px;
-    background-color: #d3d3d3e0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
     display:flex;
     flex-direction: column;
     padding: 5px 10px;
@@ -353,13 +354,14 @@ border-radius: 50%;}
   }
   
   .commentContainer:hover {
-    background-color: #d3d3d3bf;
+    background-color: #F6C3D4;
   }
   
   .inputContainer {
     display: flex;
     align-items: baseline;
     gap: 5px;
+    margin-bottom: 10px;
   }
   
   .inputContainer > span {
@@ -370,12 +372,13 @@ border-radius: 50%;}
     margin: 6px 0 0px 0;
     padding: 5px;
     display: flex;
-    border: 1px solid lightgray;
+    border: 1px solid white;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
     border-radius: 5px;
-    background-color: #e7e7e7;
+    background-color: white;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
   }
   
   .first_input {
@@ -384,6 +387,7 @@ border-radius: 50%;}
   
   .commentContainer > span {
     margin: 0 5px;
+    top: 20px;
   }
   
   .reply {
@@ -394,11 +398,16 @@ border-radius: 50%;}
     font-weight: 600;
     cursor: pointer;
   }
+
+  .reply:hover {
+    text-decoration: underline;
+  }
   
   .comment {
-    color: #ffffff;
-    background-color: #569dff;
+    color: black;
+    background-color: #EF8CAD;
     letter-spacing: 0.8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
   }
 
   .CommentStructure{
@@ -407,6 +416,7 @@ border-radius: 50%;}
   }
   .Commentfield{
     position: relative;
-    top: 100px;
     left: 40%;
+    top: 30px;
+    margin-bottom: 50px;
   }
