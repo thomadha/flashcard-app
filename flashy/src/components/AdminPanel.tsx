@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 import { getAuth } from "firebase/auth";
+import { useListAllUsers } from "./FetchFirestoreData";
 
 function AdminPanel(){
     const [email, setEmail] = useState("");
@@ -9,6 +10,11 @@ function AdminPanel(){
     const adminRef = doc(db, "Administratorer", "UsersWithAdmin");
     const [AdminArray, setAdminArray] = useState<string[]>([]);
     
+    const { usersList: allUsers, fetchAllUsers } = useListAllUsers();
+
+    useEffect(() => {
+        fetchAllUsers();
+    }, [fetchAllUsers]);
 
     async function CheckIfAdmin(){
         
@@ -64,9 +70,15 @@ function AdminPanel(){
                         <input
                             id="emailInput"
                             placeholder="E-post"
-                            type="email"
+                            type="text"
+                            list="allUsers"
                             onChange={(e) => setEmail(e.target.value)}
                         />
+                        <datalist id="allUsers">
+                            {allUsers && allUsers.map((user, index) => (
+                                <option key={index} value={user} />
+                            ))}
+                        </datalist>
                         <br/><br/>
                         <button id="addAdminBtn" onClick={addUser}>
                             Legg til
