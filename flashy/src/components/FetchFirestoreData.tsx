@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 
 export const useSetNames = () => {
@@ -35,17 +35,28 @@ export const usePublicState = () => {
 
   const [publicState, setpublicState] = useState<{ id: string; isPublic: boolean }[]>([]); // Object containing docId and isPublic boolean value
 
-  const fetchData = async () => {
+  const fetchPublicData = async (flashCardSetId: string) => {
     try {
-      const cardsCollectionRef = collection(db, 'flashcardSets');
-      const querySnapshot = await getDocs(cardsCollectionRef);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, isPublic: doc.data().isPublic }));
-      setpublicState(data);        
+      const documentSnapshot = await getDoc(doc(db, "flashcardSets", flashCardSetId));
+      if (documentSnapshot.exists()) {
+        const data = documentSnapshot.data(); // retrieve the document data
+        if (data["isPublic"] === true) {
+          // console.log("Boolean value is true");
+        } else if (data["isPublic"] === false){
+        //   console.log("Boolean value is false");
+        } else {
+          // console.log("Boolean value does not exist");
+        }
+        const publicStateData = { id: documentSnapshot.id, isPublic: data.isPublic };
+        setpublicState([publicStateData]);        
+      } else {
+        console.warn("Document does not exist");
+      }
     } catch (error) {
       console.error("Error fetching flashcard set public state:", error);
     }
   };
-    return {publicState, fetchData};
+    return {publicState, fetchPublicData};
 }
 
 
