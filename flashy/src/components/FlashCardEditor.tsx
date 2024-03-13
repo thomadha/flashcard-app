@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
 import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import { useCardStrings } from "./FetchFirestoreData";
+import { useCardStrings, usePublicState } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
@@ -37,6 +37,8 @@ const Page: React.FC = () => {
     const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
+
+    const [isPublic, setIsPublic] = useState(false);
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
     
@@ -73,9 +75,39 @@ const Page: React.FC = () => {
         }
     }, [card]);
 
-    
+    // Set publicState
+    const {publicState, fetchPublicData} = usePublicState();
 
-    
+    useEffect(() => {
+        if (id) {
+            fetchPublicData(id);
+        }
+    }, [id, isPublic]);
+
+    useEffect(() => {
+        try {
+            if (publicState) {
+                setIsPublic(publicState[0].isPublic);
+            }
+        } catch (error) {
+            // console.error("Error setting public state:", error);
+        }
+    }, [publicState]);
+
+    useEffect(() => { 
+        try {
+            if (publicState[0].isPublic !== isPublic) {
+                // console.log("Updating public state");
+                updateDoc(doc(db, "flashcardSets", id), {
+                    isPublic: isPublic
+                });
+              }
+        } catch (error) {
+            // console.error("Error setting public state:", error);
+        }
+
+      }, [isPublic]);
+
     // Constant updating of setStudySet
     useEffect(() => { 
         if (cardsData) {
@@ -164,6 +196,17 @@ const Page: React.FC = () => {
         <div className="page">
     
             <div>
+                <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "15px"}}>
+                <input 
+                    type="checkbox" 
+                    id="public" 
+                    name="public" 
+                    value="public" 
+                    checked={isPublic} 
+                    onChange={(e) => setIsPublic(e.target.checked)} 
+                />
+                <label htmlFor="public">Vis settet til andre brukere</label>
+                </div>
                 <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>

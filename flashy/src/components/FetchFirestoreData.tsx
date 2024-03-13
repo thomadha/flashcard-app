@@ -60,6 +60,34 @@ export const useCardStrings = () => {
     return {cardsData, fetchData};
 }
 
+export const usePublicState = () => {
+
+  const [publicState, setpublicState] = useState<{ id: string; isPublic: boolean }[]>([]); // Object containing docId and isPublic boolean value
+
+  const fetchPublicData = async (flashCardSetId: string) => {
+    try {
+      const documentSnapshot = await getDoc(doc(db, "flashcardSets", flashCardSetId));
+      if (documentSnapshot.exists()) {
+        const data = documentSnapshot.data(); // retrieve the document data
+        if (data["isPublic"] === true) {
+          // console.log("Boolean value is true");
+        } else if (data["isPublic"] === false){
+        //   console.log("Boolean value is false");
+        } else {
+          // console.log("Boolean value does not exist");
+        }
+        const publicStateData = { id: documentSnapshot.id, isPublic: data.isPublic };
+        setpublicState([publicStateData]);        
+      } else {
+        console.warn("Document does not exist");
+      }
+    } catch (error) {
+      console.error("Error fetching flashcard set public state:", error);
+    }
+  };
+    return {publicState, fetchPublicData};
+}
+
 export const useUserData = () => {
     
     const [userData, setUserData] = useState<{email: string, username:string} | null>(null);
@@ -93,4 +121,4 @@ export const useUserData = () => {
 
 
 
-export default { useSetNames, useCardStrings, useUserData };
+export default { useSetNames, useCardStrings, useUserData, usePublicState };
