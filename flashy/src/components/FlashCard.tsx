@@ -25,7 +25,7 @@ function FlashCard({
         <button id="DifficultCard" onClick={handleDifficultClick}>
           Vanskelig
         </button>
-        <button id="EditFlashCard">Rediger</button>
+        {/* <button id="EditFlashCard">Rediger</button> */}
 {/*         {isDuplicatedVisible && <p id="DuplicatedCard">Prøv deg på denne igjen!</p>} */}
       </div>
     </>
