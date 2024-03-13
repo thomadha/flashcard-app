@@ -64,7 +64,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Type to search'
+                    placeholder='Søk...'
                 />
             </div>
 

@@ -245,17 +245,17 @@ body {
     filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
 }
 
-#SearchSetButton{
+.search-bar input[type=text]{
     position: absolute;
     padding: 1px;
     right: 250px;
+    width: 150px;
     margin-top: 15px;
     transform: translateY(-5%);
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
     font-size: 30px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
 }
 
 Nav>homenav {
