@@ -85,8 +85,8 @@ body {
 }
 
 #ShuffleCards {
-    /*position: absolute;     Hør med Helle om det går greit at denne endres*/
-    bottom: 5px; 
+    position: absolute;
+    bottom: 17%; 
     left: 40vw;
     background-color: white;
     border-radius: 8px;
@@ -404,4 +404,9 @@ border-radius: 50%;}
   .CommentStructure{
     margin-top: 20px;
     width: fit-content;
+  }
+  .Commentfield{
+    position: relative;
+    top: 100px;
+    left: 40%;
   }
