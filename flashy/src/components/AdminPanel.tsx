@@ -73,6 +73,7 @@ function AdminPanel(){
                             type="text"
                             list="allUsers"
                             onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="off"
                         />
                         <datalist id="allUsers">
                             {allUsers && allUsers.map((user, index) => (
