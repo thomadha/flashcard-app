@@ -115,7 +115,9 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             {itemsArray.map((item) => (
                 <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
                 <div>{item.name}</div>
-                <button onClick={gotoEdit(item.id)}>Rediger</button>
+                {(isAdmin || item.creatorId === userId) && (
+                    <button onClick={gotoEdit(item.id)}>Rediger</button>
+                )}
                 {(isAdmin || item.creatorId === userId) && (
                     <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
                 )}
