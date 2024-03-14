@@ -1,6 +1,12 @@
+interface CommentItem {
+  id: number;
+  name: string;
+  items: CommentItem[];
+}
+
 export const useNode = () => {
   // Function to insert a new node into the tree
-  const insertNode = function (tree, commentId, item) {
+const insertNode = function(tree: any, commentId: number, item:  CommentItem[]) {
     if (tree.id === commentId) {
       // If the current node matches the commentId, insert a new node
       tree.items.push({
@@ -12,22 +18,22 @@ export const useNode = () => {
     }
 
     let latestNode = [];
-    latestNode = tree.items.map((ob) => {
+    latestNode = tree.items.map((ob: any) => {
       return insertNode(ob, commentId, item);
     });
- 
+
     return { ...tree, items: latestNode };
   };
 
   // Function to edit the name of a node in the tree
-  const editNode = (tree, commentId, value) => {
+  const editNode = (tree: any, commentId: number, value: string) => {
     if (tree.id === commentId) {
       // If the current node matches the commentId, update the name
       tree.name = value; // Update the name of the node
       return tree;
     }
 
-    tree.items.map((ob) => {
+    tree.items.map((ob: any) => {
       return editNode(ob, commentId, value);
     });
 
@@ -35,7 +41,7 @@ export const useNode = () => {
   };
 
   // Function to delete a node from the tree
-  const deleteNode = (tree, id) => {
+  const deleteNode = (tree: any, id: number) => {
     for (let i = 0; i < tree.items.length; i++) {
       const currentItem = tree.items[i];
       if (currentItem.id === id) {
