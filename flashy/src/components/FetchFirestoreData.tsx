@@ -111,14 +111,18 @@ export const useUserData = () => {
     
 
 }
-    
-        
-    
-    
-    
 
-    
+export const useListAllUsers = () => {
+  const [usersList, setUsersList] = useState<string[][] | null>(null);
+  //const [cardsData, setCardsData] = useState<{ 0: string, 1: string, 2: string, 3: boolean }[] | null>(null);  
 
+        const fetchAllUsers = async () => {
+          const userCollectionRef = collection(db, 'user');
+          const querySnapshot = await getDocs(userCollectionRef);
+          const data = querySnapshot.docs.map(doc => doc.data().email);
+          setUsersList(data);
+        };
+    return {usersList, fetchAllUsers};
+}
 
-
-export default { useSetNames, useCardStrings, useUserData, usePublicState };
+export default { useSetNames, useCardStrings, useUserData, usePublicState, useListAllUsers };
