@@ -4,7 +4,7 @@ import { auth, db } from "../lib/firebase/firebase";
 import { initLikes, getUsername } from './GridHelper';
 
 export const useSetNames = () => {
-    const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string, creatorId: string, likes: number, username: string}[]>([]); // Array of objects with ID and name and creatorId
+    const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string, creatorId: string, likes: number, username: string, tag:string}[]>([]); // Array of objects with ID and name and creatorId
   
     const fetchData = async (userId: String, page:number) => {
         try {
@@ -36,7 +36,7 @@ export const useSetNames = () => {
                     userSetsQuery = query(collection(db, 'flashcardSets'));
                     userSetsSnapshot = await getDocs(userSetsQuery);
             }
-            const userDataPromise = userSetsSnapshot.docs.map(async doc => ({ id: doc.id, name: doc.data().name, creatorId: doc.data().creatorId, likes: await initLikes(doc.id), username: await getUsername(doc.data().creatorId) }));
+            const userDataPromise = userSetsSnapshot.docs.map(async doc => ({ id: doc.id, name: doc.data().name, creatorId: doc.data().creatorId, likes: await initLikes(doc.id), username: await getUsername(doc.data().creatorId), tag: doc.data().tag }));
             const userData = await Promise.all(userDataPromise);
             setFlashcardSetData(userData);   
         } catch (error) {
@@ -111,6 +111,33 @@ export const useUserData = () => {
     
 
 }
+
+export const useSetTags = () => {
+  const [flashcardTags, setFlashcardTags] = useState<{tag:string}[]>([]);
+
+  const fetchSetTags = async(userId:string) => {
+
+    try {
+      if (userId != ""){
+        const cardsCollectionRef = collection(db, 'tags');
+        const q = query(cardsCollectionRef, where("creatorId", "==", userId) )
+        const querySnapshot = await getDocs(q);
+        const data = querySnapshot.docs.map(doc => ({tag: doc.data().tag }));
+        setFlashcardTags(data);        
+      } else {
+        const cardsCollectionRef = collection(db, 'tags');
+        const querySnapshot = await getDocs(cardsCollectionRef);
+        const data = querySnapshot.docs.map(doc => ({tag: doc.data().tag }));
+        setFlashcardTags(data);    
+      }
+    }
+    catch (error){
+      console.error("Error fetching flashcard tag data:", error);
+    }
+  };
+  return {flashcardTags, fetchSetTags};
+}
+
     
         
     
@@ -121,4 +148,4 @@ export const useUserData = () => {
 
 
 
-export default { useSetNames, useCardStrings, useUserData, usePublicState };
+export default { useSetNames, useCardStrings, useUserData, usePublicState, useSetTags };

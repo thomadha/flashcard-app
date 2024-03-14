@@ -12,16 +12,22 @@ export interface Item {
     creatorId: string;
     likes: number;
     username: string
+    tag: string;
 }
 
+// KNUT EIRIK: (TRENGS DENNE?):
+export interface GridItemArray {
+    items: Item[];
+}
 
 interface gridProps {
     filter: string;
     searchItem: string;
     page: number;
+    tag: string;
 }
 
-const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
+const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
     const navigateTo = useNavigate();
     const { flashcardSetData, fetchData } = useSetNames();
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
@@ -32,21 +38,53 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
         fetchData(filter, page);
     }, [filter, page]); // Fetch data when filter or page changes
 
+    // SEARCH with text
     useEffect(() => {
         const getFilteredItemsArray =async () => {
             if (flashcardSetData) {
                 const filtered = flashcardSetData.filter(item =>
                     item.name.toLowerCase().startsWith(searchItem.toLowerCase())
                 )
+                if (tag != ""){
+                    const filtered2 = filtered.filter(item => item.tag === tag)
+                    setItemsArray(filtered2);
+                } else {
+                    setItemsArray(filtered);
+                }
                 
-                
-                setItemsArray(filtered);
+
+                //KNUT EIRIK: (TAR IKKE DETTE MED SIDEN DET ER FEIL)
+                // const isFiltered = flashcardSetData.some(item =>
+                //     filteredNameID.some(filteredItem => filteredItem.id === item.id)
+                // );
+                // if (isFiltered) {
+                //     setItemsArray(filteredNameID);
+                // }
+                // if (!isFiltered && searchItem.length > 0 ){
+                //     setItemsArray([])
+                // }
             }
         }
-        
-
         getFilteredItemsArray()
     }, [flashcardSetData, searchItem]);
+
+    // SEARCH WITH TAG:
+    useEffect(() => {
+        const getTagItemsArray =async () => {
+            if (flashcardSetData) {
+                if (tag != ""){
+                    const filtered = flashcardSetData.filter(item => item.tag === tag)
+                    setItemsArray(filtered);
+                } else {
+                    fetchData(filter, page)
+                }
+                
+                
+                
+            }
+        }
+        getTagItemsArray()
+    }, [tag]);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -126,6 +164,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
                 <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
 
                 <p>Laget av: {item.username}</p>
+                <p>Tags: {item.tag}</p>
             </div>
             ))}
         </div>

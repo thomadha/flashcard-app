@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
-import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import { useCardStrings, usePublicState } from "./FetchFirestoreData";
+import { useCardStrings, usePublicState, useSetTags } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
@@ -33,6 +33,10 @@ const Page: React.FC = () => {
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
     
+    // TAGS FRA KNUT EIRIK
+    const {flashcardTags, fetchSetTags} = useSetTags();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>("Annet");
+    const [isOptionsVisible, setOptionsVisible] = useState(false);
 
     const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
@@ -51,6 +55,7 @@ const Page: React.FC = () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
                     name: setName,
                     creatorId: user?.uid,
+                    tag: flashcardSetChosenTag,
                     isFavorite: false,
                     isPublic: true //ENDRE PÅ DENNE NÅR GJØR OFFENTLIG TOGGLE BLIR IMPLEMENTERT
                 });
@@ -119,6 +124,9 @@ const Page: React.FC = () => {
     // Dummy value is changed when updating, adding or deleting card.
     useEffect(() => { 
         fetchData(id);
+        //KNUT EIRIK:
+        fetchSetTags("");
+        console.log("No vart eg kjørt")
         
       }, [dummy, id]);
 
@@ -131,6 +139,14 @@ const Page: React.FC = () => {
                 console.log(text2)
                 const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
 
+                // KNUT EIRIK:
+                const docRef2 = doc(db, "flashcardSets", id);
+                const docSnap = await getDoc(docRef2);
+                if (docSnap.exists()) {
+                    await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
+                }
+
+
                 await updateDoc(docRef, {
                     flashcardFront: text1,
                     flashcardBack: text2
@@ -142,6 +158,10 @@ const Page: React.FC = () => {
                     flashcardFront: text1,
                     flashcardBack: text2
                 });
+
+                //KNUT EIRIK:
+                const docRef2 = doc(db, "flashcardSets", id);
+                await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
 
                 if (docRef){
                     setDummy(dummy + 1);
@@ -190,6 +210,19 @@ const Page: React.FC = () => {
         }
     }
 
+    // KNUT EIRIK:
+
+    const handleButtonClick = () => {
+        // Toggle the visibility of the options div when the button is clicked
+        setOptionsVisible(!isOptionsVisible);
+    };
+
+    const handleTagSelection = (tag:string) => {
+        // Update the selected tag and hide the options div when a tag is selected
+        setFlashcardSetChosenTag(tag);
+        setOptionsVisible(false);
+    };
+
 
     return (
 
@@ -221,6 +254,30 @@ const Page: React.FC = () => {
 
             <div className="cardfront">Framside</div>
             <div className="cardback">Bakside</div>
+
+
+            {/* KNUT EIRIK START*/}
+            <div className="dropdown">
+                <button className="tagButton" onClick={handleButtonClick}
+                >Kategori</button>
+                {isOptionsVisible && (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {flashcardTags.map((tag, index) => (
+                        <div key={index} onClick={() => handleTagSelection(tag.tag)} 
+                        style={{
+                            padding: '5px',
+                            cursor: 'pointer',
+                            backgroundColor: flashcardSetChosenTag === tag.tag ? '#EF8CAD' : 'transparent',
+                        }}>
+                            {tag.tag}
+                        </div>
+                    ))}
+                </div>
+            )}
+            </div>
+
+            {/* KNUT EIRIK SLUTT*/}
+
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
                 <FlashCardEditor text={text2} handleTextChange={setText2} />
