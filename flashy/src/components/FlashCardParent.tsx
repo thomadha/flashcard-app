@@ -3,7 +3,14 @@ import Buttons from "./Buttons";
 import FlashCard from "./FlashCard";
 import { useCardStrings } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
-import { doc, updateDoc, collection, getDocs, query, where} from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../lib/firebase/firebase";
 
 interface FlashCardParentProps {}
@@ -14,9 +21,8 @@ function FlashCardParent(props: FlashCardParentProps) {
   // id of set that was clicked on and userId of that set
   // We need userId to display who made the set when going into the set, but problem because this information
   // is locked and we need real backend to do this.
-  const [id, userId] = location.state.pageArray; 
-  
-  
+  const [id, userId] = location.state.pageArray;
+
   //cardsData har [0] framsiden, [1] baksiden, [2] IDen til card collection
   const { cardsData, fetchData } = useCardStrings();
   //Framside og bakside av Flashcards
@@ -25,17 +31,15 @@ function FlashCardParent(props: FlashCardParentProps) {
   ]);
   const [card, setCard] = useState(0);
   const [side, setSide] = useState(0);
-  
+
   const [text, setText] = useState(studySet[0][0]);
   /*   const [isDuplicatedVisible, setIsDuplicatedVisible] = useState(false); */
 
-
   useEffect(() => {
-    if (id){
+    if (id) {
       fetchData(id);
     }
-  }, [id, ]);
-
+  }, [id]);
 
   // Sets the username based on userId from set, problem is this is not how it works
   // We need email based on uid
@@ -172,8 +176,18 @@ function FlashCardParent(props: FlashCardParentProps) {
     }
   };
 
+  // Calculate progress percentage
+  const progressPercentage = Math.round(((card + 1) / studySet.length) * 100);
+
   return (
     <>
+      <div className="progressBar">
+        <div
+          className="progress"
+          style={{ width: `${progressPercentage}%` }}
+        ></div>
+        <div className="percentageText">{progressPercentage}%</div>
+      </div>
       <Buttons
         handleBackClick={handleBackClick}
         handleNextClick={handleNextClick}
