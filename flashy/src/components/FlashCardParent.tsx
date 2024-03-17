@@ -101,9 +101,19 @@ function FlashCardParent(props: FlashCardParentProps) {
   };
 
   const handleShuffleCards = () => {
+    // Copy the current study set
     const shuffledStudySet = [...studySet];
-    const currentCardText = studySet[card][0];
-
+  
+    // Find the index of the current card
+    const currentIndex = studySet.findIndex(([front]) => front === text);
+  
+    // Move the current card to the first index
+    if (currentIndex !== -1) {
+      const currentCard = shuffledStudySet.splice(currentIndex, 1)[0];
+      shuffledStudySet.unshift(currentCard);
+    }
+  
+    // Shuffle the remaining cards
     for (let i = shuffledStudySet.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledStudySet[i], shuffledStudySet[j]] = [
@@ -111,13 +121,10 @@ function FlashCardParent(props: FlashCardParentProps) {
         shuffledStudySet[i],
       ];
     }
-
-    const newCardIndex = shuffledStudySet.findIndex(
-      ([front]) => front === currentCardText
-    );
-
+  
+    // Update the study set and set the card index to 0
     setStudySet(shuffledStudySet);
-    setCard(newCardIndex !== -1 ? newCardIndex : 0);
+    setCard(0);
   };
 
   const handleDifficultState = async () => {
