@@ -441,7 +441,7 @@ border-radius: 50%;}
     width: 0%; /* Set initial width to 0% */
 }
 
-.percentageText {
+.progressText {
     position: absolute;
     top: 50%;
     left: 50%;

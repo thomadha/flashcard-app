@@ -177,16 +177,13 @@ function FlashCardParent(props: FlashCardParentProps) {
   };
 
   // Calculate progress percentage
-  const progressPercentage = Math.round(((card + 1) / studySet.length) * 100);
+  const currentCardIndex = card + 1; // Adding 1 to convert from zero-based index to one-based index
 
   return (
     <>
       <div className="progressBar">
-        <div
-          className="progress"
-          style={{ width: `${progressPercentage}%` }}
-        ></div>
-        <div className="percentageText">{progressPercentage}%</div>
+        <div className="progress" style={{ width: `${(currentCardIndex / studySet.length) * 100}%` }}></div>
+        <div className="progressText">{currentCardIndex}/{studySet.length}</div>
       </div>
       <Buttons
         handleBackClick={handleBackClick}
