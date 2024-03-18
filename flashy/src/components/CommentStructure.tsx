@@ -11,18 +11,23 @@ interface CommentItem {
     id: number;
     name: string;
     items: CommentItem[];
+    path: string;
 }
 
 const comments: CommentItem = {
     id: 1,
     name: "",
     items: [],
+    path: "", 
 };
 
 export default function CommentStructure() {
-    const [commentsData, setCommentsData] = useState<CommentItem>(comments);
     const location = useLocation();
     const [flashcardsetId, creatorId] = location.state.pageArray;
+    comments.path = "flashcardSets/" + flashcardsetId+  "/comments";
+    const [commentsData, setCommentsData] = useState<CommentItem>(comments);
+    
+    
     const path = "flashcardSets/" + flashcardsetId+  "/comments";
     const { insertNode, editNode, deleteNode } = useNode();
 
@@ -32,7 +37,7 @@ export default function CommentStructure() {
                 let data = await Promise.all(docs.docs.map(async (doc) => {
                     const childComments = await fetchChildComments(path+ "/"+ doc.data().id + "/children");
                     console.log(doc.data().id, doc.data().name);
-                    return { id: doc.data().id, name: doc.data().name, items: childComments };
+                    return { id: doc.data().id, name: doc.data().name, items: childComments, path: doc.data().path };
                 }));
                 setCommentsData({...commentsData, items: data});
                 return data;
@@ -49,7 +54,7 @@ export default function CommentStructure() {
                 const docs = await getDocs(docRef);
                 const data = await Promise.all(docs.docs.map(async (doc) => {
                     const childComments = await fetchChildComments(parentPath+ "/"+ doc.data().id + "/children");
-                    return { id: doc.data().id, name: doc.data().name, items: childComments };
+                    return { id: doc.data().id, name: doc.data().name, items: childComments, path: doc.data().path};
                 }));
                 return data;
             } else {
@@ -67,7 +72,7 @@ export default function CommentStructure() {
     
 
     // Function to handle inserting a new comment node
-    const handleInsertNode = (parentId: number, item: CommentItem[]) => {
+    const handleInsertNode = async (parentId: number, item: CommentItem[]) => {
         const finalStructure = insertNode(commentsData, parentId, item);
         setCommentsData(finalStructure);
     };

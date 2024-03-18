@@ -1,3 +1,6 @@
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../lib/firebase/firebase";
+
 interface CommentItem {
   id: number;
   name: string;
@@ -6,14 +9,30 @@ interface CommentItem {
 
 export const useNode = () => {
   // Function to insert a new node into the tree
-const insertNode = function(tree: any, commentId: number, item:  CommentItem[]) {
+const insertNode = async function(tree: any, commentId: number, item:  CommentItem[]) {
     if (tree.id === commentId) {
       // If the current node matches the commentId, insert a new node
+      const date = new Date().getTime();
+      const newPath = tree.path + "/" + date + "/children";
       tree.items.push({
-        id: new Date().getTime(), // Unique identifier for the new node
+        id: date, // Unique identifier for the new node
         name: item, // Name of the new node
         items: [], // Child nodes of the new node
+        path: newPath, // Path of the new node
       });
+      try {
+        // Add the new comment to the Firestore collection
+        await addDoc(collection(db, newPath), {
+          id: date, // Unique identifier for the new node
+          name: item, // Name of the new node
+          items: [], // Child nodes of the new node
+          path: newPath, // Path of the new node
+        });
+        console.log("New comment added to Firestore");
+    } catch (error) {
+        console.error("Error adding new comment to Firestore:", error);
+        // Handle error
+    }
       return tree;
     }
 
