@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@testing-library/react": "^14.2.1"
+  },
+  "dependencies": {
+    "text-encoding": "^0.7.0"
+  }
+}
