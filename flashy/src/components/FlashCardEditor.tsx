@@ -207,7 +207,9 @@ const Page: React.FC = () => {
                 />
                 <label htmlFor="public">Vis settet til andre brukere</label>
                 </div>
-                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
+                <p style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "15px"}}>
+                    Legg til et FlashCard Set blant settene til {user?.email}
+                </p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 

@@ -64,13 +64,18 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Type to search'
+                    placeholder='Skriv for å søke'
                 />
             </div>
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>
             {showModal && (
-                <div>
-                    <input type="text" value={setName} onChange={handleSetName} placeholder="Skriv inn navn..." />
+                <div className="Name-bar">
+                    <input 
+                        type="text" 
+                        value={setName} 
+                        onChange={handleSetName} 
+                        placeholder="Skriv inn navn..." 
+                    />
                     <button onClick={handleConfirmSetName}>Bekreft</button>
                 </div>
             )}

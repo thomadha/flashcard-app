@@ -51,7 +51,7 @@ function InlogPanel() {
           if (auth.currentUser){
             await setDoc(doc(db, "user", auth.currentUser.uid), {
               email: email,
-              username: email + '-Brukernavn'
+              username: email.split('@')[0]
             });
           }
         }

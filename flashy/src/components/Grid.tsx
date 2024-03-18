@@ -114,7 +114,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
         <div className="grid-container">
             {itemsArray.map((item) => (
                 <div key={item.id} className="grid-item" onClick={() => gotoPage(item.id, item.creatorId)}>
-                <div>{item.name}</div>
+                <div className='setTitle'>{item.name}</div>
                 {(isAdmin || item.creatorId === userId) && (
                     <button onClick={gotoEdit(item.id)}>Rediger</button>
                 )}
