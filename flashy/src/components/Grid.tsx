@@ -11,6 +11,7 @@ export interface Item {
     name: string;
     creatorId: string;
     likes: number;
+    tag: string;
     username: string
 }
 
@@ -19,18 +20,36 @@ interface gridProps {
     filter: string;
     searchItem: string;
     page: number;
+    tag: string;
 }
 
-const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
+const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
     const navigateTo = useNavigate();
-    const { flashcardSetData, fetchData } = useSetNames();
+    const { flashcardSetData, fetchDataSetNames } = useSetNames();
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [userId, setUserId] = useState("");
 
     useEffect(() => {
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }, [filter, page]); // Fetch data when filter or page changes
+
+    {/*useEffect(() => {
+        const filtered = flashcardSetData.filter(item =>
+            item.name.toLowerCase().startsWith(searchItem.toLowerCase()));
+        
+        let filteredByTag: { id: string; name: string; creatorId: string; likes:number; tag: string; username:string}[] = [];
+        if (searchItem.trim() !== '') {
+            // Only filter by tag if searchItem is not empty
+            filteredByTag = flashcardSetData.filter(item =>
+                item.tag && item.tag.toLowerCase().startsWith(searchItem.toLowerCase())
+            );
+        }
+        const filteredResults = [...filtered, ...filteredByTag];
+        setFilteredNameID(filteredResults);
+        
+        
+    }, [searchItem, flashcardSetData]);*/}
 
     useEffect(() => {
         const getFilteredItemsArray =async () => {
@@ -38,15 +57,35 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
                 const filtered = flashcardSetData.filter(item =>
                     item.name.toLowerCase().startsWith(searchItem.toLowerCase())
                 )
-                
-                
-                setItemsArray(filtered);
+                if (tag != ""){
+                    const filtered2 = filtered.filter(item => item.tag === tag)
+                    setItemsArray(filtered2);
+                } else {
+                    setItemsArray(filtered);
+                }
+            
             }
         }
-        
-
         getFilteredItemsArray()
     }, [flashcardSetData, searchItem]);
+
+    // SEARCH WITH TAG:
+    useEffect(() => {
+        const getTagItemsArray =async () => {
+            if (flashcardSetData) {
+                if (tag != ""){
+                    const filtered = flashcardSetData.filter(item => item.tag === tag)
+                    setItemsArray(filtered);
+                } else {
+                    fetchDataSetNames(filter, page)
+                }
+                
+                
+                
+            }
+        }
+        getTagItemsArray()
+    }, [tag]);
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -66,7 +105,13 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             setUserId(user.uid);
             const arrayRef = doc(db, "Administratorer", "UsersWithAdmin");
             const AdminArrayDoc = await getDoc(arrayRef);
-            return AdminArrayDoc.get("AdminArray").includes(mail);
+            try {
+                const Array = AdminArrayDoc.get("AdminArray").includes(mail);
+                return Array;
+            } catch (error) {
+                return []
+            }
+
         } else {
             return false;
         }
@@ -89,7 +134,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
             if (id !== undefined) {
                 const docRef = doc(db, "flashcardSets", id);
                 await deleteDoc(docRef);
-                fetchData(filter, page);
+                fetchDataSetNames(filter, page);
             }
         } catch (e) {
             return;
@@ -100,14 +145,14 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
     const changeLike = (itemId: string) => async (event: React.MouseEvent) => {
         event.stopPropagation();
         logButtonclick(itemId);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     //Håndterer når favoritt knappen blir trykket på
     const changeFavorite = (id: string) => (event: React.MouseEvent) => {
         event.stopPropagation();
         favoriteHandler(id);
-        fetchData(filter, page);
+        fetchDataSetNames(filter, page);
     }
 
     return (
@@ -124,8 +169,8 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page }) => {
                 <img src={require('../pictures/1000_F_238719835_fdgaiXccSVeBhcr0ZSAn1c1iny0T764d.png')} id='favoriteimage'
                     onClick={(event) => changeFavorite(item.id)(event)}></img>
                 <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
-
-                <p>Laget av: {item.username}</p>
+                <p>Tag: {item.tag}</p>
+                <p style={{bottom:0}}>Laget av: {item.username}</p>
             </div>
             ))}
         </div>

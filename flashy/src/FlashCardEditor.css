@@ -51,6 +51,14 @@
     font-size: 40px;
 }
 
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    top: 395px;
+    left: 83%;
+    font-size: 12px;
+}
+
 button {
     background-color: white;
     color: black;

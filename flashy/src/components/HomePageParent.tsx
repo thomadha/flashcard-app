@@ -15,12 +15,14 @@ function HomePageParent() {
     const [filter, setFilter] = useState<string>('');
     const [searchItem, setSearchItem] = useState<string>('');
 
+    const [tag, setTag] = useState<string>('');
+
     return (
         <>
             <div>
                 <Navbar />
-                <HomePageNav filter={filter} setFilter={setFilter} searchItem={searchItem} setSearchItem={setSearchItem} updatePage={updatePage}/>
-                <Grid page={page} filter={filter} searchItem={searchItem}/>
+                <HomePageNav tag={tag} setTag={setTag} filter={filter} setFilter={setFilter} searchItem={searchItem} setSearchItem={setSearchItem} updatePage={updatePage}/>
+                <Grid tag={tag} page={page} filter={filter} searchItem={searchItem}/>
             </div>
         </>
         )
