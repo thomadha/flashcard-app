@@ -139,14 +139,6 @@ const Page: React.FC = () => {
                 console.log(text2)
                 const docRef = doc(db, "flashcardSets", id, "cards", studySet[card][2]);
 
-                // KNUT EIRIK:
-                const docRef2 = doc(db, "flashcardSets", id);
-                const docSnap = await getDoc(docRef2);
-                if (docSnap.exists()) {
-                    await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
-                }
-
-
                 await updateDoc(docRef, {
                     flashcardFront: text1,
                     flashcardBack: text2
@@ -158,10 +150,6 @@ const Page: React.FC = () => {
                     flashcardFront: text1,
                     flashcardBack: text2
                 });
-
-                //KNUT EIRIK:
-                const docRef2 = doc(db, "flashcardSets", id);
-                await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
 
                 if (docRef){
                     setDummy(dummy + 1);
@@ -177,6 +165,21 @@ const Page: React.FC = () => {
             setText1("");
             setText2("");
 
+        } catch (error) {
+            console.error("Problemer ved lagring:", error);
+    }
+    };
+
+    // JALLAAAAA:
+    const handleSaveTag = async () => {
+        try{
+            console.log(flashcardSetChosenTag);
+            const docRef2 = doc(db, "flashcardSets", id);
+            const docSnap = await getDoc(docRef2);
+            if (docSnap.exists()) {
+                await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
+            }
+            setOptionsVisible(false);
         } catch (error) {
             console.error("Problemer ved lagring:", error);
     }
@@ -220,7 +223,7 @@ const Page: React.FC = () => {
     const handleTagSelection = (tag:string) => {
         // Update the selected tag and hide the options div when a tag is selected
         setFlashcardSetChosenTag(tag);
-        setOptionsVisible(false);
+        
     };
 
 
@@ -258,6 +261,9 @@ const Page: React.FC = () => {
 
             {/* KNUT EIRIK START*/}
             <div className="dropdown">
+                { (flashcardSetChosenTag != "") &&
+                    <div>Kategori valgt: {flashcardSetChosenTag}</div>
+                }
                 <button className="tagButton" onClick={handleButtonClick}
                 >Kategori</button>
                 {isOptionsVisible && (
@@ -272,8 +278,12 @@ const Page: React.FC = () => {
                             {tag.tag}
                         </div>
                     ))}
+                    <button className="tagButton" onClick={handleSaveTag}>Lagre</button>
                 </div>
+                
+                
             )}
+                
             </div>
 
             {/* KNUT EIRIK SLUTT*/}
