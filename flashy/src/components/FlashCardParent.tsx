@@ -98,8 +98,17 @@ function FlashCardParent(props: FlashCardParentProps) {
 
   const handleShuffleCards = () => {
     const shuffledStudySet = [...studySet];
-    const currentCardText = studySet[card][0];
 
+    // Find the index of the current card
+    const currentIndex = studySet.findIndex(([front]) => front === text);
+  
+    // Move the current card to the first index
+    if (currentIndex !== -1) {
+      const currentCard = shuffledStudySet.splice(currentIndex, 1)[0];
+      shuffledStudySet.unshift(currentCard);
+    }
+  
+    // Shuffle the remaining cards
     for (let i = shuffledStudySet.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledStudySet[i], shuffledStudySet[j]] = [
@@ -108,12 +117,8 @@ function FlashCardParent(props: FlashCardParentProps) {
       ];
     }
 
-    const newCardIndex = shuffledStudySet.findIndex(
-      ([front]) => front === currentCardText
-    );
-
     setStudySet(shuffledStudySet);
-    setCard(newCardIndex !== -1 ? newCardIndex : 0);
+    setCard(0);
   };
 
   const handleDifficultState = async () => {
@@ -172,8 +177,15 @@ function FlashCardParent(props: FlashCardParentProps) {
     }
   };
 
+   // Calculate cardIndex
+   const currentCardIndex = card + 1; // Adding 1 to convert from zero-based index to one-based index
+
   return (
     <>
+    <div className="progressBar">
+      <div className="progress" style={{ width: `${(currentCardIndex / studySet.length) * 100}%` }}></div>
+      <div className="progressText">{currentCardIndex}/{studySet.length}</div>
+      </div>
       <Buttons
         handleBackClick={handleBackClick}
         handleNextClick={handleNextClick}
