@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../FlashCardEditor.css';
-import { doc, collection, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc, deleteDoc, setDoc, getDoc } from "firebase/firestore";
 import { db, auth } from "../lib/firebase/firebase";
-import UseCardStrings, { useCardStrings } from "./FlashCardSet";
+import { useCardStrings, usePublicState, useSetTags } from "./FetchFirestoreData";
 import { useLocation } from "react-router-dom";
 
 interface FlashCardProps{
-    
     text: string;
     handleTextChange: (newText:string) => void;
 }
@@ -26,18 +25,23 @@ const FlashCardEditor: React.FC<FlashCardProps> = ({text, handleTextChange }) =>
 
 const Page: React.FC = () => {
 
-    const location = useLocation();
+    const location = useLocation(); 
     const [id, setId] = useState("AEM8Vg71YOYv1JwWOttA"); // Placeholder ID
-    const [locationId, setName, isNew] = location.state.editArray;
+    const [locationId, setName, isNew] = location.state.editArray; // ['', setName: string, newSet: Boolean ] - Info from createSet functions in HomePageNav.tsx
 
     const [text1, setText1] = useState("");
     const [text2, setText2] = useState("");
     const [dummy, setDummy] = useState(0)
     
+    const {flashcardTags, fetchSetTags} = useSetTags();
+    const [flashcardSetChosenTag, setFlashcardSetChosenTag] = useState<string>("Annet");
+    const [isOptionsVisible, setOptionsVisible] = useState(false);
 
-    const {cardsData, fetchData} = UseCardStrings();
+    const {cardsData, fetchData} = useCardStrings();
     const [studySet, setStudySet] = useState([[ "Laster inn..", "Laster inn..", "Laster inn..."]]);
     const [card, setCard] = useState(-1); 
+
+    const [isPublic, setIsPublic] = useState(false);
 
     const [savedMessage, setSavedMessage] = useState<string | null>(null);
     
@@ -49,10 +53,11 @@ const Page: React.FC = () => {
             const createDoc = async () => {
                 const docRef = await addDoc(collection(db, "flashcardSets"), {
                     name: setName,
-                    creatorId: user?.uid
+                    creatorId: user?.uid,
+                    tag: flashcardSetChosenTag,
+                    isFavorite: false,
+                    isPublic: false
                 });
-                console.log("Document written with ID: ", docRef.id);
-                console.log("Document written with set name: ", setName);
                 setId(docRef.id);
             };
             createDoc();
@@ -74,9 +79,39 @@ const Page: React.FC = () => {
         }
     }, [card]);
 
-    
+    // Set publicState
+    const {publicState, fetchPublicData} = usePublicState();
 
-    
+    useEffect(() => {
+        if (id) {
+            fetchPublicData(id);
+        }
+    }, [id, isPublic]);
+
+    useEffect(() => {
+        try {
+            if (publicState) {
+                setIsPublic(publicState[0].isPublic);
+            }
+        } catch (error) {
+            // console.error("Error setting public state:", error);
+        }
+    }, [publicState]);
+
+    useEffect(() => { 
+        try {
+            if (publicState[0].isPublic !== isPublic) {
+                // console.log("Updating public state");
+                updateDoc(doc(db, "flashcardSets", id), {
+                    isPublic: isPublic
+                });
+              }
+        } catch (error) {
+            // console.error("Error setting public state:", error);
+        }
+
+      }, [isPublic]);
+
     // Constant updating of setStudySet
     useEffect(() => { 
         if (cardsData) {
@@ -88,7 +123,7 @@ const Page: React.FC = () => {
     // Dummy value is changed when updating, adding or deleting card.
     useEffect(() => { 
         fetchData(id);
-        
+        fetchSetTags("")
       }, [dummy, id]);
 
     
@@ -133,6 +168,7 @@ const Page: React.FC = () => {
 
     // Click to select different card for editing
     const handleClickOnHeader = (i: number) => {
+        console.log(user?.email);
         setCard(i);
         console.log(i);
     }
@@ -159,11 +195,49 @@ const Page: React.FC = () => {
     }
 
 
+    const handleSaveTag = async () => {
+            try{
+                console.log(flashcardSetChosenTag);
+                const docRef2 = doc(db, "flashcardSets", id);
+                const docSnap = await getDoc(docRef2);
+                if (docSnap.exists()) {
+                    await setDoc(docRef2, { tag: flashcardSetChosenTag }, { merge: true });
+                }
+                setOptionsVisible(false);
+            } catch (error) {
+                console.error("Problemer ved lagring:", error);
+        }
+        };
+
+    const handleButtonClick = () => {
+        // Toggle the visibility of the options div when the button is clicked
+        setOptionsVisible(!isOptionsVisible);
+    };
+
+    const handleTagSelection = (tag:string) => {
+        // Update the selected tag and hide the options div when a tag is selected
+        setFlashcardSetChosenTag(tag);
+        
+    };
+
+
     return (
 
         <div className="page">
     
             <div>
+                <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "15px"}}>
+                <input 
+                    type="checkbox" 
+                    id="public" 
+                    name="public" 
+                    value="public" 
+                    checked={isPublic} 
+                    onChange={(e) => setIsPublic(e.target.checked)} 
+                />
+                <label htmlFor="public">Vis settet til andre brukere</label>
+                </div>
+                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 
@@ -177,6 +251,34 @@ const Page: React.FC = () => {
 
             <div className="cardfront">Framside</div>
             <div className="cardback">Bakside</div>
+            {/* KNUT EIRIK START*/}
+            <div className="dropdown">
+                { (flashcardSetChosenTag != "") &&(flashcardSetChosenTag !== "Annet") &&
+                    <div>Kategori valgt: {flashcardSetChosenTag}</div>
+                }
+                <button className="tagButton" onClick={handleButtonClick}
+                >Kategori</button>
+                {isOptionsVisible && (
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {flashcardTags.map((tag, index) => (
+                        <div key={index} onClick={() => handleTagSelection(tag.tag)} 
+                        style={{
+                            padding: '5px',
+                            cursor: 'pointer',
+                            backgroundColor: flashcardSetChosenTag === tag.tag ? '#EF8CAD' : 'transparent',
+                        }}>
+                            {tag.tag}
+                        </div>
+                    ))}
+                    <button className="tagButton" onClick={handleSaveTag}>Lagre</button>
+                </div>
+                
+                
+            )}
+                
+            </div>
+
+            {/* KNUT EIRIK SLUTT*/}
             <div className="card-container">
                 <FlashCardEditor text={text1} handleTextChange={setText1} />
                 <FlashCardEditor text={text2} handleTextChange={setText2} />

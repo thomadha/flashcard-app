@@ -86,7 +86,7 @@ body {
 
 #ShuffleCards {
     position: absolute;
-    bottom: 5px;
+    bottom: 17%; 
     left: 40vw;
     background-color: white;
     border-radius: 8px;
@@ -222,6 +222,24 @@ Nav>homenav {
     max-width: 100%;
 }
 
+.search-bar{
+    display: flex;
+    align-items: center; 
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.tagBox {
+    position: fixed; /* Position the overlay relative to the viewport */
+    top: 30%; /* Align the top edge of the overlay to the top of the viewport */
+    left: 19%; /* Align the left edge of the overlay to the left of the viewport */
+    width: auto; /* Make the overlay full width of the viewport */
+    height: auto; /* Make the overlay full height of the viewport */
+    background-color: #DEFEDD; /* Semi-transparent black background */
+    z-index: 9999; /* Set a high z-index to ensure it appears on top of other content */
+}
+
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -276,3 +294,147 @@ Nav>homenav {
     margin-left: 30px;
     font-size: 20px;
 }
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+.switchInput {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    margin-top: 5px;
+    left: 10px;
+    bottom: 10px;
+    background-color: #76B27C;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 28px;
+    width: 28px;
+    left: 10px;
+    bottom: 4px;
+    background-color: #76B27C;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #76B27C;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #76B27C;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;}
+
+#favoriteimage{
+    background-color: 'transparent';
+    width: 20px;
+    height: 20px;
+}
+
+/* Kommentar styling */
+.commentContainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    display:flex;
+    flex-direction: column;
+    padding: 5px 10px;
+    width: 300px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .commentContainer:hover {
+    background-color: #F6C3D4;
+  }
+  
+  .inputContainer {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .inputContainer > span {
+    margin-top: 5px;
+  }
+  
+  .inputContainer__input {
+    margin: 6px 0 0px 0;
+    padding: 5px;
+    display: flex;
+    border: 1px solid white;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: white;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+  }
+  
+  .first_input {
+    margin: 0;
+  }
+  
+  .commentContainer > span {
+    margin: 0 5px;
+    top: 20px;
+  }
+  
+  .reply {
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 5px;
+    color: #4e4e4e;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .reply:hover {
+    text-decoration: underline;
+  }
+  
+  .comment {
+    color: black;
+    background-color: #EF8CAD;
+    letter-spacing: 0.8px;
+    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+  }
+
+  .CommentStructure{
+    margin-top: 20px;
+    width: fit-content;
+  }
+  .Commentfield{
+    position: relative;
+    left: 40%;
+    top: 30px;
+    margin-bottom: 50px;
+  }
