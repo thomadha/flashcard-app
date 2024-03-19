@@ -1,0 +1,36 @@
+.dark_mode {
+    cursor: pointer;
+    position: relative;
+    margin-left: 95%;
+    padding-bottom: 10px;
+    padding-top: 8px;
+}
+
+.dark_mode_toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50px; 
+    height: 30px; 
+    border-radius: 15px;
+    background-color: #ccc; 
+    padding: 1px; 
+    transition: background-color 0.3s ease;
+}
+
+.dark_mode_toggle.dark_mode_on {
+    justify-content: flex-end;
+    background-color: black;
+}
+
+.dark_mode_toggle.dark_mode_off {
+    justify-content: flex-start;
+    background-color: lightgray;
+}
+
+.dark_mode_toggle svg {
+    width: 26px; /* Adjust size as needed */
+    height: 26px; /* Adjust size as needed */
+    fill: #fff; /* Color of icons */
+    transition: fill 0.3s ease;
+}

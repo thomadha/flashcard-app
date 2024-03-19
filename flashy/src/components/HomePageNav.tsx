@@ -76,12 +76,12 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
     };
 
     return (
-        <div style={{ backgroundColor: "#DEFEDD" }} className="Container">
+        <div id="HomePageNav" className="Container">
             <button id="HomePageNavButton" onClick={() => handlemip(0)}>Mine sett</button>
             <button id="HomePageNavButton" onClick={() => handlemip(1)}>Utforsk</button>
             <button id="HomePageNavButton" onClick={() => handlemip(2)}>Favoritter</button>
             {/* KNUT EIRIK START */}
-            <button onClick={handleButtonClick}>Kategorier</button>
+            <button id="categoriesButton" onClick={handleButtonClick}>Kategorier</button>
             {isOptionsVisible && (
             <div className='tagBox' style={{ display: 'flex', flexDirection: 'column' }}>
                 {/*DEFAULT:*/}
@@ -113,7 +113,7 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Type to search'
+                    placeholder='Søk...'
                 />
             </div>
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>

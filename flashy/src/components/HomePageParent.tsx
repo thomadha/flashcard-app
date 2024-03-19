@@ -19,7 +19,7 @@ function HomePageParent() {
 
     return (
         <>
-            <div>
+            <div id="homePageNav">
                 <Navbar />
                 <HomePageNav tag={tag} setTag={setTag} filter={filter} setFilter={setFilter} searchItem={searchItem} setSearchItem={setSearchItem} updatePage={updatePage}/>
                 <Grid tag={tag} page={page} filter={filter} searchItem={searchItem}/>

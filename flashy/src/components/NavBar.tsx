@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import DarkMode from "./DarkMode/DarkMode";
 
 function Navbar() {
 
@@ -10,6 +11,7 @@ function Navbar() {
 
     return (
     <nav role="main" className="navbar-flashy">
+      <DarkMode/>
       <p id="Title">Flashy!</p>
       <Link to="/home" >
         <button id="HomeButton">Hjem</button>
