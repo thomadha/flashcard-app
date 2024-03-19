@@ -261,7 +261,7 @@ const Page: React.FC = () => {
 
             {/* KNUT EIRIK START*/}
             <div className="dropdown">
-                { (flashcardSetChosenTag != "") &&
+                { (flashcardSetChosenTag != "") && (flashcardSetChosenTag != "Annet") &&
                     <div>Kategori valgt: {flashcardSetChosenTag}</div>
                 }
                 <button className="tagButton" onClick={handleButtonClick}
