@@ -51,18 +51,7 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
                 } else {
                     setItemsArray(filtered);
                 }
-                
-
-                //KNUT EIRIK: (TAR IKKE DETTE MED SIDEN DET ER FEIL)
-                // const isFiltered = flashcardSetData.some(item =>
-                //     filteredNameID.some(filteredItem => filteredItem.id === item.id)
-                // );
-                // if (isFiltered) {
-                //     setItemsArray(filteredNameID);
-                // }
-                // if (!isFiltered && searchItem.length > 0 ){
-                //     setItemsArray([])
-                // }
+            
             }
         }
         getFilteredItemsArray()
