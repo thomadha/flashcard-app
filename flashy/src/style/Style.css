@@ -232,9 +232,9 @@ Nav>homenav {
 }
 
 .tagBox {
-    position: fixed; /* Position the overlay relative to the viewport */
-    top: 0%; /* Align the top edge of the overlay to the top of the viewport */
-    left: 50%; /* Align the left edge of the overlay to the left of the viewport */
+    position: absolute; /* Position the overlay relative to the viewport */
+    top: 30%; /* Align the top edge of the overlay to the top of the viewport */
+    left: 19%; /* Align the left edge of the overlay to the left of the viewport */
     width: auto; /* Make the overlay full width of the viewport */
     height: auto; /* Make the overlay full height of the viewport */
     background-color: #DEFEDD; /* Semi-transparent black background */
