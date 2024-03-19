@@ -25,7 +25,6 @@ function InlogPanel() {
           email,
           password
         );
-        console.log("Success. Signed in ", loginInfo.user.email);
         navigateTo("/home");
       } catch (e){
         console.error("Error: ", e);

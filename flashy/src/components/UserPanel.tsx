@@ -24,12 +24,13 @@ function UserPanel(){
     
     useEffect( () => {
         async function foo(){
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (user) {
-            await setUserId(user?.uid);
-            await fetchUserData(user?.uid);
-        }}
+            const auth = getAuth();
+            const user = auth.currentUser;
+            if (user) {
+                setUserId(user?.uid);
+                await fetchUserData(user?.uid);
+            }
+        }
         foo();
     }, [dummy, ]);
 

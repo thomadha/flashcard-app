@@ -14,10 +14,9 @@ function AdminPanel(){
 
     useEffect(() => {
         fetchAllUsers();
-    }, [fetchAllUsers]);
+    }, []);
 
-    async function CheckIfAdmin(){
-        
+    async function CheckIfAdmin(){     
         const auth = getAuth();
         const user = auth.currentUser;
         try {
