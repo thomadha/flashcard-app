@@ -438,3 +438,33 @@ border-radius: 50%;}
     top: 30px;
     margin-bottom: 50px;
   }
+
+    /* Progress bar styling */
+.progressBar {
+    position: relative;
+    height: 20px;
+    background-color: #EF8CAD; 
+    margin-top: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #76B27C; 
+    border-radius: 10px;
+    width: 0%; /* Set initial width to 0% */
+}
+
+.progressText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; 
+    font-size: 14px;
+    font-weight: bold;
+}
