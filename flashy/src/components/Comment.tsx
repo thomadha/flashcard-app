@@ -100,20 +100,6 @@ const Comment: React.FC<CommentProps> = ({
                 <>
                   <Action
                     className="reply"
-                    type={
-                      <>
-                        {expand ? (
-                          <UpArrow width="10px" height="10px" />
-                        ) : (
-                          <DownArrow width="10px" height="10px" />
-                        )}{" "}
-                        REPLY
-                      </>
-                    }
-                    handleClick={handleNewComment}
-                  />
-                  <Action
-                    className="reply"
                     type="EDIT"
                     handleClick={() => {
                       setEditMode(true);
@@ -140,7 +126,6 @@ const Comment: React.FC<CommentProps> = ({
               autoFocus
               onChange={(e) => setInput(e.target.value)}
             />
-            <Action className="reply" type="REPLY" handleClick={onAddComment} />
             <Action
               className="reply"
               type="CANCEL"
