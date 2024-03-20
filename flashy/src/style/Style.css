@@ -455,6 +455,13 @@ border-radius: 50%;}
     width: 20px;
     height: 20px;
 }
+
+#userimage{
+    background-color: 'transparent';
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
 #favoriteimagenot{
     background-color: 'transparent';
     width: 20px;

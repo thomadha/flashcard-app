@@ -28,87 +28,70 @@ export default function CommentStructure() {
     const [flashcardsetId, creatorId] = location.state.pageArray;
     const path = "flashcardSets/" + flashcardsetId+  "/comments";
     const { insertNode, editNode, deleteNode } = useNode();
-    const [refresh, setRefresh] = useState(1);
+    const [deletedIDs, setDeletedIDs] = useState<number[]>([]);
     const fetchParentComments = async () => {
         try {
                 const docs = await getDocs(collection(db,path));
                 const bigL = (await getCountFromServer(collection(db,path))).data().count; 
-                console.log("bigL",bigL);
                 if(bigL !== 0){   
                 let data = await Promise.all(docs.docs.map(async (doc) => {
                     //const childComments = await fetchChildComments(path+ "/"+ doc.data().id);
                     const childComments: never[] = [];
                     console.log("Getting parent",doc.data().id, doc.data().name);
-                    return { id: doc.data().id, name: doc.data().name, items: childComments, path: doc.data().path };
+                    return { id: doc.data().id, name: doc.data().name, items: childComments, createdBy: doc.data().createdBy, uid: doc.data().uid};
                 }));
-                setCommentsData({...commentsData, items: data});            
-                return data;}
+                setCommentsData({...commentsData, items: data});}
                 else{
-                    setCommentsData(comments);
-                    return [];
+                    setCommentsData(comments);}
                 }
-        } catch (error) {
+        catch (error) {
             console.log("Error fetching parent comments: ", error);
-            
-            setCommentsData(comments);
         }
 
     };
 
-    {/*const fetchChildComments = async (parentPath: string): Promise<CommentItem[]> => {
-        try {
-            const docRef = collection(db, parentPath);
-            const bigL = (await getCountFromServer(docRef)).data().count;
-            console.log("bigL",bigL);
-            
-            if (bigL!== 0) {
-                const docs = await getDocs(docRef);
-                const data = await Promise.all(docs.docs.map(async (doc) => {
-                    const childComments = await fetchChildComments(doc.data().path+"/children"+doc.data().id);
-                    return { id: doc.data().id, name: doc.data().name, items: childComments, path: doc.data().path};
-                }));
-                console.log("getting child",data);
-                return data;
-            } else {
-                console.log("empty child");
-                return [];
-            }
-        } catch (error) {
-            console.log("Error fetching child comments: ", error);
-            return [];
-        }
-    };*/}
-
-    useEffect(() => {
+    useEffect(() => { 
         setCommentsData(comments)
         fetchParentComments();
     }, []);
-    useEffect(() => {
-        setCommentsData(comments)
-        fetchParentComments();
-    }, [refresh]);
+
 
     // Function to handle inserting a new comment node
     const handleInsertNode = async (parentId: number, item: CommentItem[]) => {
-        const finalStructure = insertNode(commentsData, parentId, item,path);
-        setCommentsData(await finalStructure);
+        insertNode(commentsData, parentId, item,path).then(() =>{refresh()});
     };
 
     // Function to handle editing a comment node
     const handleEditNode = async (parentId: number, value: string) => {
-        const finalStructure = editNode(commentsData, parentId, value, path, refresh,setRefresh);
-        setCommentsData(await finalStructure);
-        setRefresh(refresh+1);
+        editNode(commentsData, parentId, value, path).then(() =>{refresh()});
     };
 
     // Function to handle deleting a comment node
     const handleDeleteNode = async(parentId: number) => {
-        const finalStructure = deleteNode(commentsData, parentId, path);
-        const temp = { ...finalStructure };
-        setCommentsData(await temp);
-        setRefresh(refresh+1);
+        setDeletedIDs([...deletedIDs, parentId]);
+        await deleteNode(commentsData, parentId, path);
+        refresh();
     };
 
+    const refresh = () => {
+        console.log("refreshing");
+        
+        setCommentsData(comments);
+        fetchParentComments();
+    }
+
+    useEffect(() => {
+        console.log("commentsData got changed", commentsData);
+        const updatedItems = commentsData.items.filter(comment => !deletedIDs.includes(comment.id));
+        if(updatedItems.length === commentsData.items.length){}
+        else{
+        setCommentsData(prevState => ({
+            ...prevState,
+            items: updatedItems
+        }));}
+    }, [commentsData]);
+    
+    
     return (
         <Comment
             key={commentsData.id}
@@ -119,3 +102,4 @@ export default function CommentStructure() {
         />
     );
 }
+

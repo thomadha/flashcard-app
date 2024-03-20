@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import Action from "./CommentAction";
 import { ReactComponent as DownArrow } from "../pictures/down-arrow.svg";
 import { ReactComponent as UpArrow } from "../pictures/up-arrow.svg";
+import userImg from "../pictures/user.png";
+import { auth } from "../lib/firebase/firebase";
 
 interface CommentProps {
   handleInsertNode: Function;
@@ -47,11 +49,16 @@ const Comment: React.FC<CommentProps> = ({
   const handleDelete = () => {
     handleDeleteNode(comment.id);
   };
-
+  
+  const itemsList = () => {
+    console.log("itemsList", comment.items);
+    
+  }
+  itemsList();
   return (
     <div>
-      <div className={comment.id === 1 ? "inputContainer" : "commentContainer"}>
-        {comment.id === 1 ? (
+      <div className={comment.id === 1  ? "inputContainer" : "commentContainer"}>
+        {comment.id === 1  ? (
           <>
             <input
               type="text"
@@ -69,7 +76,12 @@ const Comment: React.FC<CommentProps> = ({
           </>
         ) : (
           <>
-            <span
+            <span style={{ fontWeight: "bold" }}>
+            <img src={userImg} id="userimage"></img>
+              {comment.createdBy}
+            </span>
+            {/* Display the comment text */}
+            <span id="commentText"
               contentEditable={editMode}
               suppressContentEditableWarning={editMode}
               ref={inputRef}
@@ -81,6 +93,7 @@ const Comment: React.FC<CommentProps> = ({
             <div style={{ display: "flex", marginTop: "5px" }}>
               {editMode ? (
                 <>
+                  {/* Action buttons for saving and canceling edit */}
                   <Action
                     className="reply"
                     type="SAVE"
@@ -98,18 +111,18 @@ const Comment: React.FC<CommentProps> = ({
                 </>
               ) : (
                 <>
-                  <Action
+                  {(auth.currentUser?.uid == comment.uid)&&<Action
                     className="reply"
                     type="EDIT"
                     handleClick={() => {
                       setEditMode(true);
                     }}
-                  />
+                  />}{(auth.currentUser?.uid == comment.uid)&&
                   <Action
                     className="reply"
                     type="DELETE"
                     handleClick={handleDelete}
-                  />
+                  />}
                 </>
               )}
             </div>
@@ -120,12 +133,15 @@ const Comment: React.FC<CommentProps> = ({
       <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
         {showInput && (
           <div className="inputContainer">
+            {/* Input for replying to a comment */}
             <input
               type="text"
               className="inputContainer__input"
               autoFocus
               onChange={(e) => setInput(e.target.value)}
             />
+            {/* Action buttons for replying and canceling reply */}
+            <Action className="reply" type="REPLY" handleClick={onAddComment} />
             <Action
               className="reply"
               type="CANCEL"
