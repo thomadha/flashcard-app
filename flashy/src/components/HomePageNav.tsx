@@ -106,14 +106,12 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
                 ))}
             </div>
             )}
-
-            {(tag != "") && <p>KATEGORI VALGT: {tag}</p>}
             <div className="search-bar"> 
                 <input
                     type="text"
                     value={searchItem}
                     onChange={handleInputChange}
-                    placeholder='Søk...'
+                    placeholder='Søk her...'
                 />
             </div>
             <button id="CreateSetButton" onClick={handleCreateSet}>Lag et nytt sett</button>

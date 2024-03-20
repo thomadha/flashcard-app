@@ -178,6 +178,10 @@ body {
 
 /* InlogCSS */
 
+#LogInLogo{
+    color: black;
+}
+
 #BackPanel {
     height: 100vh;
     background-color: #A6526D;
@@ -288,7 +292,7 @@ Nav>homenav {
 }
 
 .tagBox {
-    position: fixed; /* Position the overlay relative to the viewport */
+    position: absolute; /* Position the overlay relative to the viewport */
     top: 34%; /* Align the top edge of the overlay to the top of the viewport */
     left: 30.75%; /* Align the left edge of the overlay to the left of the viewport */
     width: 162px; /* Make the overlay full width of the viewport */
@@ -363,7 +367,7 @@ Nav>homenav {
 }
 
 .cardfront, .cardback{
-    margin-top: 70px;
+    margin-top: 15px;
 }
 
 #divUser{
