@@ -8,12 +8,13 @@ interface HomePageNavProps {
     setFilter: (filterChange:string) => void;
     searchItem: string;
     setSearchItem: (searchItemChange:string) => void;
+    page : number;
     updatePage: (newValue: number) => void;
     tag: string;
     setTag(tagChange: string): void;
 }
 
-const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem, setSearchItem, updatePage, tag, setTag}) => {
+const HomePageNav: React.FC<HomePageNavProps> = ({page, filter, setFilter, searchItem, setSearchItem, updatePage, tag, setTag}) => {
 
     const navigateTo = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -77,9 +78,27 @@ const HomePageNav: React.FC<HomePageNavProps> = ({filter, setFilter, searchItem,
 
     return (
         <div id="HomePageNav" className="Container">
-            <button id="HomePageNavButton" onClick={() => handlemip(0)}>Mine sett</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(1)}>Utforsk</button>
-            <button id="HomePageNavButton" onClick={() => handlemip(2)}>Favoritter</button>
+            <button
+        id="HomePageNavButton"
+        style={{ textDecoration: page === 0 ? 'underline' : 'none' }}
+        onClick={() => handlemip(0)}
+      >
+        Mine sett
+      </button>
+      <button
+        id="HomePageNavButton"
+        style={{ textDecoration: page === 1 ? 'underline' : 'none' }}
+        onClick={() => handlemip(1)}
+      >
+        Utforsk
+      </button>
+      <button
+        id="HomePageNavButton"
+        style={{ textDecoration: page === 2 ? 'underline' : 'none' }}
+        onClick={() => handlemip(2)}
+      >
+        Favoritter
+      </button>
             {/* KNUT EIRIK START */}
             <button id="categoriesButton" onClick={handleButtonClick}>Kategorier</button>
             {isOptionsVisible && (
