@@ -178,9 +178,6 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
                         <>
                         <div>
                             <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
-                            
-                        </div>
-                        <div>
                             <img src={starLogo} id='favoriteimage' onClick={(event) => changeFavorite(item.id)(event)} />
                         </div>
                         </>
@@ -189,9 +186,6 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
                     <>
                     <div>
                         <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
-                        
-                    </div>
-                    <div>
                         <img src={starLogo} id='favoriteimagenot' onClick={(event) => changeFavorite(item.id)(event)} />
                     </div>
                     </>
