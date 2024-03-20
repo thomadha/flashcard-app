@@ -455,6 +455,12 @@ border-radius: 50%;}
     width: 20px;
     height: 20px;
 }
+#favoriteimagenot{
+    background-color: 'transparent';
+    width: 20px;
+    height: 20px;
+    filter: grayscale(100%);
+}
 
 /* Kommentar styling */
 .commentContainer {

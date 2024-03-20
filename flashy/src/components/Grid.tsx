@@ -5,6 +5,7 @@ import { doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase/firebase';
 import { getAuth } from 'firebase/auth';
 import { favoriteHandler, logButtonclick } from './GridHelper';
+import starLogo from '../pictures/star.png';
 
 export interface Item {
     id: string;
@@ -13,6 +14,7 @@ export interface Item {
     likes: number;
     tag: string;
     username: string
+    isFavorite: boolean;
 }
 
 
@@ -29,6 +31,10 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
     const [itemsArray, setItemsArray] = useState<Item[]>([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [userId, setUserId] = useState("");
+    const starLogoUrl = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">' + starLogo + '</svg>');
+
+// Then use `starLogoUrl` as the src of your <img> element
+
 
     useEffect(() => {
         fetchDataSetNames(filter, page);
@@ -166,9 +172,30 @@ const Grid: React.FC<gridProps> = ({ filter, searchItem, page, tag }) => {
                 {(isAdmin || item.creatorId === userId) && (
                     <button className="deleteButton" onClick={(event) => deleteSet(item.id)(event)}> Slett </button>
                 )}
-                <img src={require('../pictures/1000_F_238719835_fdgaiXccSVeBhcr0ZSAn1c1iny0T764d.png')} id='favoriteimage'
-                    onClick={(event) => changeFavorite(item.id)(event)}></img>
-                <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
+                {/* Render different favorite buttons based on the value of item.isFavorite */}
+                {item.isFavorite ? (
+                    (
+                        <>
+                        <div>
+                            <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
+                            
+                        </div>
+                        <div>
+                            <img src={starLogo} id='favoriteimage' onClick={(event) => changeFavorite(item.id)(event)} />
+                        </div>
+                        </>
+                    )
+                ) : (
+                    <>
+                    <div>
+                        <button onClick={(event) => changeLike(item.id)(event)}>{item.likes} likes</button>
+                        
+                    </div>
+                    <div>
+                        <img src={starLogo} id='favoriteimagenot' onClick={(event) => changeFavorite(item.id)(event)} />
+                    </div>
+                    </>
+                )}
                 <p>Tag: {item.tag}</p>
                 <p style={{bottom:0}}>Laget av: {item.username}</p>
             </div>

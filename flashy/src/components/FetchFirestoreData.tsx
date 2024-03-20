@@ -4,7 +4,7 @@ import { auth, db } from "../lib/firebase/firebase";
 import { initLikes, getUsername } from './GridHelper';
 
 export const useSetNames = () => {
-    const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string, creatorId: string, likes: number, tag:string , username: string}[]>([]); // Array of objects with ID and name and creatorId
+    const [flashcardSetData, setFlashcardSetData] = useState<{ id: string; name: string, creatorId: string, likes: number, tag:string , username: string, isFavorite: boolean}[]>([]); // Array of objects with ID and name and creatorId
 
     const fetchDataSetNames = async (userId: String, page:number) => {
         // Dersom man kaller fetchData med en ID skal man kun hente ut spesifikke sets
@@ -38,7 +38,9 @@ export const useSetNames = () => {
                 userSetsQuery = query(collection(db, 'flashcardSets'));
                 userSetsSnapshot = await getDocs(userSetsQuery);
         }
-        const userDataPromise = userSetsSnapshot.docs.map(async doc => ({ id: doc.id, name: doc.data().name, creatorId: doc.data().creatorId, likes: await initLikes(doc.id), tag: doc.data().tag, username: await getUsername(doc.data().creatorId) }));
+        const userDataPromise = userSetsSnapshot.docs.map(async doc => ({ id: doc.id, name: doc.data().name, creatorId: doc.data().creatorId, likes: await initLikes(doc.id), tag: doc.data().tag, username: await getUsername(doc.data().creatorId), isFavorite: doc.data().isFavorite }));
+        console.log(userDataPromise);
+        
         const userData = await Promise.all(userDataPromise);
         setFlashcardSetData(userData);   
       } catch (error) {
