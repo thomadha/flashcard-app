@@ -7,6 +7,7 @@
     --nav_color: #EF8CAD;
     --slide_color: #EF8CAD;
     --comment_color: black;
+    --button_shadow: rgb(87, 85, 85);
 }
 
 
@@ -19,6 +20,7 @@
     --nav_color: #7A4052;
     --slide_color: #7A4052;
     --comment_color: black;
+    --button_shadow: white;
 }
 
 body {
@@ -61,7 +63,7 @@ body {
     background-color: var(--flashcard_background);
     color: var(--body_color);
     border-radius: 30px;
-    filter: drop-shadow(4px 4px 4px rgb(87, 85, 85));
+    filter: drop-shadow(4px 4px 4px var(--button_shadow));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +89,7 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 4px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;
 }
 
@@ -98,7 +100,7 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 4px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;    
 }
 
@@ -122,7 +124,7 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 35px;
 }
 
@@ -134,7 +136,7 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 35px;
 }
 
@@ -145,7 +147,7 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 30px;
 }
 
@@ -160,7 +162,7 @@ body {
     color: var(--body_color);
     border-radius: 8px;
     font-size: 35px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
 #UserButton {
@@ -173,7 +175,7 @@ body {
     color: var(--body_color);
     border-radius: 8px;
     font-size: 35px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
 /* InlogCSS */
@@ -258,7 +260,7 @@ body {
     color: var(--body_color);
     border-radius: 8px;
     font-size: 30px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
 .search-bar input[type=text]{
@@ -271,7 +273,7 @@ body {
     color: var(--body_color);
     border-radius: 8px;
     font-size: 30px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
 
@@ -310,6 +312,10 @@ Nav>homenav {
     border: transparent;
 }
 
+#categoriesButton:hover {
+    text-decoration: underline;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -336,7 +342,7 @@ Nav>homenav {
     background-color: White;
     border-radius: 8px;
     font-size: 20px;
-    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
 .commentSet {
@@ -348,7 +354,7 @@ Nav>homenav {
     background-color: White;
     border-radius: 8px;
     font-size: 20px;
-    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
 /* AdminPanel CSS */
@@ -357,7 +363,7 @@ Nav>homenav {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;
 }
 
@@ -476,7 +482,7 @@ border-radius: 50%;}
     cursor: pointer;
     border-radius: 5px;
     background-color: white;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
   }
   
   .first_input {
@@ -505,7 +511,7 @@ border-radius: 50%;}
     color: black;
     background-color: #EF8CAD;
     letter-spacing: 0.8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
   }
 
   .CommentStructure{
