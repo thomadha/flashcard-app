@@ -1,28 +1,79 @@
+:root {
+    --body_background: #DEFEDD;
+    --flashcard_background: white;
+    --body_color: black;
+    --button_background: white;
+    --grid_background: #F6C3D4;
+    --nav_color: #EF8CAD;
+    --slide_color: #EF8CAD;
+    --comment_color: black;
+    --button_shadow: rgb(87, 85, 85);
+}
+
+
+[data-theme="dark"] {
+    --body_background: #222322;
+    --flashcard_background: #7A4052;
+    --body_color: white;
+    --button_background: #222322;
+    --grid_background: #7A4052;
+    --nav_color: #7A4052;
+    --slide_color: #7A4052;
+    --comment_color: black;
+    --button_shadow: white;
+}
+
 body {
-    background-color: #DEFEDD;
+    background-color: var(--body_background);
+    color: var(--body_color);
+    transition: all 0.1s ease-in-out;
+
 }
 
 .navbar-flashy {
-    background-color: #EF8CAD;
+    color: var(--body_color);
+    background-color: var(--nav_color);
     width: 100%;
     height: 15%;
+    transition: all 0.1s ease-in-out;
+
 }
+
+#homePageNav {
+    background-color: var(--body_background);
+    transition: all 0.1s ease-in-out;
+}
+
+.homeNavButtons {
+    color: var(--body_color);
+    background-color: var(--button_background);
+    transition: all 0.1s ease-in-out;
+}
+
+
 
 /* CardViewerCSS */
 
 #flashCard {
     position: relative;
     margin: auto;
-    margin-top: 80px;
-    width: 800px;
-    height: 522px;
-    background-color: white;
+    margin-top: -50px;
+    width: 700px;
+    height: 460px;
+    background-color: var(--flashcard_background);
+    color: var(--body_color);
     border-radius: 30px;
-    filter: drop-shadow(4px 4px 4px rgb(87, 85, 85));
+    filter: drop-shadow(4px 4px 4px var(--button_shadow));
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.setTitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
 /* #DuplicatedCard {
     font-size: 20px;
@@ -35,9 +86,10 @@ body {
     position: absolute;
     right: 20px;
     top: 20px;
-    background-color: white;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 4px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;
 }
 
@@ -45,53 +97,58 @@ body {
     position: absolute;
     right: 20px;
     top: 70px;
-    background-color: white;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 4px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;    
 }
 
 #flashCardText {
+    color: var(--body_color);
     text-align: center;
     font-size: 30px;
 }
 
 #Title {
-    padding-top: 10px;
-    font-size: 65px;
+    color: var(--body_color);
+    font-size: 80px;
     margin-left: 30px;
 }
 
 #BackButton {
     position: absolute;
     left: 0;
-    top: 220px;
-    margin-left: 120px; 
-    background-color: white;
+    top: 250px;
+    margin-left: 160px; 
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 35px;
 }
 
 #NextButton {
     position: absolute;
     right: 0; 
-    top: 220px;
-    margin-right: 120px;
-    background-color: white;
+    top: 250px;
+    margin-right: 160px;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 35px;
 }
 
 #ShuffleCards {
-    position: absolute;
-    bottom: 17%; 
+    position: relative;
+    top: 490px;
     left: 40vw;
-    background-color: white;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
-    font-size: 35px;
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
+    font-size: 30px;
 }
 
 #HomeButton{
@@ -99,27 +156,33 @@ body {
     padding: 5px;
     position:absolute; 
     right: 180px;
-    top: 3%;
+    top: 9%;
     transform: translateY(-5%);
-    background-color: white;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
     font-size: 35px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
 #UserButton {
     padding: 5px;
     position:absolute; 
     right: 30px;
-    top: 3%;
+    top: 9%;
     transform: translateY(-5%);
-    background-color: White;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
     font-size: 35px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
 /* InlogCSS */
+
+#LogInLogo{
+    color: black;
+}
 
 #BackPanel {
     height: 100vh;
@@ -177,17 +240,15 @@ body {
 #HomePageNavButton {
     padding: 1%;
     transform: translateY(-5%);
-    background-color: #DEFEDD;
+    background-color: var(--button_background);
+    color: var(--body_color);
     font-size: 30px;
     border: transparent;
 }
 
-
 #HomePageNavButton:hover {
     text-decoration: underline;
 }
-
-
 
 #CreateSetButton {
     padding: 1px;
@@ -195,26 +256,37 @@ body {
     right: 30px;
     margin-top: 15px;
     transform: translateY(-5%);
-    background-color: White;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
     font-size: 30px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
 }
 
-#SearchSetButton{
+.search-bar input[type=text]{
     position: absolute;
     padding: 1px;
     right: 250px;
-    margin-top: 15px;
+    width: 150px;
     transform: translateY(-5%);
-    background-color: White;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
-    font-size: 30px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    font-size: 27px;
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
+
+.Name-bar input[type=text] {
+    padding: 1px;
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+
 Nav>homenav {
-    background-color: #DEFEDD;
+    background-color: var(--body_background);
 }
 
 .Container {
@@ -230,15 +302,27 @@ Nav>homenav {
 }
 
 .tagBox {
-    position: fixed; /* Position the overlay relative to the viewport */
-    top: 30%; /* Align the top edge of the overlay to the top of the viewport */
-    left: 19%; /* Align the left edge of the overlay to the left of the viewport */
-    width: auto; /* Make the overlay full width of the viewport */
+    position: absolute; /* Position the overlay relative to the viewport */
+    top: 34%; /* Align the top edge of the overlay to the top of the viewport */
+    left: 30.75%; /* Align the left edge of the overlay to the left of the viewport */
+    width: 162px; /* Make the overlay full width of the viewport */
     height: auto; /* Make the overlay full height of the viewport */
-    background-color: #DEFEDD; /* Semi-transparent black background */
+    background-color: var(--body_background); /* Semi-transparent black background */
     z-index: 9999; /* Set a high z-index to ensure it appears on top of other content */
 }
 
+#categoriesButton{
+    padding: 1%;
+    transform: translateY(-5%);
+    background-color: var(--button_background);
+    color: var(--body_color);
+    font-size: 30px;
+    border: transparent;
+}
+
+#categoriesButton:hover {
+    text-decoration: underline;
+}
 
 .grid-container {
     display: grid;
@@ -250,7 +334,7 @@ Nav>homenav {
 
 .grid-item {
     position: relative;
-    background-color: #F6C3D4;
+    background-color: var(--grid_background);
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -266,7 +350,7 @@ Nav>homenav {
     background-color: White;
     border-radius: 8px;
     font-size: 20px;
-    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
 .commentSet {
@@ -278,16 +362,30 @@ Nav>homenav {
     background-color: White;
     border-radius: 8px;
     font-size: 20px;
-    filter: drop-shadow(1px 1px 1px rgb(87, 85, 85));
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
+}
+
+#commentText {
+    color: black;
 }
 
 /* AdminPanel CSS */
 
 #addAdminBtn, #removeAdminBtn {
-    background-color: white;
+    background-color: var(--button_background);
+    color: var(--body_color);
     border-radius: 8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
     font-size: 20px;
+}
+
+.Name-bar {
+    padding: 1%;
+    transform: translateY(-5%);
+}
+
+.cardfront, .cardback{
+    margin-top: 15px;
 }
 
 #divUser{
@@ -396,7 +494,7 @@ border-radius: 50%;}
     cursor: pointer;
     border-radius: 5px;
     background-color: white;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
   }
   
   .first_input {
@@ -425,7 +523,7 @@ border-radius: 50%;}
     color: black;
     background-color: #EF8CAD;
     letter-spacing: 0.8px;
-    filter: drop-shadow(2px 2px 2px rgb(87, 85, 85));
+    filter: drop-shadow(2px 2px 2px var(--button_shadow));
   }
 
   .CommentStructure{
@@ -443,8 +541,8 @@ border-radius: 50%;}
 .progressBar {
     position: relative;
     height: 20px;
-    background-color: #EF8CAD; 
-    margin-top: 30px;
+    background-color: var(--slide_color); 
+    margin-top: 20px;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -464,7 +562,7 @@ border-radius: 50%;}
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white; 
+    color: var(--body_color); 
     font-size: 14px;
     font-weight: bold;
 }

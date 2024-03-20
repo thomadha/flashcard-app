@@ -226,7 +226,7 @@ const Page: React.FC = () => {
         <div className="page">
     
             <div>
-                <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "15px"}}>
+                <div style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginTop: "-180px"}}>
                 <input 
                     type="checkbox" 
                     id="public" 
@@ -235,9 +235,12 @@ const Page: React.FC = () => {
                     checked={isPublic} 
                     onChange={(e) => setIsPublic(e.target.checked)} 
                 />
-                <label htmlFor="public">Vis settet til andre brukere</label>
+                <label style={{marginTop: "-6px"}}htmlFor="public">Vis settet til andre brukere</label>
                 </div>
-                <p>Legg til et FlashCard Set blant settene til {user?.email}</p>
+                <p style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginTop: "15px"}}>
+                    Legg til et FlashCard Set blant settene til {user?.email}
+                </p>
+
 
                 <nav role="setNavbar" style={{display: "flex", justifyContent: "center", alignItems: "flex-start", marginBottom: "75px"}}>
 
