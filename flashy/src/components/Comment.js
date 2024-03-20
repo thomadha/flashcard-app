@@ -107,7 +107,7 @@ const Comment = ({
         ) : (
           <>
             {/* Display the comment text */}
-            <span
+            <span id="commentText"
               contentEditable={editMode}
               suppressContentEditableWarning={editMode}
               ref={inputRef}

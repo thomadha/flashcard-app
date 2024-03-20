@@ -272,8 +272,16 @@ body {
     background-color: var(--button_background);
     color: var(--body_color);
     border-radius: 8px;
-    font-size: 30px;
+    font-size: 27px;
     filter: drop-shadow(1px 1px 1px var(--button_shadow));
+}
+
+
+.Name-bar input[type=text] {
+    padding: 1px;
+    filter: drop-shadow(1px 1px 1px var(--button_shadow));
+    border-radius: 8px;
+    font-size: 20px;
 }
 
 
@@ -357,6 +365,10 @@ Nav>homenav {
     filter: drop-shadow(1px 1px 1px var(--button_shadow));
 }
 
+#commentText {
+    color: black;
+}
+
 /* AdminPanel CSS */
 
 #addAdminBtn, #removeAdminBtn {
@@ -367,7 +379,7 @@ Nav>homenav {
     font-size: 20px;
 }
 
-.name-bar{
+.Name-bar {
     padding: 1%;
     transform: translateY(-5%);
 }
