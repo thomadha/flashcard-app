@@ -66,17 +66,17 @@ const Comment: React.FC<CommentProps> = ({
               autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="type..."
+              placeholder="Skriv kommentar..."
             />
             <Action
               className="reply comment"
-              type="COMMENT"
+              type="KOMMENTER"
               handleClick={onAddComment}
             />
           </>
         ) : (
           <>
-            <span style={{ fontWeight: "bold" }}>
+            <span id="userNameComment" style={{ fontWeight: "bold" }}>
             <img src={userImg} id="userimage"></img>
               {comment.createdBy}
             </span>
@@ -96,12 +96,12 @@ const Comment: React.FC<CommentProps> = ({
                   {/* Action buttons for saving and canceling edit */}
                   <Action
                     className="reply"
-                    type="SAVE"
+                    type="LAGRE"
                     handleClick={onAddComment}
                   />
                   <Action
                     className="reply"
-                    type="CANCEL"
+                    type="AVSLUTT"
                     handleClick={() => {
                       if (inputRef.current)
                         inputRef.current.innerText = comment.name;
@@ -113,14 +113,14 @@ const Comment: React.FC<CommentProps> = ({
                 <>
                   {(auth.currentUser?.uid == comment.uid)&&<Action
                     className="reply"
-                    type="EDIT"
+                    type="ENDRE"
                     handleClick={() => {
                       setEditMode(true);
                     }}
                   />}{(auth.currentUser?.uid == comment.uid)&&
                   <Action
                     className="reply"
-                    type="DELETE"
+                    type="SLETT"
                     handleClick={handleDelete}
                   />}
                 </>
@@ -141,10 +141,10 @@ const Comment: React.FC<CommentProps> = ({
               onChange={(e) => setInput(e.target.value)}
             />
             {/* Action buttons for replying and canceling reply */}
-            <Action className="reply" type="REPLY" handleClick={onAddComment} />
+            <Action className="reply" type="SVAR" handleClick={onAddComment} />
             <Action
               className="reply"
-              type="CANCEL"
+              type="AVSLUTT"
               handleClick={() => {
                 setShowInput(false);
                 if (!comment?.items?.length) setExpand(false);

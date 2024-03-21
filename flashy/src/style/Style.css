@@ -369,6 +369,10 @@ Nav>homenav {
     color: black;
 }
 
+#userNameComment {
+    color: black;
+}
+
 /* AdminPanel CSS */
 
 #addAdminBtn, #removeAdminBtn {
